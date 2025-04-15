@@ -1,0 +1,15 @@
+# System
+.DS_Store
+Thumbs.db
+
+# Node / Libs (if added later)
+node_modules/
+dist/
+.env
+
+# Design Tools
+*.fig
+*.psd
+
+# VS Code
+.vscode/
