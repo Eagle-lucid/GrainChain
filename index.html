@@ -114,9 +114,33 @@
             <h2 class="headline fade-in">Where does it all go?</h2>
 
             <!-- Visual Placeholder: Animated supply chain -->
-             <div class="supply-chain-visual">
-                <p class="visual-note">[Animated supply chain will go here]</p>
-             </div>
+            <div class="supply-chain-visual">
+                <div class="supply-chain-flow">
+                    <div class="stage gsap-stage" data-stage="farm">
+                        <img src="assets/icons/" alt="Farm" class="icon">
+                        <img src="assets/icons/triangle-exclamation-solid.svg" alt="Loss Point" class="loss-icon">
+                    </div>
+                    <div class="arrow">
+                        <img src="assets/icons/arrow-right.svg" alt="Arrow from farm to truck">
+                    </div>
+                    <div class="stage gsap-stage" data-stage="truck">
+                        <img src="assets/icons/truck-fast-solid.svg" alt="Transport Truck" class="icon">
+                    </div>
+                    <div class="arrow">
+                        <img src="assets/icons/arrow-right.svg" alt="Arrow from truck to warehouse">
+                    </div>    
+                    <div class="stage gsap-stage" data-stage="warehouse">
+                        <img src="assets/icons/warehouse-solid.svg" alt="Warehouse" class="icon">
+                        <img src="assets/icons/triangle-exclamation-solid.svg" alt="Loss Point" class="loss-icon">
+                    </div>
+                    <div class="arrow">
+                        <img src="assets/icons/arrow-right.svg" alt="Arrow from warehouse to store">
+                    </div>
+                    <div class="stage gsap-stage" data-stage="store">
+                        <img src="assets/icons/store-solid.svg" alt="Retail Store" class="icon">
+                    </div>
+                </div>    
+            </div>                
 
              <!-- Interaction: Quiz -->
               <div class="quiz-section">
@@ -232,14 +256,15 @@
       </main>
       <footer class="site-footer fade-in-stagger">
         <div class="footer-bio">
-            <p></p>
+            <p><strong>GrainChain: </strong>Using tech to reduce food loss and create smarter supply chains. Together, we can make a difference.</p>
         </div>
 
         <div class="social-icons">
             <ul>
-                <li><img src="assets/icons/linkedin.svg" alt="LinkedIn profile"></li>
-                <li><img src="assets/icons/github.svg" alt="GitHub repository"></li>
-                <li><img src="assets/icons/twitter.svg" alt="Twitter account"></li>
+                <li><img src="assets/icons/linkedin-brands.svg" alt="LinkedIn profile"></li>
+                <li><img src="assets/icons/github-brands.svg" alt="GitHub repository"></li>
+                <li><img src="assets/icons/x-twitter-brands.svg" alt="Twitter account"></li>
+                <li><img src="assets/icons/reddit-brands.svg" alt=" Reddit Profile"></li>
             </ul>
         </div>
 
