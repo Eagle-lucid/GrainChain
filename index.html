@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GrainChain</title>
+    <link rel="stylesheet" href="styles/style.css">
+</head>
+<body>
+    <!-- Screen 0: Intro animation -->
+     <div class="screen-0">
+        <!-- Logo & Animation -->
+        <div class="screen-0-logo">
+            <h1 class="logo fade-in">GrainChain</h1>
+        </div>
+
+        <!-- subheading and animation -->
+         <div class="screen-0-subheading">
+            <p>Solving food loss with tech.</p>
+         </div>
+     </div>
+
+     <!-- After screen 0 main content will load -->
+      <main>
+         <!-- Sticky header (will appear after Screen 0 fades out) -->
+        <header class="header transparent">
+            <nav class="desktop-nav">
+                <ul class="nav-list">
+                    <li><a href="#problem">Problem</a></li>
+                    <li><a href="#hidden-cost">Hidden Cost</a></li>
+    
+                    <li class="dropdown">
+                        <a href="#vision">
+                            Vision
+                            <img src="assets/icons/chevron-down.svg" alt="arrow down" class="arrow-down">
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="javascript:void(0)">Cold Chain</a></li>
+                            <li><a href="javascript:void(0)">Mobile Alerts</a></li>
+                            <li><a href="javascript:void(0)">Direct Access</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#mission">
+                            Mission
+                            <img src="assets/icons/chevron-down.svg" alt="arrow down" class="arrow-down">
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="javascript:void(0)">Farmer</a></li>
+                            <li><a href="javascript:void(0)">Investor</a></li>
+                            <li><a href="javascript:void(0)">Volunteer</a></li>
+                        </ul>
+                    </li>
+    
+                    <li><a href="#cta">Join Us</a></li>
+                </ul>
+            </nav>
+    
+            <!--  Hamburger for mobile  -->
+              <div class="hamburger" id="hamburger">
+                <span>
+                    <img src="assets/icons/menu.svg" alt="hamburger menu" class="hamburger-icon">
+                </span>
+              </div>
+    
+               <!-- Mobile navigation menu -->
+                <nav class="mobile-nav" id="mobileNav">
+                    <ul>
+                        <li><a href="#problem">Problem</a></li>
+                        <li><a href="#hidden-cost">Hidden Cost</a></li>
+                        
+                        <li class="dropleft">
+                            <a href="#vision">
+                                Vision
+                                <img src="assets/icons/chevron-left.svg" alt="arrow left" class="arrow-left">
+                            </a>
+                            <ul class="dropleft-menu">
+                                <li><a href="javascript:void(0)">Cold Chain</a></li>
+                                <li><a href="javascript:void(0)">Mobile Alerts</a></li>
+                                <li><a href="javascript:void(0)">Direct Access</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropleft">
+                            <a href="#mission">
+                                Mission
+                                <img src="assets/icons/chevron-left.svg" alt="arrow left" class="arrow-left">
+                            </a>
+                            <ul class="dropleft-menu">
+                                <li><a href="javascript:void(0)">Farmer</a></li>
+                                <li><a href="javascript:void(0)">Investor</a></li>
+                                <li><a href="javascript:void(0)">Volunteer</a></li>
+                            </ul>
+                        </li>
+    
+                        <li><a href="#cta">Join Us</a></li>
+                    </ul>
+                </nav>
+        </header>
+
+        <div class="scroll-wrapper">
+            <!-- Main content sections -->
+         <section id="problem" class="screen screen-1">
+            <!-- Headline -->
+             <div class="content">
+                <h2 class="headline fade-in">40% of food is wasted in the supply chain.</h2>
+
+             <p class="description fade-in">Not because we lack food, but because it's lost before it's eaten due to inefficiencies and lack of visibility.</p>
+             </div>
+         </section>
+
+         <!-- Screen 2: The Hidden cost -->
+          <section id="hidden-cost" class="screen screen-2">
+            <!-- Headline -->
+            <h2 class="headline fade-in">Where does it all go?</h2>
+
+            <!-- Visual Placeholder: Animated supply chain -->
+            <div class="supply-chain-visual">
+                <div class="supply-chain-flow">
+                    <div class="stage gsap-stage" data-stage="farm">
+                        <img src="assets/icons/leaf-solid.svg" alt="Farm" class="icon">
+                        <img src="assets/icons/triangle-exclamation-solid.svg" alt="Loss Point" class="loss-icon">
+                    </div>
+                    <div class="arrow">
+                        <img src="assets/icons/arrow-right.svg" alt="Arrow from farm to truck">
+                    </div>
+                    <div class="stage gsap-stage" data-stage="truck">
+                        <img src="assets/icons/truck-fast-solid.svg" alt="Transport Truck" class="icon">
+                    </div>
+                    <div class="arrow">
+                        <img src="assets/icons/arrow-right.svg" alt="Arrow from truck to warehouse">
+                    </div>    
+                    <div class="stage gsap-stage" data-stage="warehouse">
+                        <img src="assets/icons/warehouse-solid.svg" alt="Warehouse" class="icon">
+                        <img src="assets/icons/triangle-exclamation-solid.svg" alt="Loss Point" class="loss-icon">
+                    </div>
+                    <div class="arrow">
+                        <img src="assets/icons/arrow-right.svg" alt="Arrow from warehouse to store">
+                    </div>
+                    <div class="stage gsap-stage" data-stage="store">
+                        <img src="assets/icons/store-solid.svg" alt="Retail Store" class="icon">
+                    </div>
+                </div>    
+            </div>                
+
+             <!-- Interaction: Quiz -->
+              <div class="quiz-section">
+                <p class="quiz-question">Where do you think most food is lost?</p>
+                <div class="quiz-options">
+                    <button class="option" role="button" data-answer="1">Farm</button>
+                    <button class="option" role="button" data-answer="2">Transport</button>
+                    <button class="option" role="button" data-answer="3">Storage</button>
+                    <button class="option" role="button" data-answer="4">Retail</button>
+                </div>
+              </div>
+
+              <!-- Stat Animations -->
+               <div class="stat-counters">
+                <div class="stat fade-in-up">
+                    <span class="percent">25%</span>
+                    <p>Lost in Storage</p>
+                </div>
+                <div class="stat fade-in-up">
+                    <span class="percent">15%</span>
+                    <p>Lost in Transit</p>
+                </div>
+               </div>
+
+               <!-- Scroll Cue -->
+                <div class="scroll-cue fade-bounce">
+                    <p>See what's possible</p>
+                    <img src="assets/icons/arrow-right.svg" alt=" scroll right" class="bounce-arrow-right">
+                </div>
+          </section>
+          <!-- Screen 3: The Vision-->
+           <section id="vision" class="screen screen-3 horizontal-scroll">
+            <!-- Headline -->
+             <h2 class="headline fade-in">Now imagine a world where food is never wasted</h2>
+
+             <!-- Scene Visualization -->
+              <div class="vision-sequence">
+                <div class="vision-slide active" data-bg="assets/images/cold-truck.jpg">
+                    <p>Cold chain truck arrives in time</p>
+                </div>
+                <div class="vision-slide" data-bg="assets/images/farmer-alert-call.jpg">
+                    <p>Mobile alerts for farmers</p>
+              </div>
+                <div class="vision-slide" data-bg="assets/images/produce-data.jpg">
+                    <p>Direct access to markets</p>
+                </div>
+                <!-- Visual Scroll Tags -->
+                <div class="tech-tags scroll-reveal">
+                    <span class="tag">Cold Chain</span>
+                    <span class="tag">Smart Alerts</span>
+                    <span class="tag">Direct Access</span>
+                </div>
+                <!-- Color Shift Note -->
+                <div class="color-shift-note">
+                    <p>Color shifts as you scroll</p>
+                </div>
+                <!-- Voiceover Text Placeholder -->
+                 <div class="voiceover-text fade-in">
+                    <p>"Tech can fix what tradition couldn't"</p>
+                 </div>
+           </section>
+
+           <!-- Screen 4: The Mission -->
+            <section id="mission" class="screen screen-4 fade-in-stagger">
+                <!-- Headline -->
+                <h2 class="headline fade-in">We're building the tech to stop food loss</h2>
+
+                <!-- Mission Statements -->
+                <p class="microcopy fade-in">Together we create smarter supply chains.</p>
+                
+                <!-- CTA Form -->
+                 <form action="" class="cta-form">
+                    <div class="form-group fade-in-up">
+                        <label for="name">
+                            Name:
+                            <input type="text" name="name" id="name" placeholder="Your Name" required />
+                        </label>
+                    </div>
+                    <div class="form-group fade-in-up">
+                        <label for="email">
+                            Email:
+                            <input type="email" name="email" id="email" placeholder="Your Email" required />
+                        </label>
+                    </div>
+                    <div class="form-group fade-in-up">
+                        <label for="role">Select your role:</label>
+                        <select name="role" id="role" >
+                            <option value="" disabled selected>Select your role</option>
+                            <option value="farmer">Farmer</option>
+                            <option value="distributor">Distributor</option>
+                            <option value="retailer">Retailer</option>
+                            <option value="partner">Partner</option>
+                            <option value="investor">Investor</option>
+                            <option value="volunteer">Volunteer</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group fade-in-up">
+                       <label for="location">
+                            Location:
+                            <input type="text" name="location" id="location" placeholder="Your Location" required />
+                        </label>
+                       </label>
+                    </div>
+                    <button type="submit" class="submit-btn fade-in-up">Join the Mission</button>
+
+                    <!-- TODO: Add support logos/testimonials in Phase 2 -->
+                 </form>
+            </section>
+            <!-- Sticky CTA Button -->
+             <button class="sticky-cta bounce" onclick="scrollToCTA()">Join the Movement</button>
+        </div>
+      </main>
+      <footer class="site-footer fade-in-stagger">
+        <div class="footer-bio">
+            <p><strong>GrainChain: </strong>Using tech to reduce food loss and create smarter supply chains. Together, we can make a difference.</p>
+        </div>
+
+        <div class="social-icons">
+            <ul>
+                <li><img src="assets/icons/linkedin-brands.svg" alt="LinkedIn profile"></li>
+                <li><img src="assets/icons/github-brands.svg" alt="GitHub repository"></li>
+                <li><img src="assets/icons/x-twitter-brands.svg" alt="Twitter account"></li>
+                <li><img src="assets/icons/reddit-brands.svg" alt=" Reddit Profile"></li>
+            </ul>
+        </div>
+
+        <div class="contact-email">
+            <p>Contact: <a href=""mailto:team@foodchaintech.com">team@foodchaintech.com</a></p>
+        </div>
+
+        <div class="built-credit">
+            <p>Built with ❤️ + Tech</p>
+        </div>
+      </footer>
+    <script src="scripts/main.js"></script>
+</body>
+</html>
