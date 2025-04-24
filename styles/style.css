@@ -1,0 +1,56 @@
+/* Imported Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Sora:wght@100..800&display=swap');
+
+/* Root Variables */
+:root {
+    /* Fonts */
+    --primary-font: 'Inter', sans-serif;
+    --header-font: 'Playfair Display', 'DM Serif Display' serif;
+    --btn-font: 'Poppins', 'Sora' sans-serif;
+
+    /* Colors */
+    --primary-color: hsl(202, 71%, 52%);     
+    --primary-color-hover: hsl(208, 79%, 51%);
+    --secondary-color: hsl(45, 86%, 62%);
+    --background-color: hsl(0, 0%, 96%);
+    --text-color: hsl(0, 0%, 20%);
+    --text-color-dark: hsl(0, 0%, 13%);
+
+    --accent-color: hsl(0, 79%, 63%);
+    --accent-color-hover: hsl(0, 79%, 53%);
+    --success-green: hsl(145, 63%, 42%);
+    
+    /* Spacing Scale */
+    --space-xxs: 4px;
+    --space-xs: 8px;  
+    --space-sm: 12px;
+    --space-md: 16px; 
+    --space-lg: 24px;
+    --space-xl: 32px;
+    --space-2xl: 48px;
+    --space-3xl: 64px;
+
+      /* Font Sizes */
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1rem;
+  --font-size-md: 1.125rem;
+  --font-size-lg: 1.5rem;
+  --font-size-xl: 2rem;
+  --font-size-2xl: 3rem;
+  --font-size-3xl: 4rem;
+
+   /* Border Radius */
+   --radius-sm: 4px;
+   --radius-md: 8px;
+   --radius-lg: 16px;
+   --radius-xl: 24px;
+   --radius-pill: 999px;
+
+   /* Z index */
+   --z-behind: -1;
+   --z-base: 1;
+   --z-nav: 100;
+   --z-overlay: 1000;
+  --z-modal: 9999;
+}
