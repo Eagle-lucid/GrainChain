@@ -185,7 +185,7 @@ main .header.scrolled {
     position: absolute;
     top: 130%;
     left: 0;
-    background-color: transparent;
+    background-color: hsl(0, 0%, 23%);
     border-radius: var(--radius-md);
     margin-top: 0.5rem;
     padding: var(--space-md) var(--space-sm);
@@ -224,3 +224,74 @@ main .header.scrolled {
     color: hsl(51, 100%, 45%);
     box-shadow: 0 5px 20px hsla(0, 0%, 100%, 0.363);
 }
+/* Screen 1 Basic style */
+main .screen-1 {
+    position: relative;
+    height: 100vh;
+    width: 100%;
+    background-image: url('../assets/images/rotting-potatoes.jpg');
+    background-color: #1a1a1a; /* dark fallback */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    overflow: hidden;
+    transform: scale(1.05); /* Prepare for GSAP zoom later */
+}
+/* Overly for better readability */
+main .screen-1::after {
+   content: '';
+   position: absolute;
+   top: 0; left: 0;
+   height: 100%; width: 100%;
+   background: hsla(0, 0%, 0%, 0.5);
+   pointer-events: none;
+}
+/* Center content */
+.screen-1 .content {
+    position: relative;
+    z-index: var(--z-base);
+    margin: 0 auto;
+    max-width: 1200px;
+    padding: var(--space-lg);
+    top: 50%;
+    transform: translateY(-50%);
+    text-align: center;
+}
+/* Heading */
+.screen-1 .content .headline {
+    font-family: var(--header-font);
+    font-size: var(--font-size-2xl);
+    color: hsl(0, 63%, 42%);
+    margin-bottom: var(--space-md);
+}
+/* Subheading */
+.screen-1 .content .description {
+    font-family: var(--primary-font);
+    font-size: var(--font-size-lg);
+    color:  hsl(0, 0%, 87%);
+    margin-top: 20px;
+    white-space: nowrap;
+    border-right: 2px solid hsl(145, 63%, 42%);
+    animation: typing-placeholder 4s steps(40, end) forwards, blink-cursor 0.8s step-end infinite;
+    animation-delay: 2s;
+}
+.screen-1 .content .headline,
+.screen-1 .content .description {
+    opacity: 1;
+    text-shadow: 2px 4px 6px hsla(0, 1%, 65%, 0.514);
+    overflow: hidden; 
+}
+/* Typing animation */
+@keyframes typing-placeholder {
+    0% {
+        width: 0;
+    }
+    100% {
+        width: 100%;
+    }
+}
+@keyframes blink-cursor {
+    from, to { border-color: transparent }
+    50% { border-color: hsl(145, 63%, 42%) }
+  }
+/* ====== SCREEN 2 ====== */
