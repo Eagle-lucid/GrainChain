@@ -180,20 +180,6 @@ main .header.scrolled {
     position: relative;
     display: inline-block;
 }
-.nav-list .dropdown .arrow-down {
-    display: inline-block;
-    margin-left: var(--space-xs);
-    width: 20px;
-    height: 20px;
-    opacity: 0;
-    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
-}
-/* Show arrow on hover */
-.desktop-nav .nav-list .dropdown:hover .arrow-down,
-.desktop-nav .nav-list .dropdown:focus-within .arrow-down {
-    opacity: 1;
-    transform: translateY(2px);
-}
 /* Dropdown Menu */
 .nav-list .dropdown .dropdown-menu {
     position: absolute;
