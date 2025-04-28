@@ -185,7 +185,7 @@ main .header.scrolled {
     position: absolute;
     top: 130%;
     left: 0;
-    background-color: hsl(0, 0%, 10%);
+    background-color: transparent;
     border-radius: var(--radius-md);
     margin-top: 0.5rem;
     padding: var(--space-md) var(--space-sm);
@@ -211,7 +211,7 @@ main .header.scrolled {
     text-align: left;
     margin-bottom: var(--space-xs);
     padding: var(--space-xs) var(--space-sm);
-    background-color: hsl(0, 0%, 90%);
+    background-color: hsl(0, 0%, 100%);
     color: hsl(145, 63%, 42%);
     border-radius: var(--radius-md);
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
@@ -220,7 +220,7 @@ main .header.scrolled {
 .dropdown-menu li a:hover,
 .dropdown-menu li a:focus,
 .dropdown-menu li a:active {
-    background-color: hsl(0, 0%, 100%);
+    background-color: hsl(0, 0%, 52%);
     color: hsl(51, 100%, 45%);
-    box-shadow: 0 5px 20px hsla(0, 0%, 100%, 0.2);
+    box-shadow: 0 5px 20px hsla(0, 0%, 100%, 0.363);
 }
