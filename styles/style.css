@@ -295,3 +295,97 @@ main .screen-1::after {
     50% { border-color: hsl(145, 63%, 42%) }
   }
 /* ====== SCREEN 2 ====== */
+main .screen-2 {
+    position: relative;
+    overflow: hidden;
+    background: hsla(0, 0%, 0%, 0.5);
+}
+main .screen-2::before {
+    content: '';
+    position: absolute;
+    top: 0; left: -10%;
+    width: 300%;
+    height: 100%;
+    background: linear-gradient(270deg, hsl(120, 100%, 25%), hsl(60, 100%, 50%), hsl(0, 100%, 50%), hsl(39, 100%, 50%), hsl(300, 100%, 25%), hsl(240, 100%, 50%));
+    background-size: 300% 100%;
+    opacity: 0.8;
+    animation: shiftGradient 30s linear infinite;
+    z-index: var(--z-base);
+    pointer-events: none;
+}
+/* Floating food icon */
+.screen-2 .floating-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+}
+.screen-2 .floating-bg .floating-icon {
+    position: absolute;
+    width: 40px;
+    opacity: 0.5;
+    animation: floatFade 12s ease-in-out infinite;
+}
+.floating-icon:nth-child(1) { 
+    top: 10%;
+    left: 20%;
+    animation-delay: 0s;
+}
+.floating-icon:nth-child(2) { 
+    top: 20%;
+    left: 70%;
+    animation-delay: 3s;
+}
+.floating-icon:nth-child(3) { 
+    top: 50%;
+    left: 30%;
+    animation-delay: 6s;
+}
+.floating-icon:nth-child(4) { 
+    top: 40%;
+    left: 80%;
+    animation-delay: 1s;
+}
+.floating-icon:nth-child(5) { 
+    top: 60%;
+    left: 50%;
+    animation-delay: 4s;
+}
+.floating-icon:nth-child(6) { 
+    top: 80%;
+    left: 10%;
+    animation-delay: 7s;
+}
+.floating-icon:nth-child(7) { 
+    top: 70%;
+    left: 90%;
+    animation-delay: 2s;
+}
+.floating-icon:nth-child(8) { 
+    top: 90%;
+    left: 40%;
+    animation-delay: 5s;
+}
+@keyframes floatFade {
+    0% {
+        transform: translateY(0) scale(1);
+        opacity: 0.5;
+    }
+    50% {
+        transform: translateY(-30px) scale(1.05);
+        opacity: 0.8;
+    }
+    100% {
+        transform: translateY(0) scale(1);
+        opacity: 0.5;
+    }
+}
+/* Shift gradient animation */
+@keyframes shiftGradient {
+    0% {
+        background-position: 0% 50%;
+    }
+    100% {
+        background-position: 100% 50%;
+    }
+}
