@@ -303,15 +303,23 @@ main .screen-2 {
 main .screen-2::before {
     content: '';
     position: absolute;
-    top: 0; left: -10%;
+    top: 0; left: -100%;
     width: 300%;
     height: 100%;
     background: linear-gradient(270deg, hsl(120, 100%, 25%), hsl(60, 100%, 50%), hsl(0, 100%, 50%), hsl(39, 100%, 50%), hsl(300, 100%, 25%), hsl(240, 100%, 50%));
     background-size: 300% 100%;
     opacity: 0.8;
     animation: shiftGradient 30s linear infinite;
-    z-index: var(--z-base);
+    z-index: var(--z-behind);
     pointer-events: none;
+}
+/* Gradient Overlay for better readability */
+main .screen-2 .gradientBg-overlay {
+    position: absolute;
+    top: 0; left: 0;
+    height: 100%; width: 100%;
+    background: hsla(0, 0%, 0%, 0.603);
+    z-index: var(--z-base);
 }
 /* Floating food icon */
 .screen-2 .floating-bg {
