@@ -155,29 +155,35 @@
               <div class="quiz-section">
                 <p class="quiz-question">Where do you think most food is lost?</p>
                 <div class="quiz-options">
-                    <button class="option" role="button" data-answer="1">Farm</button>
-                    <button class="option" role="button" data-answer="2">Transport</button>
-                    <button class="option" role="button" data-answer="3">Storage</button>
-                    <button class="option" role="button" data-answer="4">Retail</button>
+                    <button class="option" role="button" data-answer="1" data-correct="true">Farm</button>
+                    <button class="option" role="button" data-answer="2" data-correct="false">Transport</button>
+                    <button class="option" role="button" data-answer="3" data-correct="false">Storage</button>
+                    <button class="option" role="button" data-answer="4" data-correct="false">Retail</button>
                 </div>
               </div>
 
               <!-- Stat Animations -->
                <div class="stat-counters">
                 <div class="stat fade-in-up">
-                    <span class="percent">25%</span>
-                    <p>Lost in Storage</p>
+                    <div class="stat-value">
+                        <span class="percent" data-count="50" data-label="30-50%">0%</span>
+                    </div>
+                    <p class="stat-label">Loss in Harvesting</p>
                 </div>
                 <div class="stat fade-in-up">
-                    <span class="percent">15%</span>
-                    <p>Lost in Transit</p>
+                   <div class="stat-value">
+                    <span class="percent" data-count="50" data-label="10-25%">0%</span>
+                   </div>
+                    <p class="stat-label">Loss in Storage</p>
                 </div>
                </div>
 
                <!-- Scroll Cue -->
                 <div class="scroll-cue fade-bounce">
-                    <p>See what's possible</p>
-                    <img src="assets/icons/arrow-right.svg" alt=" scroll right" class="bounce-arrow-right">
+                    <p class="scroll-text">See what's possible</p>
+                    <button onclick="slideToVision()" class="slide-btn">
+                        <img src="assets/icons/arrow-right.svg" alt=" scroll right" class="bounce-arrow-right">
+                    </button>
                 </div>
           </section>
           <!-- Screen 3: The Vision-->
