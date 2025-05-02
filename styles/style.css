@@ -333,6 +333,7 @@ main .screen-2 .gradientBg-overlay {
     width: 40px;
     opacity: 0.5;
     animation: floatFade 12s ease-in-out infinite;
+    will-change: transform, opacity;
 }
 .floating-icon:nth-child(1) { 
     top: 10%;
@@ -395,5 +396,292 @@ main .screen-2 .gradientBg-overlay {
     }
     100% {
         background-position: 100% 50%;
+    }
+}
+/* Headline animation */
+.screen-2 .headline {
+    position: relative;
+    font: var(--header-font);
+    font-size: var(--font-size-2xl);
+    text-align: center;
+    color: hsl(0, 0%, 100%);
+    text-shadow: 0 0 15px hsla(0, 100%, 50%, 0.822);
+    margin-top: var(--space-lg);
+    opacity: 0;
+    letter-spacing: var(--space-xs);
+    transform: translateY(20px);
+    animation: headlineFadeIn 1.8s ease-in-out forwards;
+    animation-delay: 1s;
+    will-change: opacity, transform;
+    z-index: 3;
+}
+/* Headline fade in animation */
+@keyframes headlineFadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(20px) scale(0.95);
+      }
+      50% {
+        opacity: 0.7;
+        transform: translateY(10px) scale(1.02);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+}
+/* Supply Chain Container */
+.supply-chain-visual {
+    display: flex;
+    justify-content: center;
+    padding: var(--space-lg);
+    box-sizing: border-box;
+}
+  
+  /* Flow Container */
+.supply-chain-flow {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-md);
+}
+  
+  /* Each stage */
+.stage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    padding: var(--space-sm);
+    background-color: hsla(0, 0%, 100%, 0.801);
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.205);
+    transition: all 0.3s ease-in-out;
+    z-index: 2;
+}
+  
+  /* Icons */
+.icon, .loss-icon {
+    width: 40px;
+    height: 40px;
+    margin: 4px;
+}
+  
+.loss-icon {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    width: 20px;
+    height: 20px;
+    opacity: 0;
+    transition: all 0.3s ease-in-out;
+}
+  
+  /* Arrows */
+.arrow img {
+    width: 24px;
+    height: 24px;
+    opacity: 0.6;
+}
+  
+  /* Responsive: Desktop View (horizontal) */
+@media screen and (min-width: 768px) {
+    .supply-chain-flow {
+      flex-direction: row;
+      align-items: center;
+    }
+  
+    .arrow img {
+      transform: rotate(0deg); /* horizontal arrow */
+    }
+  
+    .stage {
+      flex-direction: column;
+      min-width: 100px;
+    }
+  }
+  
+  /* Responsive: Mobile View (vertical) */
+@media screen and (max-width: 767px) {
+    .arrow img {
+      transform: rotate(90deg); /* vertical arrow */
+    }
+  }
+/* Quiz Section */
+.screen-2 .quiz-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-lg);
+    text-align: center;
+    padding: var(--space-lg);
+}
+/* Quiz question */
+.quiz-section .quiz-question {
+    font-family: var(--header-font);
+    font-size: var(--font-size-xl);
+    color: hsl(0, 0%, 100%);
+    margin-bottom: var(--space-md);
+    transform: translateY(20px);
+    transition: all 0.3s ease-in-out;
+    animation: fadeIn 0.6s ease-in-out forwards;
+    animation-delay: 0.5s;
+    opacity: 0;
+    will-change: opacity, transform;
+    z-index: 3;
+}
+.quiz-section .quiz-options {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-sm);
+
+}
+/* Each option */
+.quiz-options .option {
+    background-color: hsl(0, 0%, 100%);
+    color: hsl(0, 0%, 20%);
+    font-family: var(--btn-font);
+    font-size: var(--font-size-lg);
+    padding: var(--space-sm) var(--space-md);
+    border: 2px solid transparent;
+    border-radius: var(--radius-md);
+    width: 200px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    z-index: 3;
+}
+/* Hover & Active state for option */
+.quiz-options .option:hover {
+    background-color: hsl(200, 100%, 60%);
+    color: hsl(0, 0%, 100%);
+    border-color: hsl(200, 100%, 60%);
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+.quiz-options .option:active {
+    transform: scale(0.95);
+    transition: all 0.1s ease-in-out;
+    background-color: hsl(200, 100%, 60%);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+/* Correct answer */
+.quiz-options .option.correct {
+    background-color: hsl(120, 60%, 45%);
+    color: hsl(0, 0%, 100%);
+    border-color: hsl(120, 60%, 45%);
+    box-shadow: 0 4px 10px rgba(0, 200, 0, 0.3);
+}
+/* Incorrect answer */
+.quiz-options .option.incorrect {
+    background-color: hsl(0, 100%, 50%);
+    color: hsl(0, 0%, 100%);
+    border-color: hsl(0, 100%, 50%);
+    box-shadow: 0 4px 10px rgba(200, 0, 0, 0.3);
+}
+/* Supply Chain Flow Stage Highlight */
+.stage.correct {
+    background-color: hsl(120, 60%, 45%);
+    box-shadow: 0 4px 10px rgba(0, 200, 0, 0.3);
+}
+.stage.incorrect {
+    background-color: hsl(0, 100%, 50%);
+    box-shadow: 0 4px 10px rgba(200, 0, 0, 0.3);
+}
+/* Animation for fadeIn */
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+/* Reset Fade out  & fade in animation */
+.quiz-options .fade-out {
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
+.quiz-options .fade-in {
+    opacity: 1;
+    transition: opacity 0.5s ease-in-out;
+}
+/* Stat  Section */
+.screen-2 .stat-counters {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    gap: var(--space-lg);
+    padding: var(--space-lg) var(--space-md);
+}
+  
+.stat {
+    text-align: center;
+    flex: 1 1 200px;
+    z-index: 3;
+}
+  
+.stat-value .percent {
+    font-family: var(--primary-font);
+    font-size: var(--font-size-xl);
+    font-weight: bold;
+    color: hsl(0, 100%, 50%);
+    text-shadow: 1px 1px 6px hsla(0, 100%, 50%, 0.5);
+    transition: all 0.3s ease-in-out;
+}
+  
+.stat-label {
+    margin-top: var(--space-sm);
+    font-size: var(--font-size-md);
+    font-family: var(--primary-font);
+    color: hsl(0, 0%, 100%);
+    text-shadow: 1px 1px 6px hsla(0, 0%, 53%, 0.712);
+    font-weight: 700;
+}
+/* Scroll cue section */
+.screen-2 .scroll-cue {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: var(--space-sm);
+    margin: var(--space-lg) 0;
+}
+/* Scroll cue text */
+.scroll-cue .scroll-text {
+    font-family: var(--primary-font);
+    font-size: var(--font-size-md);
+    font-weight: 800;
+    color: hsl(120, 100%, 50%);
+    text-shadow: 1px 1px 6px hsla(120, 100%, 50%, 0.603);
+    margin-left: 40%;
+    letter-spacing: var(--space-xs);
+    z-index: 3;
+}
+.scroll-cue .slide-btn {
+    width: 40px;
+    height: 40px;
+    margin-left: auto;
+    margin-right: var(--space-lg);
+    background-color: hsl(0, 0%, 100%);
+    border: none;
+    padding: var(--space-xs);
+    border-radius: var(--radius-lg);
+    animation: bounce 1.5s infinite;
+    z-index: 3;
+}
+/* Bounce animation */
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateX(0);
+    }
+    40% {
+        transform: translateX(-10px);
+    }
+    60% {
+        transform: translateX(-5px);
     }
 }
