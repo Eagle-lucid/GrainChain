@@ -309,7 +309,7 @@ main .screen-2::before {
     background: linear-gradient(270deg, hsl(120, 100%, 25%), hsl(60, 100%, 50%), hsl(0, 100%, 50%), hsl(39, 100%, 50%), hsl(300, 100%, 25%), hsl(240, 100%, 50%));
     background-size: 300% 100%;
     opacity: 0.8;
-    animation: shiftGradient 30s linear infinite;
+    animation: shiftGradient 20s linear infinite;
     z-index: var(--z-behind);
     pointer-events: none;
 }
@@ -684,4 +684,111 @@ main .screen-2 .gradientBg-overlay {
     60% {
         transform: translateX(-5px);
     }
+}
+/* ====== SCREEN 3 ====== */
+main .screen-3 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-lg) var(--space-md);
+    min-height: 100vh;
+    background: hsl(0, 0%, 96%);
+    position: relative;
+    overflow: hidden;
+}
+.screen-3::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: hsla(0, 0%, 0%, 0.2);
+    z-index: var(--z-behind);
+    pointer-events: none;
+    transition: background 1s ease-in-out;
+}
+.screen-3.active::before {
+    background: rgba(85, 170, 85, 0.5);
+}
+/* Headline Styling */
+.screen-3 .headline {
+    font-family: var(--header-font);
+    font-size: 2.2rem;
+    color: hsl(120, 100%, 25%);
+    text-shadow: 0 0 15px hsla(120, 100%, 50%, 0.822);
+    text-align: center;
+    max-width: 800px;
+    margin-bottom: var(--space-lg);
+    transform: translateY(40px);
+    opacity: 0;
+    animation: fadeSlideIn 1.2s ease-out forwards;
+    animation-delay: 0.3s;
+}
+/* Vision slides */
+.screen-3 .vision-sequence {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-lg);
+    position:relative;
+    z-index: 2;
+}
+.screen-3 .vision-sequence .vision-slide {
+    width: 100%;
+    max-width: 800px;
+    padding: var(--space-lg);
+    background-size: cover;
+    background-position: center;
+    border-radius: var(--radius-lg);
+    color: var(--text-color-dark);
+    font-family: var(--primary-font);
+    font-size: var(--font-size-md);
+    font-weight: 600;
+    text-align: center;
+    transform: translateX(80px);
+    transform-origin: center center;
+    opacity: 0;
+    animation: fadeSlideIn 1.2s ease-out forwards;
+}
+.screen-3 .vision-sequence .vision-slide.active {
+    animation-delay: 0.5s;
+}
+/* Tech Tags */
+.vision-sequence .tech-tags {
+    display: flex;
+    gap: var(--space-sm);
+    margin-top: var(--space-2xl);
+    transform: translateY(40px);
+    opacity: 0;
+    animation: fadeSlideIn 1.2s ease-out forwards;
+    animation-delay: 1.2s;
+}
+/* Tech Tag */
+.tag {
+    background-color: hsl(0, 100%, 50%);
+    color: hsl(0, 0%, 100%);
+    padding: var(--space-xs) var(--space-md);
+    border-radius: var(--radius-md);
+    font-family: var(--btn-font);
+    font-size: var(--font-size-sm);
+}
+/* Voice textover */
+.vision-sequence .voiceover-text {
+   font-family: var(--primary-font);
+    font-size: var(--font-size-lg);
+    font-style: italic;
+    color: var(--text-color-dark);
+    margin-top: var(--space-lg);
+    transform: translateY(40px);
+    opacity: 0;
+    animation: fadeSlideIn 1.3s ease-out forwards;
+    animation-delay: 1.5s;
+    text-align: center;
+}
+/* Animation Keyframe */
+@keyframes fadeSlideIn {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    
 }
