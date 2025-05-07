@@ -1,10 +1,20 @@
 // Scroll behavior for header
 window.addEventListener('scroll', () => {
     const header = document.querySelector('header');
+    const cta = document.querySelector('.sticky-cta');
+    const trigger = document.querySelector('.screen-0');
+    const triggerButton = trigger.getBoundingClientRect().bottom;
+
     if (window.scrollY > 0) {
         header.classList.add('scrolled');
     } else {
         header.classList.remove('scrolled');
+    }
+
+    if (window.scrollY > triggerButton) {
+        cta.classList.add('active');
+    } else {
+        cta.classList.remove('active');
     }
 })
 // Cache reusable DOM selections
