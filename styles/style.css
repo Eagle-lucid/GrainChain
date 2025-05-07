@@ -1045,3 +1045,82 @@ main .sticky-cta {
         transform: translateY(-5px);
     }
 }
+/* ====== FOOTER ====== */
+.site-footer {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+    background: linear-gradient(135deg, hsl(0, 0%, 0%), hsl(43, 74%, 49%));
+    padding: var(--space-lg) var(--space-md);
+} 
+.footer-bio p {
+    font-family: var(--primary-font);
+    font-size: var(--font-size-md);
+    color: hsl(0, 0%, 100%);
+    text-align: center;
+    margin-bottom: var(--space-lg);
+    line-height: 1.6;
+    text-shadow: 0 4px 12px hsla(0, 0%, 53%, 0.712);
+}
+.footer-bio p strong {
+    font-weight: 900;
+    color: hsl(0, 100%, 50%);
+    text-shadow: 0 4px 12px hsla(0, 100%, 50%, 0.822);
+}
+.site-footer .social-icons ul {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-lg);
+    margin-top: var(--space-lg);
+    list-style: none;
+}
+/* Social Icons */
+.site-footer .social-icons li img {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    background-color: transparent;
+    border-radius: var(--radius-lg);
+    box-shadow: 0 4px 10px hsla(0, 0%, 0%, 0.2);
+    transition: all 0.3s ease-in-out;
+    cursor: pointer;
+}
+/* Hover effect for social icons */
+.site-footer .social-icons li img:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 12px hsla(0, 0%, 0%, 0.3);
+    background-color: gold;
+    filter: drop-shadow(0 0 5px gold);
+}
+/* Contact */
+.site-footer .contact-email p {
+    font-family: var(--primary-font);
+    font-size: var(--font-size-md);
+    font-weight: 700;
+    color: hsl(0, 0%, 100%);
+    margin-top: var(--space-lg);
+    text-shadow: 0 4px 12px rgb(155, 155, 155);  
+}
+.site-footer .contact-email p a {
+    color: rgb(0, 132, 255);
+    text-decoration: none;
+    transition: all 0.3s ease-in-out;
+}
+.site-footer .contact-email p a:hover {
+    text-decoration: underline;
+    color: rgb(16, 228, 16);
+}
+.built-credit {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.built-credit p {
+    font-family: var(--primary-font);
+    font-size: var(--font-size-md);
+    color: hsl(0, 0%, 95%);
+    text-align: center;
+    margin-top: var(--space-lg);
+}
