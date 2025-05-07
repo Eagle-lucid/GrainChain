@@ -976,3 +976,72 @@ main .screen-4::after {
         transform: translateY(0);
     }
 }
+/* Sticky CTA */
+main .sticky-cta {
+   position: fixed;
+   bottom: var(--space-lg);
+   right: var(--space-lg);
+   padding: var(--space-sm) var(--space-md);
+   font-family: var(--btn-font);
+   font-size: var(--font-size-lg);
+   font-weight: bold;
+   color: hsl(0, 0%, 100%);
+   border: none;
+   border-radius: var(--radius-lg);
+   cursor: pointer;
+   background: linear-gradient(270deg, hsl(0, 100%, 50%), hsl(120, 100%, 25%));
+   background-size: 400px 400px;
+   box-shadow: 0 4px 20px hsla(0, 0%, 0%, 0.2);
+   animation: chargingLoop 5s linear infinite;
+   transition: background 0.3s ease-in-out, transform 0.2s ease-in-out;
+   transform: translateY(20px);
+   opacity: 0;
+   z-index: var(--z-nav);
+}
+/* Pause Animation on hover */
+.sticky-cta:hover {
+   animation-play-state: paused;
+   background: hsl(0, 100%, 50%);
+   box-shadow: 0 6px 24px hsla(0, 100%, 50%, 0.4);
+   text-shadow: 0 0 10px hsl(0, 0%, 0%), 0 0 20px hsl(0, 100%, 50%);
+}
+/* When clicked (GSAP or class toggle can add this) */
+.sticky-cta.clicked {
+    animation: none;
+    background: hsl(120, 100%, 50%);
+}
+.sticky-cta.bounce {
+    animation: bounce 2s ease infinite;
+} 
+.sticky-cta.bounce:hover {
+    animation: none;
+}
+.sticky-cta.active {
+    opacity: 1;
+    transform: translateY(0);
+    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+}
+/* Charging animation keyframes */
+@keyframes chargingLoop {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+/* Bounce animation */ 
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-10px);
+    }
+    60% {
+        transform: translateY(-5px);
+    }
+}
