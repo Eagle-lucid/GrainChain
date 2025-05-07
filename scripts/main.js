@@ -88,3 +88,22 @@ optionButtons.forEach(button => {
         }, 3000);
     });
 });
+// Function for validation testing
+const form = document.querySelector('.cta-form');
+const inputs = form.querySelectorAll('input, select');
+
+inputs.forEach(input => {
+    input.addEventListener('blur', () => {
+        if (input.checkValidity()) {
+            input.classList.remove('invalid');
+            input.classList.add('valid');
+        } else {
+            input.classList.remove('valid');
+            input.classList.add('invalid');
+        }
+    });
+
+    input.addEventListener('input', () => {
+        input.classList.remove('valid', 'invalid');
+    })
+})
