@@ -115,5 +115,88 @@ inputs.forEach(input => {
 
     input.addEventListener('input', () => {
         input.classList.remove('valid', 'invalid');
-    })
-})
+    });
+});
+// Function to toggle sidebar and hide header 
+const menuToggle = document.getElementById('menuToggle');
+const header = document.querySelector('main .header');
+const sidebar = document.getElementById('mobileSidebar');
+const overlay = document.getElementById('sidebarOverlay');
+let sidebarAutoCloseTimer;
+let touchStartX = 0;
+let touchEndX = 0;
+const swipeThreshold = 60;
+
+menuToggle.addEventListener('click', () => {
+    sidebar.classList.add('open');
+    header.classList.add('hide');
+    overlay.classList.add('show');
+    document.body.style.overflow = 'hidden';
+
+    // Start auto-close timer
+    sidebarAutoCloseTimer = setTimeout(() => {
+       closeSidebar()
+    }, 8000);
+});
+//  Reset Timer if User Touches or Clicks Inside Sidebar
+sidebar.addEventListener('mousedown', resetAutoCloseTimer);
+sidebar.addEventListener('touchstart', resetAutoCloseTimer);
+
+// Function Close Sidebar Utility
+function closeSidebar() {
+    sidebar.classList.remove('open');
+    header.classList.remove('hide');
+    overlay.classList.remove('show');
+    document.body.style.overflow = '';
+}
+function resetAutoCloseTimer() {
+  clearTimeout(sidebarAutoCloseTimer);
+}
+// Click outside (overlay)
+overlay.addEventListener('click', () => {
+    resetAutoCloseTimer();
+    closeSidebar();
+});
+// Close on link click inside sidebar
+document.querySelectorAll('.mobile-nav a').forEach(link => {
+  link.addEventListener('click', () => {
+    resetAutoCloseTimer();
+    closeSidebar();
+  });
+});
+// Close on outside click
+document.addEventListener('click', (e) => {
+    if (
+        sidebar.classList.contains('open') &&
+        !sidebar.contains(e.target) &&
+        !menuToggle.contains(e.target)&&
+        !overlay.contains(e.target)
+    ) {
+        resetAutoCloseTimer()
+        closeSidebar();
+    }
+});
+// Close on ESC key
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && sidebar.classList.contains('open')) {
+        resetAutoCloseTimer();
+        closeSidebar();
+    }
+}); 
+// Start touch
+sidebar.addEventListener('touchstart', (e) => {
+    touchStartX = e.changedTouches[0].clientX;
+}, {passive: true});
+// End touch
+sidebar.addEventListener('touchend', (e) => {
+    touchEndX = e.changedTouches[0].clientX;
+    handleSwipeGesture();
+}, {passive: true});
+function handleSwipeGesture () {
+    const swipeDistance = touchStartX - touchEndX;
+
+    if (swipeDistance > swipeThreshold) {
+        resetAutoCloseTimer();
+        closeSidebar();
+    }
+};
