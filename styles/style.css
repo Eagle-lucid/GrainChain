@@ -313,9 +313,12 @@ main .header.scrolled {
         max-width: 230px;
         height: 100dvh;
         padding: var(--space-lg);
+        background-color: rgb(0, 0, 0);
+        box-shadow: 0 2.5px 10px  hsla(0, 0%, 53%, 0.815);
+        border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
         overflow-y: auto;
         z-index: var(--z-modal);
-        transition: left 0.4s ease-in-out;
+        transition: all 0.4s ease-in-out;
     }
     /* When active (JS adds this class) */
     .mobile-sidebar.open {
@@ -346,6 +349,59 @@ main .header.scrolled {
         visibility: visible;
         pointer-events: auto;
     }
+    .mobile-sidebar {
+        display: block;
+        position: fixed;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        max-width: 260px;
+        height: 100dvh;
+        background-color: hsl(0, 0%, 10%);
+        padding: var(--space-2xl) var(--space-lg);
+        z-index: var(--z-modal);
+        overflow-y: auto;
+        transition: left 0.4s ease-in-out;
+    }
+
+    .mobile-sidebar.open {
+        left: 0;
+    }
+
+    /* Nav List */
+    .mobile-sidebar .mobile-nav ul {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: var(--space-2xl);
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    /* Nav Links */
+    .mobile-sidebar .mobile-nav ul li a {
+      text-decoration: none;
+      color: hsl(145, 100%, 50%);
+      font-family: var(--header-font);
+      font-size: clamp(1rem, 2.5vw, var(--font-size-md));
+      font-weight: 600;
+      text-shadow: 
+        0 0 5px hsl(51, 79%, 34%),
+        0 0 10px hsl(51, 79%, 34%);
+      transition: 
+        color 0.3s ease-in-out,
+        text-shadow 0.3s ease-in-out;
+    }
+    
+    .mobile-sidebar .mobile-nav ul li a:hover {
+      color: hsl(51, 100%, 65%);
+      text-shadow: 
+        0 0 8px hsl(51, 100%, 50%),
+        0 0 12px hsl(145, 100%, 40%);
+    }
+
 }
 /* Screen 1 Basic style */
 main .screen-1 {
