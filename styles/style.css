@@ -63,6 +63,9 @@
     padding: 0;
     list-style: none;
 }
+htnml, body {
+    overflow-x: hidden;
+}
 /* Base styles */
 .screen-0 {
     position: relative;
@@ -713,7 +716,13 @@ main .screen-2 .gradientBg-overlay {
     height: 24px;
     opacity: 0.6;
 }
-  
+  /* Responsive: Tiny mobile  View */
+@media screen and (max-width: 360px) {
+  .supply-chain-visual {
+    padding: var(--space-sm) var(--space-xs);
+  }
+}
+
   /* Responsive: Desktop View (horizontal) */
 @media screen and (min-width: 768px) {
     .supply-chain-flow {
@@ -1218,6 +1227,7 @@ main .screen-4::after {
     font-weight: bold;
     padding: var(--space-sm) var(--space-md);
     margin-top: var(--space-lg);
+    min-width: 200px;
     border-radius: var(--radius-md);
     border: none;
     cursor: pointer;
