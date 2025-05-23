@@ -1,3 +1,87 @@
+// Register Plugins
+gsap.registerPlugin(SplitText, ScrollTrigger);
+
+// Wait until DOM is fully loaded
+window.addEventListener('DOMContentLoaded', () => {
+  // Lock scroll initially
+  document.body.style.overflowY = 'hidden';
+  window.scrollTo(0, 0);
+
+    // Split the logo text into individual characters
+    const  splitLogo = new SplitText('.logo', {type: 'chars'});
+    // Apply styles to each char span
+    splitLogo.chars.forEach(char => {
+      char.style.background = 'linear-gradient(190deg, hsl(51, 100%, 45%) 50%, hsl(145, 63%, 42%) 100%)';
+      char.style.webkitBackgroundClip = 'text';
+      char.style.backgroundClip = 'text';
+      char.style.color = 'transparent';
+      char.style.webkitTextFillColor = 'transparent';
+      char.style.textShadow = '2px 2px 10px hsla(0, 0%, 0%, 0.75)';
+    });
+
+    // Create GSAP timeline 
+    const screen0TL = gsap.timeline();
+    screen0TL.fromTo(splitLogo.chars, {
+        opacity: 0,
+        y: 50
+    }, {
+        opacity: 1,
+        y: 0,
+        duration: 1.2,
+        ease: 'power4.out',
+        stagger: {
+            amount: 1.2,
+            from: 'start'
+        }
+    });
+
+    // Animate subheading with slight zoom & lift 
+    screen0TL.fromTo('.screen-0-subheading p', {
+        opacity: 0,
+        scale: 0.96,
+        y: 15
+    }, {
+        opacity: 1,
+        scale: 1,
+        y: 0,
+        duration: 1,
+        ease: 'power2.out'
+    }, '-=0.5');
+
+    // Hint ("Tap to continue")
+    screen0TL.to('.continue-hint', {
+        opacity: 1,
+        y: 0,
+        duration: 0.6,
+        ease: 'power2.out'
+    }, '-=0.3');
+
+    // Exit animation function
+    function exitScreen0() {
+        document.querySelector('.screen-0').classList.add('fade-out');
+        gsap.to('.screen-0', {
+           y: '-100%',
+           duration: 1.2,
+           ease: 'power4.inOut',
+           onComplete() {
+               document.querySelector('.screen-0').style.display = 'none';
+               document.body.style.overflowY = 'auto'; // Unlock scroll
+               document.querySelector('.screen-1').scrollIntoView({ behavior: 'smooth'});
+           }
+        });
+    }
+    // Auto-exit after delay (if user doesn’t act)
+    const autoExit = setTimeout(exitScreen0, 6000);
+
+    // Allow early exit by user interaction
+    ["click", "wheel", "touchstart", "keydown"].forEach(evt => {
+        window.addEventListener(evt, () => {
+            clearTimeout(autoExit); // Clear the auto-exit timer
+            exitScreen0(); // Trigger exit animation
+        }, { once: true });
+    });
+});
+
 // Scroll behavior for header
 window.addEventListener('scroll', () => {
     const header = document.querySelector('header');
@@ -16,7 +100,7 @@ window.addEventListener('scroll', () => {
     } else {
         cta.classList.remove('active');
     }
-})
+});
 // Cache reusable DOM selections
 const optionButtons = document.querySelectorAll('.option');
 const stages = document.querySelectorAll('.stage');

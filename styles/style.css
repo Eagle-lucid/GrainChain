@@ -63,8 +63,10 @@
     padding: 0;
     list-style: none;
 }
-htnml, body {
-    overflow-x: hidden;
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
 }
 /* Base styles */
 .screen-0 {
@@ -82,7 +84,7 @@ htnml, body {
     background-repeat: no-repeat;
     transition:  background-image 1.5s ease-in-out, filter 1s ease-in-out;
     filter: grayscale(30%) brightness(0.9);
-    z-index: var(--z-base);
+    z-index: var(--z-behind);
 }
 .screen-0 .screen-0-overlay {
   position: absolute;
@@ -90,6 +92,10 @@ htnml, body {
   height: 100%; width: 100%;
   background: hsla(0, 0%, 0%, 0.5);
   z-index: 2;
+}
+.screen-0.fade-out .screen-0-overlay {
+    opacity: 0.8;
+    transition: opacity 0.5s ease;
 }
 .screen-0 .screen-0-logo .logo {
     position: relative;
@@ -105,7 +111,6 @@ htnml, body {
     color: transparent;
     -webkit-text-fill-color: transparent;
     text-shadow: 2px 2px 10px hsla(0, 0%, 0%, 0.75);
-    z-index: 3;
     letter-spacing: 5px;
 }
 .screen-0 .screen-0-subheading p {
@@ -115,20 +120,32 @@ htnml, body {
     color: hsl(145, 63%, 42%);
     text-shadow: 2px 4px 6px hsla(0, 1%, 65%, 0.514);
     margin-top: var(--space-sm);
-    z-index: 3;
     letter-spacing: 1px;
 }
 .logo, 
 .screen-0-subheading p {
-    opacity: 0;
+    opacity: 1;
     transform: translateY(20px);
+    z-index: 4;
     transition: none; /* GSAP will take over */
+    will-change: opacity, transform;
+}
+.screen-0 .continue-hint {
+    font-size: var(--font-size-xs);
+    color: hsla(0, 0%, 100%, 0.5);
+    margin-top: var(--space-md);
+    z-index: 4;
+    opacity: 0;
+    transform: translateY(10px);
+    pointer-events: none;
+}
+.screen-0, 
+.screen-1 {
+    will-change: transform, opacity;
+    backface-visibility: hidden;
 }
 /* Responsive screen for all devices for screen 0 */
 @media screen and (max-width: 480px) {
-    .screen-0 {
-        height: 100dvh;
-    }
     .screen-0 .screen-0-logo .logo {
         letter-spacing: 3px;
     }
@@ -437,6 +454,8 @@ main .screen-1 {
     position: relative;
     height: 100vh;
     width: 100%;
+    margin: 0;
+    top: 0;
     background-image: url('../assets/images/rotting-potatoes.jpg');
     background-color: #1a1a1a; /* dark fallback */
     background-size: cover;
