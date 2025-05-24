@@ -461,7 +461,6 @@ main .screen-1 {
     background-position: center;
     background-repeat: no-repeat;
     overflow: hidden;
-    transform: scale(1.05); /* Prepare for GSAP zoom later */
 }
 /* Overly for better readability */
 main .screen-1::after {
@@ -491,35 +490,53 @@ main .screen-1::after {
     margin-bottom: var(--space-md);
     line-height: 1.2;
 }
-/* Subheading */
+/* Hybrid Typewriter Text */
 .screen-1 .content .description {
+    position: relative;
+    display: inline-block;
     font-family: var(--primary-font);
     font-size: clamp(var(--font-size-md), 2.5vw, var(--font-size-lg));
-    color:  hsl(0, 0%, 87%);
+    color: hsl(0, 0%, 87%);
+    text-shadow: 2px 4px 6px hsla(0, 1%, 65%, 0.514);
     margin-top: 20px;
     white-space: nowrap;
+    overflow: hidden;
+    width: 0ch;
     border-right: 2px solid hsl(145, 63%, 42%);
-    animation: typing-placeholder 4s steps(40, end) forwards, blink-cursor 0.8s step-end infinite;
-    animation-delay: 2s;
+    animation: typeHybrid 4s steps(40, end) forwards;
+}
+
+/* Blinking Cursor */
+.screen-1 .content .description::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 2px;
+    height: 100%;
+    background-color: hsl(145, 63%, 42%);
+    animation: blink-cursor 0.8s step-end infinite;
+    pointer-events: none;
+}
+
+/* Keyframes */
+@keyframes typeHybrid {
+    from {
+        width: 0ch;
+    }
+    to {
+        width: 77ch;
+    }
+}
+@keyframes blink-cursor {
+    0%, 100% { opacity: 0; }
+    50% { opacity: 1; }
 }
 .screen-1 .content .headline,
 .screen-1 .content .description {
     opacity: 1;
     text-shadow: 2px 4px 6px hsla(0, 1%, 65%, 0.514);
     overflow: hidden; 
-}
-/* Typing animation */
-@keyframes typing-placeholder {
-    0% {
-        width: 0;
-    }
-    100% {
-        width: 100%;
-    }
-}
-@keyframes blink-cursor {
-    from, to { border-color: transparent }
-    50% { border-color: hsl(145, 63%, 42%) }
 }
 /* For small phones */
 @media screen and (max-width: 480px) {
@@ -531,10 +548,15 @@ main .screen-1::after {
         white-space: normal;
         border-right: none;
         width: auto;
-        max-width: 100%;
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.5s ease, transform 0.5s ease;
         overflow-wrap: break-word;
         animation: none;
     }
+    .screen-1 .content .description::after {
+    display: none;
+  }
 }
 
 /* For tablets */

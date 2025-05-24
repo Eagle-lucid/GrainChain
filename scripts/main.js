@@ -311,3 +311,37 @@ gsap.fromTo('.sticky-cta',
     ease: 'power2.out'
   }
 );
+// GSAP for screen 1 animations
+// Zoom Effects 
+gsap.to('.screen-1', {
+    scale: 1, 
+     scrollTrigger: {
+        trigger: '.screen-1',
+        start: 'top top',
+        end: 'bottom top',
+        scrub: true
+     }, 
+     ease: 'power1.out'
+});
+// Text Animations
+gsap.from('.screen-1 .headline', {
+    opacity: 0,
+    y: 40, 
+    duration: 1.5,
+    ease: 'power2.out',
+    scrollTrigger: {
+        trigger: '.screen-1',
+        start: 'top +=100 center'
+    }
+});
+gsap.from('.screen-1 .description', {
+    opacity: 0,
+    y: 20,
+    duration: 1.2,
+    delay: 0.3,
+    ease: 'power2.out',
+    scrollTrigger: {
+        trigger: '.screen-1',
+        start: 'top +=150 center'
+    }
+});
