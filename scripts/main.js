@@ -82,25 +82,28 @@ window.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-// Scroll behavior for header
-window.addEventListener('scroll', () => {
-    const header = document.querySelector('header');
-    const cta = document.querySelector('.sticky-cta');
-    const trigger = document.querySelector('.screen-0');
-    const triggerButton = trigger.getBoundingClientRect().bottom;
+// Scroll-triggered Header Styling
+    ScrollTrigger.create({
+      start: 'top -10',
+      end: 99999,
+      toggleClass: {
+        targets: 'main .header',
+        className: 'scrolled'
+      }
+    });
 
-    if (window.scrollY > 0) {
-        header.classList.add('scrolled');
-    } else {
-        header.classList.remove('scrolled');
-    }
-
-    if (window.scrollY > triggerButton) {
-        cta.classList.add('active');
-    } else {
-        cta.classList.remove('active');
-    }
-});
+    // Animate the Logo on Scroll (optional polish)
+    gsap.to('.logo-text', {
+    scrollTrigger: {
+    trigger: 'main .header',
+    start: 'top top',
+    end: '+=150',
+    scrub: true
+  },
+    scale: 0.94,
+    opacity: 0.85,
+    ease: 'power2.out'
+ });
 // Cache reusable DOM selections
 const optionButtons = document.querySelectorAll('.option');
 const stages = document.querySelectorAll('.stage');
@@ -284,3 +287,27 @@ function handleSwipeGesture () {
         closeSidebar();
     }
 };
+// CTA reveal animation
+ScrollTrigger.create({
+  trigger: '.screen-1',  // Show when screen-1 enters view
+  start: 'top center',
+  toggleClass: {
+    targets: '.sticky-cta',
+    className: 'active'
+  }
+});
+gsap.fromTo('.sticky-cta', 
+  { opacity: 0, y: 30, pointerEvents: 'none' },
+  {
+    opacity: 1,
+    y: 0,
+    pointerEvents: 'auto',
+    scrollTrigger: {
+      trigger: '.screen-1',
+      start: 'top center',
+      toggleActions: 'play none none reverse'
+    },
+    duration: 0.6,
+    ease: 'power2.out'
+  }
+);

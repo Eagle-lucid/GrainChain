@@ -63,11 +63,7 @@
     padding: 0;
     list-style: none;
 }
-html, body {
-  margin: 0;
-  padding: 0;
-  overflow-x: hidden;
-}
+
 /* Base styles */
 .screen-0 {
     position: relative;
@@ -160,10 +156,10 @@ main .mobile-screen {
 }
 main .header {
     position: sticky;
-    top: 3%;
+    top: 0;
     width: clamp(280px, 75%, 1140px);
     margin: 0 auto;
-    padding: clamp(0.5rem, 2vw, 1.5rem) clamp(1rem, 4vw, 3rem);
+    padding: var(--space-md) var(--space-lg);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -265,6 +261,9 @@ main .header.scrolled {
 }
 /* Show mobile nav on smaller screens */
 @media (max-width: 1024px) {
+    main .header {
+        padding: 0;
+    }
     .header .desktop-nav {
         display: none;
     }
