@@ -851,8 +851,18 @@ main .screen-2 .gradientBg-overlay {
     border-radius: var(--radius-md);
     width: 200px;
     cursor: pointer;
-    transition: all 0.3s ease-in-out;
+    transition: 
+        background-color 0.3s ease-in-out, 
+        color 0.3s ease-in-out, 
+        border-color 0.3s ease-in-out, 
+        transform 0.2s ease-in-out, 
+        box-shadow 0.2s ease-in-out;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    backface-visibility: hidden;
+    will-change: background-color, color, border-color, transform, box-shadow;
+    transform-style: preserve-3d;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
     z-index: 3;
 }
 /* Hover & Active state for option */
