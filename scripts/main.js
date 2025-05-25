@@ -204,6 +204,42 @@ window.addEventListener('DOMContentLoaded', () => {
       toggleActions: 'play none none none'
     }
   });
+  // ==== PHL Loss Counter ====
+  const counters = document.querySelectorAll('.percent');
+
+  counters.forEach(counter => {
+    const target = parseInt(counter.dataset.count);
+    const label = counter.dataset.label || '';
+
+    // Animate from 0 to target value
+    gsap.fromTo(counter, 
+        {innerText: 0}, 
+    {
+        innerText: target,
+        duration: 2,
+        ease: 'power2.out',
+        scrollTrigger: {
+            trigger: counter,
+            start: 'top 85%',
+            toggleActions: 'play none none none',
+        },
+        modifiers: {
+            innerText: value => {
+                const rounded = Math.round(value);
+                counter.style.color = getColorByPercentage(rounded);
+                return `${rounded}%`;
+            }
+        }
+    }
+);
+  });
+  // Function to get color based on percentage
+  function getColorByPercentage(value) {
+    if (value < 10) return 'hsl(145, 63%, 42%)'; // Green
+    if (value < 20) return 'hsl(51, 100%, 45%)'; // Yellow
+    if (value < 30) return 'hsl(30, 100%, 50%)'; // Orange
+    return 'hsl(0, 100%, 50%)'; // Red
+  }
   window.addEventListener('load', () => {
     ScrollTrigger.refresh();
   });

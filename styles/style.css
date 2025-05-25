@@ -938,12 +938,15 @@ main .screen-2 .gradientBg-overlay {
 }
   
 .stat-value .percent {
+    display: inline-block;
     font-family: var(--primary-font);
     font-size: clamp(var(--font-size-lg), 5vw, var(--font-size-xl));
     font-weight: bold;
-    color: hsl(0, 100%, 50%);
-    text-shadow: 1px 1px 6px hsla(0, 100%, 50%, 0.5);
-    transition: all 0.3s ease-in-out;
+    color: hsl(120, 100%, 25%);
+    text-shadow: 1px 1px 6px hsla(120, 100%, 25%, 0.5);
+    transition: color 0.3s ease, 
+                text-shadow 0.3s ease, 
+                transform 0.3s ease;
 }
   
 .stat-label {
