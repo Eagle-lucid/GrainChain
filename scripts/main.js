@@ -1,109 +1,214 @@
 // Register Plugins
-gsap.registerPlugin(SplitText, ScrollTrigger);
+gsap.registerPlugin(TextPlugin, SplitText, ScrollTrigger);
 
-// Wait until DOM is fully loaded
 window.addEventListener('DOMContentLoaded', () => {
-  // Lock scroll initially
+  // === Lock scroll initially ===
   document.body.style.overflowY = 'hidden';
   window.scrollTo(0, 0);
 
-    // Split the logo text into individual characters
-    const  splitLogo = new SplitText('.logo', {type: 'chars'});
-    // Apply styles to each char span
-    splitLogo.chars.forEach(char => {
-      char.style.background = 'linear-gradient(190deg, hsl(51, 100%, 45%) 50%, hsl(145, 63%, 42%) 100%)';
-      char.style.webkitBackgroundClip = 'text';
-      char.style.backgroundClip = 'text';
-      char.style.color = 'transparent';
-      char.style.webkitTextFillColor = 'transparent';
-      char.style.textShadow = '2px 2px 10px hsla(0, 0%, 0%, 0.75)';
-    });
+  // === Screen 0 Intro Animation ===
+  const logo = document.querySelector('.logo');
+  const splitLogo = new SplitText(logo, { type: 'chars' });
 
-    // Create GSAP timeline 
-    const screen0TL = gsap.timeline();
-    screen0TL.fromTo(splitLogo.chars, {
-        opacity: 0,
-        y: 50
-    }, {
-        opacity: 1,
-        y: 0,
-        duration: 1.2,
-        ease: 'power4.out',
-        stagger: {
-            amount: 1.2,
-            from: 'start'
-        }
-    });
+  splitLogo.chars.forEach(char => {
+    char.style.background = 'linear-gradient(190deg, hsl(51, 100%, 45%) 50%, hsl(145, 63%, 42%) 100%)';
+    char.style.webkitBackgroundClip = 'text';
+    char.style.backgroundClip = 'text';
+    char.style.color = 'transparent';
+    char.style.webkitTextFillColor = 'transparent';
+    char.style.textShadow = '2px 2px 10px hsla(0, 0%, 0%, 0.75)';
+  });
 
-    // Animate subheading with slight zoom & lift 
-    screen0TL.fromTo('.screen-0-subheading p', {
-        opacity: 0,
-        scale: 0.96,
-        y: 15
-    }, {
-        opacity: 1,
-        scale: 1,
-        y: 0,
-        duration: 1,
-        ease: 'power2.out'
-    }, '-=0.5');
+  const screen0TL = gsap.timeline();
+  screen0TL.fromTo(splitLogo.chars, {
+    opacity: 0,
+    y: 50
+  }, {
+    opacity: 1,
+    y: 0,
+    duration: 1.2,
+    ease: 'power4.out',
+    stagger: { amount: 1.2, from: 'start' }
+  });
 
-    // Hint ("Tap to continue")
-    screen0TL.to('.continue-hint', {
-        opacity: 1,
-        y: 0,
-        duration: 0.6,
-        ease: 'power2.out'
-    }, '-=0.3');
+  screen0TL.fromTo('.screen-0-subheading p', {
+    opacity: 0,
+    scale: 0.96,
+    y: 15
+  }, {
+    opacity: 1,
+    scale: 1,
+    y: 0,
+    duration: 1,
+    ease: 'power2.out'
+  }, '-=0.5');
 
-    // Exit animation function
-    function exitScreen0() {
-        document.querySelector('.screen-0').classList.add('fade-out');
-        gsap.to('.screen-0', {
-           y: '-100%',
-           duration: 1.2,
-           ease: 'power4.inOut',
-           onComplete() {
-               document.querySelector('.screen-0').style.display = 'none';
-               document.body.style.overflowY = 'auto'; // Unlock scroll
-               document.querySelector('.screen-1').scrollIntoView({ behavior: 'smooth'});
-           }
-        });
-    }
-    // Auto-exit after delay (if user doesn’t act)
-    const autoExit = setTimeout(exitScreen0, 6000);
+  screen0TL.to('.continue-hint', {
+    opacity: 1,
+    y: 0,
+    duration: 0.6,
+    ease: 'power2.out'
+  }, '-=0.3');
 
-    // Allow early exit by user interaction
-    ["click", "wheel", "touchstart", "keydown"].forEach(evt => {
-        window.addEventListener(evt, () => {
-            clearTimeout(autoExit); // Clear the auto-exit timer
-            exitScreen0(); // Trigger exit animation
-        }, { once: true });
-    });
-});
-
-// Scroll-triggered Header Styling
-    ScrollTrigger.create({
-      start: 'top -10',
-      end: 99999,
-      toggleClass: {
-        targets: 'main .header',
-        className: 'scrolled'
+  function exitScreen0() {
+    document.querySelector('.screen-0').classList.add('fade-out');
+    gsap.to('.screen-0', {
+      y: '-100%',
+      duration: 1.2,
+      ease: 'power4.inOut',
+      onComplete() {
+        document.querySelector('.screen-0').style.display = 'none';
+        document.body.style.overflowY = 'auto'; // Unlock scroll
+        // Optional: Scroll to screen 1 only if user did not scroll manually
+        // document.querySelector('.screen-1').scrollIntoView({ behavior: 'smooth' });
       }
     });
+  }
 
-    // Animate the Logo on Scroll (optional polish)
-    gsap.to('.logo-text', {
+  const autoExit = setTimeout(exitScreen0, 6000);
+  ['click', 'wheel', 'touchstart', 'keydown'].forEach(evt => {
+    window.addEventListener(evt, () => {
+      clearTimeout(autoExit);
+      exitScreen0();
+    }, { once: true });
+  });
+
+  // === Header Scroll Behavior ===
+  ScrollTrigger.create({
+    start: 'top -10',
+    end: 99999,
+    toggleClass: {
+      targets: 'main .header',
+      className: 'scrolled'
+    }
+  });
+
+  gsap.to('.logo-text', {
     scrollTrigger: {
-    trigger: 'main .header',
-    start: 'top top',
-    end: '+=150',
-    scrub: true
-  },
+      trigger: 'main .header',
+      start: 'top top',
+      end: '+=150',
+      scrub: true
+    },
     scale: 0.94,
     opacity: 0.85,
     ease: 'power2.out'
- });
+  });
+
+  // === CTA Reveal ===
+  ScrollTrigger.create({
+    trigger: '.screen-1',
+    start: 'top center',
+    toggleClass: {
+      targets: '.sticky-cta',
+      className: 'active'
+    }
+  });
+
+  gsap.fromTo('.sticky-cta', {
+    opacity: 0,
+    y: 30,
+    pointerEvents: 'none'
+  }, {
+    opacity: 1,
+    y: 0,
+    pointerEvents: 'auto',
+    duration: 0.6,
+    ease: 'power2.out',
+    scrollTrigger: {
+      trigger: '.screen-1',
+      start: 'top center',
+      toggleActions: 'play none none reverse'
+    }
+  });
+
+  // === Screen 1 Scroll Animations ===
+  gsap.to('.screen-1', {
+    scale: 1,
+    ease: 'power1.out',
+    scrollTrigger: {
+      trigger: '.screen-1',
+      start: 'top top',
+      end: 'bottom top',
+      scrub: true
+    }
+  });
+
+  gsap.from('.screen-1 .headline', {
+    opacity: 0,
+    y: 40,
+    duration: 1.5,
+    ease: 'power2.out',
+    scrollTrigger: {
+      trigger: '.screen-1',
+      start: 'top +=100 center'
+    }
+  });
+
+  gsap.from('.screen-1 .description', {
+    opacity: 0,
+    y: 20,
+    duration: 1.2,
+    delay: 0.3,
+    ease: 'power2.out',
+    scrollTrigger: {
+      trigger: '.screen-1',
+      start: 'top +=150 center'
+    }
+  });
+
+  // === Screen 2 Animations ===
+  const headline = document.querySelector('.screen-2 .headline');
+  if (headline) {
+    const splitHeadline = new SplitText(headline, { type: 'words' });
+    gsap.from(splitHeadline.words, {
+      opacity: 0,
+      y: 30,
+      scale: 0.95,
+      duration: 1.2,
+      stagger: 0.2,
+      ease: 'power4.out',
+      scrollTrigger: {
+        trigger: headline,
+        start: 'top 80%',
+        toggleActions: 'play none none none'
+      }
+    });
+  }
+
+  const floatingIcons = document.querySelectorAll('.floating-icon');
+  floatingIcons.forEach((icon, i) => {
+    gsap.to(icon, {
+      y: -30,
+      x: gsap.utils.random(-10, 10),
+      duration: gsap.utils.random(4, 7),
+      rotation: gsap.utils.random(-5, 5),
+      repeat: -1,
+      yoyo: true,
+      ease: 'sine.inOut',
+      delay: i * 0.3
+    });
+  });
+
+  gsap.from('.icon', {
+    opacity: 0,
+    y: 40,
+    scale: 0.9,
+    stagger: 0.25,
+    duration: 0.8,
+    ease: 'power3.out',
+    scrollTrigger: {
+      trigger: '.supply-chain-visual',
+      start: 'top 85%',
+      once: true,
+      toggleActions: 'play none none none'
+    }
+  });
+  window.addEventListener('load', () => {
+    ScrollTrigger.refresh();
+  });
+});
+
 // Cache reusable DOM selections
 const optionButtons = document.querySelectorAll('.option');
 const stages = document.querySelectorAll('.stage');
@@ -287,61 +392,3 @@ function handleSwipeGesture () {
         closeSidebar();
     }
 };
-// CTA reveal animation
-ScrollTrigger.create({
-  trigger: '.screen-1',  // Show when screen-1 enters view
-  start: 'top center',
-  toggleClass: {
-    targets: '.sticky-cta',
-    className: 'active'
-  }
-});
-gsap.fromTo('.sticky-cta', 
-  { opacity: 0, y: 30, pointerEvents: 'none' },
-  {
-    opacity: 1,
-    y: 0,
-    pointerEvents: 'auto',
-    scrollTrigger: {
-      trigger: '.screen-1',
-      start: 'top center',
-      toggleActions: 'play none none reverse'
-    },
-    duration: 0.6,
-    ease: 'power2.out'
-  }
-);
-// GSAP for screen 1 animations
-// Zoom Effects 
-gsap.to('.screen-1', {
-    scale: 1, 
-     scrollTrigger: {
-        trigger: '.screen-1',
-        start: 'top top',
-        end: 'bottom top',
-        scrub: true
-     }, 
-     ease: 'power1.out'
-});
-// Text Animations
-gsap.from('.screen-1 .headline', {
-    opacity: 0,
-    y: 40, 
-    duration: 1.5,
-    ease: 'power2.out',
-    scrollTrigger: {
-        trigger: '.screen-1',
-        start: 'top +=100 center'
-    }
-});
-gsap.from('.screen-1 .description', {
-    opacity: 0,
-    y: 20,
-    duration: 1.2,
-    delay: 0.3,
-    ease: 'power2.out',
-    scrollTrigger: {
-        trigger: '.screen-1',
-        start: 'top +=150 center'
-    }
-});

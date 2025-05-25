@@ -573,6 +573,7 @@ main .screen-2 {
     position: relative;
     overflow: hidden;
     background: hsla(0, 0%, 0%, 0.5);
+    min-height: 100vh;
 }
 main .screen-2::before {
     content: '';
@@ -606,7 +607,6 @@ main .screen-2 .gradientBg-overlay {
     position: absolute;
     width: 40px;
     opacity: 0.5;
-    animation: floatFade 12s ease-in-out infinite;
     will-change: transform, opacity;
 }
 .floating-icon:nth-child(1) { 
@@ -649,6 +649,7 @@ main .screen-2 .gradientBg-overlay {
     left: 40%;
     animation-delay: 5s;
 }
+/* Floating icon animation 
 @keyframes floatFade {
     0% {
         transform: translateY(0) scale(1);
@@ -663,6 +664,7 @@ main .screen-2 .gradientBg-overlay {
         opacity: 0.5;
     }
 }
+*/
 /* Shift gradient animation */
 @keyframes shiftGradient {
     0% {
@@ -731,9 +733,12 @@ main .screen-2 .gradientBg-overlay {
     border-radius: 12px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.205);
     transition: all 0.3s ease-in-out;
-    z-index: 2;
 }
-  
+.supply-chain-visual,
+.gsap-stage {
+    position: relative;
+    z-index: 3;
+}
   /* Icons */
 .icon, .loss-icon {
     width: 40px;
