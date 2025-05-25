@@ -60,7 +60,7 @@ window.addEventListener('DOMContentLoaded', () => {
         document.querySelector('.screen-0').style.display = 'none';
         document.body.style.overflowY = 'auto'; // Unlock scroll
         // Optional: Scroll to screen 1 only if user did not scroll manually
-        // document.querySelector('.screen-1').scrollIntoView({ behavior: 'smooth' });
+        document.querySelector('.screen-1').scrollIntoView({ behavior: 'smooth' });
       }
     });
   }
@@ -86,7 +86,7 @@ window.addEventListener('DOMContentLoaded', () => {
   gsap.to('.logo-text', {
     scrollTrigger: {
       trigger: 'main .header',
-      start: 'top top',
+      start: 'top bottom-=100',
       end: '+=150',
       scrub: true
     },
@@ -170,7 +170,7 @@ window.addEventListener('DOMContentLoaded', () => {
       ease: 'power4.out',
       scrollTrigger: {
         trigger: headline,
-        start: 'top 80%',
+        start: 'top bottom-=100',
         toggleActions: 'play none none none'
       }
     });
@@ -199,7 +199,7 @@ window.addEventListener('DOMContentLoaded', () => {
     ease: 'power3.out',
     scrollTrigger: {
       trigger: '.supply-chain-visual',
-      start: 'top 85%',
+      start: 'top bottom-=100',
       once: true,
       toggleActions: 'play none none none'
     }
