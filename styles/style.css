@@ -568,6 +568,26 @@ main .screen-1::after {
       animation: none;
     }
   }
+ /* Slide Wrapper for Screen 2 & 3
+  .slide-wrapper {
+    position: relative;
+    display: flex;
+    width: 200vw;
+    height: 100vh;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+}
+.slide-wrapper .screen {
+    width: 100vw;
+    height: 100vh;
+    flex-shrink: 0;
+    scroll-snap-align: start;
+    position: relative;
+    overflow: hidden;
+}
+.slide-wrapper::-webkit-scrollbar {
+    display: none; /* Hide scrollbar 
+}*/
 /* ====== SCREEN 2 ====== */
 main .screen-2 {
     position: relative;

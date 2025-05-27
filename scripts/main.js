@@ -240,6 +240,31 @@ window.addEventListener('DOMContentLoaded', () => {
     if (value < 30) return 'hsl(30, 100%, 50%)'; // Orange
     return 'hsl(0, 100%, 50%)'; // Red
   }
+
+  /*
+  // Horizontal scroll with ScrollTrigger pinned to wrapper
+  gsap.to('.slide-wrapper', {
+    xPercent: -100,
+    ease: 'none',
+    scrollTrigger: {
+      trigger: '.slide-wrapper',
+      start: 'top top',
+      end: () => '+=' + document.querySelector('.slide-wrapper').offsetWidth / 2,
+      scrub: 1,
+      pin: true,
+      anticipatePin: 1
+    }
+  });
+  gsap.from('.screen-3', {
+    x: 100,
+    opacity: 0,
+    duration: 1.2,
+    scrollTrigger: {
+        trigger: '.screen-3',
+        start: 'left center',
+        toggleActions: 'play none none reverse'
+    }
+  });*/
   window.addEventListener('load', () => {
     ScrollTrigger.refresh();
   });
