@@ -265,6 +265,40 @@ window.addEventListener('DOMContentLoaded', () => {
         toggleActions: 'play none none reverse'
     }
   });*/
+
+  // === Screen 3 Animations ===
+  const screen3HL = document.querySelector('.screen-3 .headline');
+  if (screen3HL) {
+    const splitVisionHeadline = new SplitText(screen3HL, { type: 'words'});
+    gsap.from(splitVisionHeadline.words, {
+      opacity: 0,
+      y: 40,
+      duration: 1.2,
+      stagger: 0.2,
+      ease: 'power3.out',
+      scrollTrigger: {
+        trigger: screen3HL,
+        start: 'top 85%',
+        toggleActions: 'play none none none'
+      }
+    })
+  }
+
+  // Animate vision slides 
+  gsap.utils.toArray('.vision-slide').forEach((slide, i) => {
+     gsap.from(slide, {
+      opacity: 0,
+      x: 80,
+      duration: 1.2,
+      delay: i * 0.2,
+      ease: 'power3.out',
+      scrollTrigger: {
+        trigger: slide,
+        start: 'top 85%',
+        toggleActions: 'play none none none'
+      }
+     })
+  })
   window.addEventListener('load', () => {
     ScrollTrigger.refresh();
   });

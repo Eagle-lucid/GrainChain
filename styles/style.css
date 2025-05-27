@@ -1086,11 +1086,7 @@ main .screen-3 {
     font-family: var(--primary-font);
     font-size: clamp(var(--font-size-md), 2vw, var(--font-size-lg));
     font-weight: 600;
-    text-align: center;
-    transform: translateX(80px);
-    transform-origin: center center;
-    opacity: 0;
-    animation: fadeSlideIn 1.2s ease-out forwards;
+    text-align: center; 
 }
 .screen-3 .vision-sequence .vision-slide.active {
     animation-delay: 0.5s;
@@ -1107,12 +1103,31 @@ main .screen-3 {
 }
 /* Tech Tag */
 .tag {
-    background-color: hsl(0, 100%, 50%);
-    color: hsl(0, 0%, 100%);
-    padding: min(var(--space-xs), var(--space-sm));
+   background: linear-gradient(135deg, hsl(145, 63%, 42%), hsl(51, 100%, 50%));
+   color: hsl(0, 0%, 100%);
+   padding: var(--space-xs) var(--space-sm);
     border-radius: var(--radius-md);
     font-family: var(--btn-font);
-    font-size: clamp(var(--font-size-sm), 2.5vw, var(--font-size-md));
+    font-size: clamp(var(--font-size-sm), 2vw, var(--font-size-md));
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transition: 
+        transform 0.3s ease-in-out,
+        background 0.3s ease-in-out,
+        box-shadow 0.3s ease-in-out,
+        color 0.3s ease-in-out  
+    ;
+    cursor: pointer;
+    backface-visibility: hidden;
+    will-change: background-color, color, border-color, transform, box-shadow;
+    transform-style: preserve-3d;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+}
+/* Tag Hover */ 
+.tag:hover {
+    transform: scale(1.1) rotate(-2deg);
+    background: linear-gradient(135deg, hsl(51, 100%, 50%), hsl(0, 100%, 50%));
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
 }
 /* Voice textover */
 .vision-sequence .voiceover-text {
