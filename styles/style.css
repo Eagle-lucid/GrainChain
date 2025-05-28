@@ -1064,6 +1064,17 @@ main .screen-3 {
     will-change: background-image, opacity;
     pointer-events: none;
 }
+.bg-dynamic::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: transparent;
+    z-index: var(--z-behind);
+    transition: background 1s ease-in-out;
+}
+.bg-dynamic.rich-color::before {
+  background: hsla(120, 100%, 25%, 0.5);
+}
 /* Headline Styling */
 .screen-3 .headline {
     font-family: var(--header-font);
@@ -1108,10 +1119,8 @@ main .screen-3 {
     display: flex;
     gap: var(--space-sm);
     margin-top: var(--space-2xl);
-    transform: translateY(40px);
-    opacity: 0;
-    animation: fadeSlideIn 1.2s ease-out forwards;
-    animation-delay: 1.2s;
+    will-change: opacity, transform;
+    transition: background 1s ease-in-out, opacity 1s ease-in-out;
 }
 /* Tech Tag */
 .tag {
@@ -1149,11 +1158,9 @@ main .screen-3 {
     font-style: italic;
     color: var(--text-color-dark);
     margin-top: var(--space-lg);
-    transform: translateY(40px);
-    opacity: 0;
-    animation: fadeSlideIn 1.3s ease-out forwards;
-    animation-delay: 1.5s;
     text-align: center;
+    transition: background 1s ease-in-out, opacity 1s ease-in-out, color 1s ease-in-out;
+
 }
 /* Animation Keyframe */
 @keyframes fadeSlideIn {
