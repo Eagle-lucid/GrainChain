@@ -617,3 +617,18 @@ function handleSwipeGesture () {
         closeSidebar();
     }
 };
+// JS logic for Sticky CTA button 
+const stickyCTA = document.querySelector('.sticky-cta');
+if (stickyCTA) {
+  stickyCTA.addEventListener('click', () => {
+    const formSection = document.querySelector('.screen-4');
+    if (formSection) {
+      formSection.scrollIntoView({ behavior: 'smooth' });
+      // Optionally close sidebar if open
+      if (sidebar.classList.contains('open')) {
+        resetAutoCloseTimer();
+        closeSidebar();
+      }
+    }
+  })
+}
