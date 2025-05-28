@@ -335,6 +335,44 @@ window.addEventListener('DOMContentLoaded', () => {
     }
    });
   });
+    
+     // Animate Color Shift 
+     ScrollTrigger.create({
+      trigger: '.vision-slide:last-child',
+      start: 'top 85%',
+      onEnter: () => {
+        document.querySelector('.bg-dynamic').classList.add('rich-color');
+      },
+      onLeaveBack: () => {
+        document.querySelector('.bg-dynamic').classList.remove('rich-color');
+      }
+     });
+    // Animate Tech Tags
+    gsap.from('.tech-tags', {
+      opacity: 0,
+      y: 40,
+      duration: 1.2,
+      ease: 'power2.out',
+      scrollTrigger: {
+        trigger: '.tech-tags',
+        start: 'top 85%',
+        toggleActions: 'play none none none'
+      }
+    });
+    
+    // Animate Voiceover Text
+    gsap.from('.voiceover-text', {
+      opacity: 0,
+      y: 40,
+      duration: 1.2,
+      delay: 0.3,
+      ease: 'power2.out',
+      scrollTrigger: {
+        trigger: '.voiceover-text',
+        start: 'top 85%',
+        toggleActions: 'play none none none'
+      }
+    });
   window.addEventListener('load', () => {
     ScrollTrigger.refresh();
   });
