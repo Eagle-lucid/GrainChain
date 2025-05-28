@@ -347,12 +347,13 @@ window.addEventListener('DOMContentLoaded', () => {
         document.querySelector('.bg-dynamic').classList.remove('rich-color');
       }
      });
-    // Animate Tech Tags
+    window.addEventListener('load', () => {
+      // Animate Tech Tags
     gsap.from('.tech-tags', {
       opacity: 0,
       y: 40,
-      duration: 1.2,
-      ease: 'power2.out',
+      duration: 1,
+      ease: 'power3.out',
       scrollTrigger: {
         trigger: '.tech-tags',
         start: 'top 85%',
@@ -366,13 +367,68 @@ window.addEventListener('DOMContentLoaded', () => {
       y: 40,
       duration: 1.2,
       delay: 0.3,
-      ease: 'power2.out',
+      ease: 'power3.out',
       scrollTrigger: {
         trigger: '.voiceover-text',
         start: 'top 85%',
         toggleActions: 'play none none none'
       }
     });
+    });
+    // ==== Screen 4 Animations ====
+    const screen4HL = document.querySelector('.screen-4 .headline');
+    if (screen4HL) {
+      const splitScreen4HL = new SplitText(screen4HL, { type: 'words' });
+      gsap.from(splitScreen4HL.words, {
+        opacity: 0,
+        y: 40,
+        duration: 1.2,
+        stagger: 0.2,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: screen4HL,
+          start: 'top 85%',
+          toggleActions: 'play none none none'
+        }
+      });
+    }
+    // Animate screen 4 content
+    const screen4MS = document.querySelector('.screen-4 .microcopy');
+    if (screen4MS) {
+      const splitMicrocopy = new SplitText(screen4MS, { type: 'chars' });
+      gsap.fromTo(splitMicrocopy.chars, {
+        opacity: 0,
+        y: 20,
+        scale: 0.95
+      }, {
+        opacity: 1,
+        y: 0,
+        scale: 1,
+        duration: 1.2,
+        stagger: 0.05,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: screen4MS,
+          start: 'top 85%',
+          toggleActions: 'play none none none'
+        }
+      });
+    }
+    // Animate screen 4 form
+    const form = document.querySelector('.screen-4 .cta-form');
+    if (form) {
+      gsap.from(form, {
+        opacity: 0,
+        y: 40,
+        duration: 1.2,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: form,
+          start: 'top 85%',
+          toggleActions: 'play none none none'
+        }
+      });
+    }
   window.addEventListener('load', () => {
     ScrollTrigger.refresh();
   });
