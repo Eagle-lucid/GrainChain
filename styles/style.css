@@ -1124,9 +1124,11 @@ main .screen-3 {
 }
 /* Tech Tag */
 .tag {
-   background: linear-gradient(135deg, hsl(145, 63%, 42%), hsl(51, 100%, 50%));
-   color: hsl(0, 0%, 100%);
-   padding: var(--space-xs) var(--space-sm);
+    position: relative;
+    display: inline-block;
+    background: linear-gradient(135deg, hsl(145, 63%, 42%), hsl(51, 100%, 50%));
+    color: hsl(0, 0%, 100%);
+    padding: var(--space-xs) var(--space-sm);
     border-radius: var(--radius-md);
     font-family: var(--btn-font);
     font-size: clamp(var(--font-size-sm), 2vw, var(--font-size-md));
@@ -1143,6 +1145,7 @@ main .screen-3 {
     transform-style: preserve-3d;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
+    z-index: 3;
 }
 /* Tag Hover */ 
 .tag:hover {
@@ -1160,7 +1163,6 @@ main .screen-3 {
     margin-top: var(--space-lg);
     text-align: center;
     transition: background 1s ease-in-out, opacity 1s ease-in-out, color 1s ease-in-out;
-
 }
 /* Animation Keyframe */
 @keyframes fadeSlideIn {
@@ -1368,12 +1370,13 @@ main .screen-4::after {
     animation-delay: 0.8s;
 }
 
-/* Staggered animation for multiple elements */
-.fade-in-stagger .fade-in-up:nth-child(1) { animation-delay: 0.8s; }
-.fade-in-stagger .fade-in-up:nth-child(2) { animation-delay: 1.0s; }
-.fade-in-stagger .fade-in-up:nth-child(3) { animation-delay: 1.2s; }
-.fade-in-stagger .fade-in-up:nth-child(4) { animation-delay: 1.4s; }
-.fade-in-stagger .fade-in-up:nth-child(5) { animation-delay: 1.6s; }
+/* Target direct children of form */
+.cta-form > .form-group.fade-in-up:nth-child(1) { animation-delay: 0.8s; }
+.cta-form > .form-group.fade-in-up:nth-child(2) { animation-delay: 1.0s; }
+.cta-form > .form-group.fade-in-up:nth-child(3) { animation-delay: 1.2s; }
+.cta-form > .form-group.fade-in-up:nth-child(4) { animation-delay: 1.4s; }
+.cta-form > button.fade-in-up:nth-child(5) { animation-delay: 1.6s; }
+
 
 /* Keyframe */
 @keyframes fadeSlide {
