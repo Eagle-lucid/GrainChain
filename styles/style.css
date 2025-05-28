@@ -1052,6 +1052,18 @@ main .screen-3 {
 .screen-3.active::before {
     background: rgba(85, 170, 85, 0.5);
 }
+.screen-3 .bg-dynamic {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0.25;
+    transition: background-image 1s ease-in-out, opacity 1s ease-in-out;
+    z-index: 3;
+    will-change: background-image, opacity;
+    pointer-events: none;
+}
 /* Headline Styling */
 .screen-3 .headline {
     font-family: var(--header-font);

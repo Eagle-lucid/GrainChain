@@ -294,11 +294,47 @@ window.addEventListener('DOMContentLoaded', () => {
       ease: 'power3.out',
       scrollTrigger: {
         trigger: slide,
-        start: 'top 85%',
+        start: 'top 90%',
         toggleActions: 'play none none none'
       }
      })
   })
+    // JS Logic to Animate BG + Text
+  const bgContainer = document.querySelector('.screen-3 .bg-dynamic');
+
+  gsap.utils.toArray('.vision-slide').forEach((slide, i) => {
+    // Set background image
+    const bgUrl = slide.dataset.bg;
+     // Trigger BG change on slide enter
+    ScrollTrigger.create({
+      trigger: slide,
+      start: 'top 85%',
+      onEnter: () => {
+        // Change BG image 
+        bgContainer.style.backgroundImage = `url(${bgUrl})`;
+      },
+      // Reverse for upward scroll 
+      onLeaveBack: () => {
+        const prevSlide = slide.previousElementSibling;
+        if (prevSlide?.classList.contains('vision-slide')) {
+          bgContainer.style.backgroundImage = `url(${prevSlide.dataset.bg})`;
+      }
+    }
+    });
+
+    // Animate text color change on slide enter
+  gsap.from(slide.querySelector('p'), {
+    opacity: 0,
+    y: 30,
+    duration: 1.2,
+    ease: 'power2.out',
+    scrollTrigger: {
+      trigger: slide,
+      start: 'top 80%',
+      toggleActions: 'play none none none'
+    }
+   });
+  });
   window.addEventListener('load', () => {
     ScrollTrigger.refresh();
   });
