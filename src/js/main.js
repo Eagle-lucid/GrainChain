@@ -4,8 +4,9 @@ gsap.registerPlugin(TextPlugin, SplitText, ScrollTrigger);
 window.addEventListener('DOMContentLoaded', () => {
   // === Lock scroll initially ===
   document.body.style.overflowY = 'hidden';
-  window.scrollTo(0, 0);
-
+  setTimeout(() => {
+    window.scrollTo(0, 0);
+  }, 50);
   // === Screen 0 Intro Animation ===
   const logo = document.querySelector('.logo');
   const splitLogo = new SplitText(logo, { type: 'chars' });
@@ -59,8 +60,7 @@ window.addEventListener('DOMContentLoaded', () => {
       onComplete() {
         document.querySelector('.screen-0').style.display = 'none';
         document.body.style.overflowY = 'auto'; // Unlock scroll
-        // Optional: Scroll to screen 1 only if user did not scroll manually
-        document.querySelector('.screen-1').scrollIntoView({ behavior: 'smooth' });
+
       }
     });
   }
@@ -141,7 +141,7 @@ window.addEventListener('DOMContentLoaded', () => {
     ease: 'power2.out',
     scrollTrigger: {
       trigger: '.screen-1',
-      start: 'top +=100 center'
+      start: 'top center'
     }
   });
 
@@ -153,7 +153,7 @@ window.addEventListener('DOMContentLoaded', () => {
     ease: 'power2.out',
     scrollTrigger: {
       trigger: '.screen-1',
-      start: 'top +=150 center'
+      start: 'top center'
     }
   });
 
@@ -170,7 +170,8 @@ window.addEventListener('DOMContentLoaded', () => {
       ease: 'power4.out',
       scrollTrigger: {
         trigger: headline,
-        start: 'top bottom-=100',
+        start: 'top 95%',
+        markers: true,
         toggleActions: 'play none none none'
       }
     });
@@ -221,7 +222,7 @@ window.addEventListener('DOMContentLoaded', () => {
         scrollTrigger: {
             trigger: counter,
             start: 'top 85%',
-            toggleActions: 'play none none none',
+            toggleActions: 'play none none none'
         },
         modifiers: {
             innerText: value => {
