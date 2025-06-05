@@ -1,78 +1,108 @@
-// Import lock and unlock functions from the animation controller
-import { lockScroll, unlockScroll } from '../core/animation-controller.js';
-import { SplitText  } from 'gsap/all';
+// src/js/screens/screen0.js
+import { lockScroll, unlockScroll } from "../core/animation-controller";
 import { gsap } from 'gsap';
+import { SplitText } from "gsap/SplitText";
 
-export function initScreen0() {
-    lockScroll();
-    setTimeout(() => window.scrollTo(0, 0), 50);
+export class Screen0Animations {
+    constructor() {
+        this.autoExitTimeout = null;
+        this.init();
+    }
+    
+    init() {
+        this.setupScrollControl();
+        this.animateLogo();
+        this.setupExitBehavior();
+    }
 
-    // Animate logo text 
-    const logo = document.querySelector('.logo');
-    if (!logo) return; // guard clause to ensure logo exists
+    setupScrollControl() {
+        lockScroll();
+        unlockScroll(() => window.scrollTo(0, 0), 50);
+    }
 
-    const splitLogo = new SplitText(logo, { type: 'chars' });
-    splitLogo.chars.forEach(char => {
-        char.style.background = 'linear-gradient(190deg, hsl(51, 100%, 45%) 50%, hsl(145, 63%, 42%) 100%)';
-        char.style.webkitBackgroundClip = 'text';
-        char.style.backgroundClip = 'text';
-        char.style.color = 'transparent';
-        char.style.webkitTextFillColor = 'transparent';
-        char.style.textShadow = '2px 2px 10px hsla(0, 0%, 0%, 0.75)';
-    });
+    animateLogo() {
+        const logo = document.querySelector('.logo')
+        if (!logo) return;
 
-    // Timeline for screen 0 animations 
-    const screen0TL = gsap.timeline();
+        // Text styling
+        const splitLogo = new SplitText(logo, { type: 'chars' });
+        this.styleLogoChars(splitLogo.chars);
 
-    screen0TL.fromTo(
-        splitLogo.chars, 
-        {opacity: 0, y: 50},
-        {
-            opacity: 1,
-            y: 0,
-            duration: 1.2,
-            ease: 'power4.out',
-            stagger: { amount: 1.2, from: 'start' }
-        }
-    );
-    screen0TL.fromTo(
-        '.screen-0-subheading p',
-        { opacity: 0, y: 15, scale: 0.96 }, 
-        {
-            opacity: 1,
-            y: 0,
-            scale: 1,
-            duration: 1,
-            ease: 'power2.out'
-        },'-=0.5'
-    );
+        //Timeline construction
+        this.createIntroTimeline(splitLogo.chars);
+    }
 
-    screen0TL.to(
-        '.continue-hint',
-        { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' }, '-=0.3'  
-    );
+    styleLogoChars(chars) {
+        chars.forEach(char => {
+            Object.assign(char.style, {
+                background: 'linear-gradient(190deg, hsl(51, 100%, 45%) 50%, hsl(145, 63%, 42%) 100%)',
+                webkitBackgroundClip: 'text',
+                backgroundClip: 'text',
+                color: 'transparent',
+                webkitTextFillColor: 'transparent',
+                textShadow: '2px 2px 10px hsla(0, 0%, 0%, 0.75)'
+            });
+        });
+    }
 
-    // Auto-exit and event-based exit for screen 0
-    const exitScreen0 = () => {
-        document.querySelector('.screen-0')?.classList.add('fade-out');
-        gsap.to('.screen-0', {
-            y: '-=100%',
-            duration: 1.2,
+    createIntroTimeline(logoChars) {
+        const timeline = gsap.timeline();
+
+        timeline.fromTo(
+            logoChars,
+            {opacity: 0, y: 50},
+            {
+                opacity: 1, y: 0,
+                duration: 1.2, ease: 'power4.out',
+                stagger: {amount: 1.2, from: 'start'}
+            }
+        );
+
+        timeline.fromTo(
+            '.screen-0-subheading p',
+            { opacity: 0, y: 15, scale: 0.96},
+            {
+                opacity: 1, y: 0,
+                duration: 1, scale: 1,
+                ease: 'power2.out'
+            },
+            '-=0.5'
+        );
+        timeline.to(
+            '.continue-hint',
+            { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' },
+            '-=0.3'
+        );
+    }
+
+    setupExitBehavior() {
+        this.autoExitTimeout = setTimeout(() => this.exitScreen(), 6000);
+
+        ['click', 'wheel', 'touchstart', 'keydown'].forEach(evt => {
+            window.addEventListener(evt, this.handleEarlyExit.bind(this), {
+                once: true
+            });
+        });
+    }
+
+    handleEarlyExit() {
+        clearTimeout(this.autoExitTimeout);
+        this.exitScreen();
+    }
+
+    exitScreen() {
+        const screen = document.querySelector('.screen-0');
+        if (!screen) return;
+
+        screen.classList.add('fade-out');
+
+        gsap.to(screen, {
+            y: '-100%', duration: 1.2,
             ease: 'power4.inOut',
             onComplete: () => {
-                document.querySelector('.screen-0').style.display = 'none';
+                screen.style.display = 'none';
                 unlockScroll();
             }
         });
-    };
-
-    const autoExit = setTimeout(exitScreen0, 6000);
-    ['click', 'wheel', 'touchstart', 'keydown'].forEach(evt => {
-        window.addEventListener(evt, () => {
-            clearTimeout(autoExit);
-            exitScreen0();
-        },
-        { once: true}
-        );
-    });
+    }
 }
