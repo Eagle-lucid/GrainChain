@@ -91,7 +91,7 @@ module.exports = {
         : false
     }),
     new MiniCssExtractPlugin({
-      filename: isProduction ? 'styles.[contenthash].css' : 'styles.css'
+      filename: isProduction ? 'styles/[name].[contenthash].css' : 'styles.css'
     })
   ],
 
