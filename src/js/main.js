@@ -1,4 +1,6 @@
 // src/js/main.js
+import '../styles/main.scss';
+
 import { initGSAPPlugins } from './core/gsap-register.js';
 import { lockScroll } from './core/animation-controller.js';
 import { initHeaderScroll } from './components/header.js';
