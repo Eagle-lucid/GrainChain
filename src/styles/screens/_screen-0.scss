@@ -1,0 +1,94 @@
+// _screen-0.scss
+@use '../abstracts/mixins' as *;
+@use '../abstracts/variables' as *;
+
+.screen-0 {
+    position: relative;
+    height: 100dvh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: {
+        image: url('../assets/images/sad-farmer.jpg');
+        color: hsl(0, 0%, 10%); // dark fallback
+        size: cover;
+        position: center;
+        repeat: no-repeat;
+    }
+    filter: grayscale(30%) brightness(0.9);
+    z-index: var(--z-behind);
+    transition: background-image 1.5s var(--transition-bounce), filter 1s ease-in-out;
+
+    @include screen-transition('up');
+
+    &-overlay {
+        @include overlay(0.5);
+        z-index: 2;
+
+        .fade-out & {
+            opacity: 0.8;
+            transition: opacity 0.5s ease;
+        }
+    }
+
+    &-logo {
+        .logo {
+            position: relative;
+            font-family: var(--header-font);
+            font-size: clamp(var(--font-size-lg), 4vw, var(--font-size-xxl));
+            @include gradient-text(
+                190deg,
+                hsl(51, 100%, 45%), // Gold
+                hsl(145, 63%, 42%) // Green
+            );
+            text-shadow: var(--shadow-lg);
+            letter-spacing: 0.3125rem; // 5px
+            z-index: 4;
+        }
+    }
+
+    &-subheading p {
+        position: relative;
+        font-family: var(--primary-font);
+        font-size: clamp(var(--font-size-base), 2.5vw, var(--font-size-lg));
+        color: var(--success-color);
+        text-shadow: 2px 4px 6px var(--text-shadow-light);
+        margin-top: var(--space-sm);
+        letter-spacing: 1px;
+        z-index: 4;
+    }
+
+    .continue-hint {
+        font-size: var(--font-size-xs);
+        color: hsla(0, 0%, 100%, 0.5);
+        margin-top: var(--space-md);
+        z-index: 4;
+        opacity: 0;
+        transform: translateY(10px);
+        pointer-events: none;
+    }
+
+    // Shared animation-ready state 
+    .logo &-subheading p {
+        opacity: 1;
+        transform: translateY(20px);
+        transition: none;
+        will-change: opacity, transform;
+    }
+}
+
+// Responsive adjustment 
+@media (max-width: 480px) {
+    .screen-0 {
+        &-logo .logo {
+            letter-spacing: 3px;
+        }
+
+        &-subheading p {
+            letter-spacing: 0.5px;
+            margin-top: var(--font-size-xs);
+        }
+    }
+}
