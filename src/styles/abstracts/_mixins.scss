@@ -46,3 +46,17 @@
     @include floating-effect(1.5rem);
   }
 }
+
+@mixin overlay($opacity: 0.5) {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: hsla(0, 0%, 0%, $opacity);
+}
+
+@mixin gradient-text($angle, $color-start, $color-end) {
+  background: linear-gradient($angle, $color-start, $color-end);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
