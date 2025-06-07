@@ -1,0 +1,85 @@
+// DESIGN TOKENS
+$colors: (
+  primary: hsl(202, 71%, 52%),
+  primary-hover: hsl(208, 79%, 51%),
+  secondary: hsl(45, 86%, 62%),
+  background: hsl(0, 0%, 96%),
+  text: hsl(0, 0%, 20%),
+  text-dark: hsl(0, 0%, 13%),
+  accent: hsl(0, 79%, 63%),
+  accent-hover: hsl(0, 79%, 53%),
+  success: hsl(145, 63%, 42%)
+);
+
+$spacing: (
+  xxs: 0.25rem,
+  xs: 0.5rem,
+  sm: 0.75rem,
+  md: 1rem,
+  lg: 1.5rem,
+  xl: 2rem,
+  xxl: 3rem,
+  xxxl: 4rem
+);
+
+$font-sizes: (
+  xs: 0.75rem,
+  sm: 0.875rem,
+  base: 1rem,
+  md: 1.125rem,
+  lg: 1.5rem,
+  xl: 2rem,
+  xxl: 3rem,
+  xxxl: 4rem
+);
+
+$radii: (
+  sm: 4px,
+  md: 8px,
+  lg: 16px,
+  xl: 24px,
+  pill: 999px
+);
+
+// EXPORT TO CSS VARS
+:root {
+  // Colors
+  @each $name, $color in $colors {
+    --#{$name}-color: #{$color};
+  }
+  
+  // Spacing
+  @each $size, $value in $spacing {
+    --space-#{$size}: #{$value};
+  }
+  
+  // Font Sizes
+  @each $size, $value in $font-sizes {
+    --font-size-#{$size}: #{$value};
+  }
+  
+  // Border Radius
+  @each $size, $value in $radii {
+    --radius-#{$size}: #{$value};
+  }
+  
+  // Shadows
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.12);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.15);
+  --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.2);
+  
+  // Z-index
+  --z-behind: -1;
+  --z-base: 1;
+  --z-nav: 100;
+  --z-overlay: 1000;
+  --z-modal: 9999;
+}
+
+// SASS VARIABLE EXPORTS (optional)
+$primary-color: map-get($colors, primary);
+$space-md: map-get($spacing, md);
+$font-size-base: map-get($font-sizes, base);
+$secondary-color: map-get($colors, secondary);
+$accent-color: map-get($colors, accent);
+$success-color: map-get($colors, success);
