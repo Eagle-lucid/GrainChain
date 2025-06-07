@@ -1,4 +1,6 @@
 // DESIGN TOKENS
+
+// Color Palette
 $colors: (
   primary: hsl(202, 71%, 52%),
   primary-hover: hsl(208, 79%, 51%),
@@ -11,6 +13,7 @@ $colors: (
   success: hsl(145, 63%, 42%)
 );
 
+// Spacing Scale
 $spacing: (
   xxs: 0.25rem,
   xs: 0.5rem,
@@ -22,6 +25,7 @@ $spacing: (
   xxxl: 4rem
 );
 
+// Font Sizes
 $font-sizes: (
   xs: 0.75rem,
   sm: 0.875rem,
@@ -33,6 +37,7 @@ $font-sizes: (
   xxxl: 4rem
 );
 
+// Border Radii
 $radii: (
   sm: 4px,
   md: 8px,
@@ -41,33 +46,47 @@ $radii: (
   pill: 999px
 );
 
-// EXPORT TO CSS VARS
+// Additional Tokens
+$food-types: (
+  'broccoli': 'vegetable',
+  'bread': 'grain',
+  'milk': 'dairy',
+  'meat': 'meat'
+);
+
+$screen-eases: (
+  'intro': cubic-bezier(0.16, 1, 0.3, 1),
+  'stats': cubic-bezier(0.65, 0, 0.35, 1),
+  'vision': cubic-bezier(0.7, 0, 0.2, 1)
+);
+
+// Export to CSS Variables
 :root {
   // Colors
   @each $name, $color in $colors {
     --#{$name}-color: #{$color};
   }
-  
+
   // Spacing
   @each $size, $value in $spacing {
     --space-#{$size}: #{$value};
   }
-  
+
   // Font Sizes
   @each $size, $value in $font-sizes {
     --font-size-#{$size}: #{$value};
   }
-  
-  // Border Radius
+
+  // Radii
   @each $size, $value in $radii {
     --radius-#{$size}: #{$value};
   }
-  
+
   // Shadows
   --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.12);
   --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.15);
   --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.2);
-  
+
   // Z-index
   --z-behind: -1;
   --z-base: 1;
@@ -76,10 +95,9 @@ $radii: (
   --z-modal: 9999;
 }
 
-// SASS VARIABLE EXPORTS (optional)
+// SASS Quick Access Variables
 $primary-color: map-get($colors, primary);
-$space-md: map-get($spacing, md);
-$font-size-base: map-get($font-sizes, base);
-$secondary-color: map-get($colors, secondary);
 $accent-color: map-get($colors, accent);
 $success-color: map-get($colors, success);
+$space-md: map-get($spacing, md);
+$font-size-base: map-get($font-sizes, base);

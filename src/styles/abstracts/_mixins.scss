@@ -1,0 +1,48 @@
+// SCREEN TRANSITIONS
+@mixin screen-transition($direction: 'up', $duration: 1.2s) {
+  @if $direction == 'up' {
+    transform: translateY(100%);
+    animation: screenIn $duration var(--transition-bounce) forwards;
+  } @else if $direction == 'left' {
+    transform: translateX(100%);
+    animation: screenInHorizontal $duration var(--transition-bounce) forwards;
+  }
+
+  @keyframes screenIn {
+    to { transform: translateY(0); }
+  }
+  @keyframes screenInHorizontal {
+    to { transform: translateX(0); }
+  }
+}
+
+// QUIZ FEEDBACK
+@mixin quiz-feedback($type: 'correct') {
+  @if $type == 'correct' {
+    background: var(--success-color);
+    box-shadow: 0 0 0 2px var(--success-color);
+  } @else {
+    background: var(--accent-color);
+    box-shadow: 0 0 0 2px var(--accent-color);
+  }
+  animation: pulse 0.6s ease;
+}
+
+// STICKY CTA BOUNCE
+@mixin sticky-cta-bounce {
+  animation: bounce 2s infinite var(--transition-bounce);
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+}
+
+// SUPPLY CHAIN STAGE
+@mixin supply-chain-stage($stage-color) {
+  .icon path {
+    fill: $stage-color;
+  }
+  &.active {
+    @include floating-effect(1.5rem);
+  }
+}

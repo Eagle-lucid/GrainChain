@@ -1,0 +1,19 @@
+@use 'variables' as *;
+
+// Gradient Colors by Food Type
+@function food-color($type) {
+  @return map-get($colors, $type);
+}
+
+// Stat Counter Animation (ease)
+@function counter-ease($start, $end) {
+  $diff: $end - $start;
+  @return cubic-bezier(0.65, 0, 0.35 * ($diff / 100), 1);
+}
+
+// Responsive Font Scaling
+@function fluid-text($min-size, $max-size) {
+  $slope: ($max-size - $min-size) / (1280 - 320);
+  $base: $min-size - $slope * 320;
+  @return calc(#{$base}px + #{$slope * 100}vw);
+}
