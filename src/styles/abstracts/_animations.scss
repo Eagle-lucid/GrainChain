@@ -1,0 +1,26 @@
+// TEXT REVEAL
+@mixin text-reveal($delay: 0.1s, $stagger: 0.05s) {
+  .char {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity var(--transition-base) ease, transform var(--transition-bounce) ease;
+  }
+  &.animated .char {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// SCROLLTRIGGER MARKER
+@mixin scroll-marker($color: var(--accent-color)) {
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 4px;
+    height: 100%;
+    background: $color;
+    z-index: var(--z-overlay);
+  }
+}
