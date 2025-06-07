@@ -61,6 +61,18 @@ $screen-eases: (
   'vision': cubic-bezier(0.7, 0, 0.2, 1)
 );
 
+$transition-durations: (
+  fast: 0.2s,
+  normal: 0.3s,
+  slow: 0.5s
+);
+
+$animation-timings: (
+  'logo-in': 1.2s,
+  'subtitle-in': 1s,
+  'hint-in': 0.6s
+);
+
 // Export to CSS Variables
 :root {
   // Colors
@@ -87,7 +99,7 @@ $screen-eases: (
   --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.12);
   --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.15);
   --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.2);
-
+  --text-shadow-light: rgba(167, 165, 165, 0.514);
   // Z-index
   --z-behind: -1;
   --z-base: 1;
