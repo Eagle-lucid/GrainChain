@@ -1,3 +1,4 @@
+@use "sass:map";
 // DESIGN TOKENS
 
 // Color Palette
@@ -96,8 +97,8 @@ $screen-eases: (
 }
 
 // SASS Quick Access Variables
-$primary-color: map-get($colors, primary);
-$accent-color: map-get($colors, accent);
-$success-color: map-get($colors, success);
-$space-md: map-get($spacing, md);
-$font-size-base: map-get($font-sizes, base);
+$primary-color: map.get($colors, primary);
+$accent-color: map.get($colors, accent);
+$success-color: map.get($colors, success);
+$space-md: map.get($spacing, md);
+$font-size-base: map.get($font-sizes, base);
