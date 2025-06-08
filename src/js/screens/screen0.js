@@ -66,7 +66,7 @@ export class Screen0Animations {
                 duration: 1, scale: 1,
                 ease: 'power2.out'
             },
-            '-=0.5'
+            '-=0.2'
         );
         timeline.to(
             '.continue-hint',
@@ -76,7 +76,7 @@ export class Screen0Animations {
     }
 
     setupExitBehavior() {
-        this.autoExitTimeout = setTimeout(() => this.exitScreen(), 6000);
+        this.autoExitTimeout = setTimeout(() => this.exitScreen(), 3000);
 
         ['click', 'wheel', 'touchstart', 'keydown'].forEach(evt => {
             window.addEventListener(evt, this.handleEarlyExit.bind(this), {
@@ -97,7 +97,7 @@ export class Screen0Animations {
         screen.classList.add('fade-out');
 
         gsap.to(screen, {
-            y: '-100%', duration: 1.2,
+            y: '100%', duration: 1.2,
             ease: 'power4.inOut',
             onComplete: () => {
                 screen.style.display = 'none';
