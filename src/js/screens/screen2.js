@@ -63,38 +63,51 @@ export class Screen2Animations {
             }
         });
     }
-
+    
     animatePHLCounter() {
         const counters = document.querySelectorAll('.percent');
-        counters.forEach((counter, i) => {
+        
+        counters.forEach((counter) => {
             const target = parseInt(counter.dataset.count);
-            gsap.fromTo(counter, 
-                { innerText: 0 },
-                {
-                    innerText: target,
-                    duration: 2,
-                    ease: 'power3.out',
-                    scrollTrigger: {
-                        trigger: counter,
-                        start: 'top 85%',
-                        toggleActions: 'play none none none'
-                    },
-                    modifiers: {
-                        innerText: value => {
-                            const rounded = Math.round(value);
-                            counter.computedStyleMap.color = this.getColorByPercentage(rounded);
-                            return `${rounded}%`;
+            const isLargeValue = target >= 30; // Determine if this is a "red" case
+            
+            gsap.to(counter, {
+                innerText: target,
+                duration: 2.5,
+                ease: "power2.out",
+                snap: { innerText: 1 },
+                scrollTrigger: {
+                    trigger: counter,
+                    start: "top 80%",
+                    toggleActions: "play none none none"
+                },
+                onUpdate: function() {
+                    const currentVal = parseInt(counter.innerText);
+                    // For large values (near 50), transition green → yellow → orange → red
+                    if (isLargeValue) {
+                        if (currentVal < 15) {
+                            counter.style.color = `hsl(145, 63%, 42%)`; // Green
+                        } else if (currentVal < 30) {
+                            counter.style.color = `hsl(51, 100%, 45%)`; // Gold
+                        } else if (currentVal < 40) {
+                            counter.style.color = `hsl(30, 100%, 50%)`; // Orange
+                        } else {
+                            counter.style.color = `hsl(0, 100%, 45%)`; // Red
+                        }
+                    } 
+                    // For smaller values (like 25), transition green → gold
+                    else {
+                        if (currentVal < 15) {
+                            counter.style.color = `hsl(145, 63%, 42%)`; // Green
+                        } else {
+                            counter.style.color = `hsl(51, 100%, 45%)`; // Gold
                         }
                     }
+                },
+                modifiers: {
+                    innerText: (value) => Math.round(value) + "%"
                 }
-
-            );
+            });
         });
-    }
-
-    getColorByPercentage(value) {
-        if (value < 10 ) return 'hsl(145, 63%, 42%)';
-        if (value < 20 ) return 'hsl(51, 100%, 45%)';
-        if (value < 30 ) return 'hsl(30, 100%, 50%)';
     }
 }
