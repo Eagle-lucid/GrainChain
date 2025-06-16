@@ -4,10 +4,10 @@
 @use '../abstracts/mixins' as *;
 
 /* ==== Base Header Styles ==== */
-.header {
+ .header {
     position: sticky;
     top: 0;
-    width: clamp(280px, 75%, 1140px);
+    width: min(90%, 1140px);
     margin: 0 auto;
     padding: var(--space-md) var(--space-lg);
     backdrop-filter: blur(0px);
@@ -15,100 +15,165 @@
     border-radius: var(--radius-lg);
     transition: all map.get($transition-durations, 'slow') ease;
     z-index: var(--z-nav);
+    will-change: transform, backdrop-filter;
 
-    
+    // Mobile toggle (hide on desktop)
     .mobile-screen {
         display: none;
-    }
-    // Sticky scroll state 
-    &.scrolled {
-        background: hsla(0, 0%, 6%, 0.95);
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
-        box-shadow: 0b5px 20px hsla(45, 100%, 51%, 0.3);
+
+        @media (max-width: 991px) {
+            display: block;
+        }
     }
 
-    // ===== Navigation Styles =====
-    .nav-list {
-        display: flex;
-        gap: var(--space-lg);
-        justify-content: center;
-        align-items: center;
+    // Sticky state 
+   &.scrolled {
+    background: hsla(0, 0%, 6%, 0.92);
+   backdrop-filter: blur(16px);
+   -webkit-backdrop-filter: blur(16px);
+   box-shadow: var(--shadow-lg);
+   border: 1px solid hsla(0, 0%, 100%, 0.12);
+   }
 
-        // Nav links 
-        &__link {
-            @include gradient-text(190deg, hsl(51, 100%, 45%), $success-color);
-            font-size: fluid-text(14, 18);
-            position: relative;
-            transition: all map.get($transition-durations, 'normal') ease;
+   /* ==== Navigation System ==== */
+   .nav-list {
+    display: flex;
+    gap: var(--space-lg);
+    justify-content: center;
+    align-items: center;
 
-            // Underline effect
-            &::after {
-                content: '';
-                position: absolute;
-                bottom: -4px;
-                left: 0;
-                width: 0;
-                height: 2px;
-                background: linear-gradient(90deg, hsl(51, 100%, 45%), transparent);
-                transition: width 0.3s var(--transition-bounce);
-            }
+    /* ---- Link styles ---- */
+    &__link {
+        @include gradient-text(190deg, map.get($colors, 'secondary'), map.get($colors, 'success'));
+        font-size: var(--font-size-md);
+        font-weight: 500;
+        letter-spacing: 0.03rem;
+        position: relative;
+        padding: var(--space-xs) 0;
+        transition: all map.get($transition-durations, 'normal') ease;
 
-            &:hover {
-                text-shadow: 0 0 10px hsla(51, 100%, 45%, 0.5);
-                &::after { width: 100%; }
-            }
+        // Animated underline
+        &::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(
+                90deg,
+                map.get($colors, 'secondary'),
+                map.get($colors, 'success')
+            );
+            transition: width map.get($transition-durations, 'normal') var(--transition-bounce);
+        }
+        &:hover {
+            text-shadow: 0 0 12px rgba(map.get($colors, 'secondary'), 0.4);
+            &::after { width: 100%; }
+        }
+        
+        // Focus state
+        &:focus-visible {
+            outline: 2px solid map.get($colors, 'primary');
+            outline-offset: 4px;
+            border-radius: var(--radius-sm);
+        }
+    }
+
+    /* ---- Dropdown System ---- */
+    &__dropdown {
+        position: relative;
+        will-change: transform;
+
+        // Chevron indicator 
+        & > .nav-list__link::after {
+            content: '';
+            display: inline-block;
+            width: 0;
+            height: 0;
+            margin-left: 6px;
+            border-left: 4px solid transparent;
+            border-right: 4px solid transparent;
+            border-top: 4px solid transparent;
+            vertical-align: middle;
+            background: transparent !important;
+            transition: transform 0.2s ease;
         }
 
-        // ===== Dropdowns ===== 
-        &__dropdown {
-            position: relative;
+        &:hover > .nav-list__link::after {
+            transform: rotate(180deg);
+        }
 
-            &-menu {
-                position: absolute;
-                top: 130%;
-                left: 0;
-                max-height: 0;
-                overflow: hidden;
-                background: hsl(0, 0%, 23%);
-                border-radius: var(--radius-md);
-                box-shadow: var(--shadow-lg);
-                transition: all map.get($transition-durations, 'slow') ease;
+        // Dropdown menu 
+        &-menu {
+            position: absolute;
+            top: calc(100% + 8px);
+            left: 50%;
+            width: max-content;
+            min-width: 200px;
+            max-height: 0;
+            overflow: hidden;
+            background: hsla(0, 0%, 12%, 0.98);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: var(--radius-md);
+            box-shadow: 
+            0 10px 30px -10px rgba(0, 0, 0, 0.98),
+            0 0 0 1px hsla(0, 0%, 100%, 0.05)
+            ;
+            transform: translateX(-50%) translateY(-8px);
+            opacity: 0;
+            z-index: var(--z-modal);
+            will-change: transform, opacity;
+
+            li {
+                padding: 0 var(space-md);
                 opacity: 0;
-                transform: translateY(-10px);
+                transform: translateY(-6px);
+                transition: none;
 
-                li {
-                    opacity: 0;
-                    transform: translateX(-10px);
-                    transition: all 0.3s ease;
+                &:first-child { padding-top: var(--space-sm); }
+                &:last-child { padding-bottom: var(--space-sm); }
 
-                    // Stagger effect
-                    @for $i from 1 through 5 {
-                        &:nth-child(#{$i}) {
-                            transition-delay: calc(0.1s * #{$i});
-                        }
-                    }
+                a {
+                    display: block;
+                    padding: var(--space-xs) var(--space-sm);
+                    border-radius: var(--radius-sm);
+                    color: hsl(0, 0%, 85%);
+                    font-size: var(--font-size-sm);
+                    transition: 
+                    color map.get($transition-durations, 'fast') ease,
+                    background-color map.get($transition-durations, 'fast') ease
+                    ;
 
                     &:hover {
-                    background: hsla(0, 0%, 100%, 0.1);
-                   } 
-                }
-            }
-
-            // Hover/Focus states 
-            &:hover {
-                .nav-list__dropdown-menu {
-                    max-height: 500px;
-                    opacity: 1;
-                    transform: translateY(0);
-
-                    li {
-                        opacity: 1;
-                        transform: translateX(0);
+                        color: map.get($colors, 'secondary');
+                        background: hsla(51, 100%, 45%, 0.48);
                     }
                 }
             }
         }
+
+        // Touch device adaptation 
+        .touch-device & {
+            &:focus-within > .nav-list__dropdown-menu {
+                max-height: 80vh;
+                opacity: 1;
+                transform: translateX(-50%) translateY(0);
+
+                li {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+        }
     }
-    
-}
+   }
+
+   /* ==== Responsive Handling ==== */
+   @media (max-width: 991px) {
+    .desktop-nav {
+        display: none;
+    }
+   }
+ }
