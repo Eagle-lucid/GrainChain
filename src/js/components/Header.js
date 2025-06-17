@@ -22,7 +22,7 @@ export const initHeaderScroll = () => {
     /*  ===== Dropdown Animations ===== */
     const dropdowns = document.querySelectorAll('.nav-list__dropdown');
     dropdowns.forEach(dropdown => {
-        const menu = document.querySelector('.nav-list__dropdown');
+        const menu = dropdown.querySelector('.nav-list__dropdown-menu');
         const items = menu.querySelectorAll('li');
         let openTimeline, closeTimeline;
 
