@@ -60,3 +60,25 @@
   background-clip: text;
   color: transparent;
 }
+
+// Mobile Header Mixins
+@mixin mobile-menu-toggle {
+  --tap-scale: 0.9;
+  background: none;
+  border: none;
+  padding: map.get($spacing, 'sm');
+  cursor: pointer;
+  transition: transform map.get($transition-durations, 'fast') ease;
+
+  &:active {
+    transform: scale(var(--tap-scale));
+  }
+}
+
+@mixin staggered-animation($count: 5, $delay: 0.05s) {
+  @for $i from 1 through $count {
+    &:nth-child(#{$i}) {
+      transition-delay: $delay * $i;
+    }
+  }
+}
