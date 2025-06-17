@@ -19,10 +19,10 @@
 
     // Mobile toggle (hide on desktop)
     .mobile-screen {
-        display: none;
+        display: none !important;
 
         @media (max-width: 991px) {
-            display: block;
+            display: block !important;
         }
     }
 
@@ -94,7 +94,7 @@
             margin-left: 6px;
             border-left: 4px solid transparent;
             border-right: 4px solid transparent;
-            border-top: 4px solid transparent;
+            border-top: 4px solid map.get($colors, 'secondary');
             vertical-align: middle;
             background: transparent !important;
             transition: transform 0.2s ease;
@@ -111,7 +111,6 @@
             left: 50%;
             width: max-content;
             min-width: 200px;
-            max-height: 0;
             overflow: hidden;
             background: hsla(0, 0%, 12%, 0.98);
             backdrop-filter: blur(20px);
@@ -127,7 +126,7 @@
             will-change: transform, opacity;
 
             li {
-                padding: 0 var(space-md);
+                padding: 0 var(--space-md);
                 opacity: 0;
                 transform: translateY(-6px);
                 transition: none;
@@ -172,7 +171,7 @@
 
    /* ==== Responsive Handling ==== */
    @media (max-width: 991px) {
-    .desktop-nav {
+    .header__nav {
         display: none;
     }
    }
