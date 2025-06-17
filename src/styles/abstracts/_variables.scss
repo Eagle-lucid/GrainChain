@@ -72,7 +72,14 @@ $animation-timings: (
   'subtitle-in': 1s,
   'hint-in': 0.6s
 );
-
+// Mobile Header Specific Tokens
+$mobile-header: (
+  sidebar-width: 280px,
+  overlay-opacity: 0.85,
+  hamburger-size: 24px,
+  sidebar-bg: hsl(0, 0%, 13%),
+  sidebar-easing: map.get($screen-eases, 'intro')
+);
 // Export to CSS Variables
 :root {
   // Colors
@@ -100,12 +107,16 @@ $animation-timings: (
   --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.15);
   --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.2);
   --text-shadow-light: rgba(167, 165, 165, 0.514);
+
   // Z-index
   --z-behind: -1;
   --z-base: 1;
   --z-nav: 100;
   --z-overlay: 1000;
   --z-modal: 9999;
+
+  --mobile-sidebar-width: #{map.get($mobile-header, 'sidebar-width')};
+  --hamburger-color: var(--secondary-color);
 }
 
 // SASS Quick Access Variables
