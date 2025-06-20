@@ -25,59 +25,100 @@
       <main>
          <!-- Sticky header (will appear after Screen 0 fades out) & mobile header when we are on any screen lower than desktop screen -->
         <header class="header transparent">
-            <!--  Hamburger for mobile  -->
-              <div class="mobile-screen">
-                <div class="mobile-screen-content">
-                        <span class="logo-text">GrainChain</span>
-                        <button id="menuToggle" class="menu-toggle" aria-label="Toggle Menu" aria-expanded="false">
-                            <img src="assets/icons/menu.svg" alt="Menu Icon " class="menu-icon">
-                        </button>
-                        <div id="sidebarOverlay"></div>
-                        <div id="mobileSidebar" class="mobile-sidebar"></div>
-                </div>
-              </div>
-            <nav class="header__nav">
-                <ul class="nav-list">
-                    <li nav-list__item>
-                        <a href="#problem" class="nav-list__link">Problem</a>
-                    </li>
-                    <li class="nav-list__item" >
-                        <a href="#hidden-cost" class="nav-list__link">Hidden Cost</a>
-                    </li>
-    
-                    <li class="nav-list__item nav-list__dropdown">
-                        <a href="#vision" class="nav-list__link">Vision</a>
-                        <ul class="nav-list__dropdown-menu">
-                            <li class="nav-list__dropdown-item">
-                                <a href="#">Cold Chain</a>
-                            </li>
-                            <li class="nav-list__dropdown-item">
-                                <a href="#">Mobile Alerts</a>
-                            </li>
-                            <li class="nav-list__dropdown-item">
-                            <a href="#">Direct Access</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="nav-list__item nav-list__dropdown">
-                        <a href="#mission" class="nav-list__link">Mission</a>
-                        <ul class="nav-list__dropdown-menu">
-                            <li class="nav-list__dropdown-item">
-                                <a href="">Farmer</a>
-                            </li>
-                            <li class="nav-list__dropdown-item">
-                                <a href="">Investor</a>
-                            </li>
-                            <li class="nav-list__dropdown-item">
-                                <a href="">Volunteer</a>
-                            </li>
-                        </ul>
-                    </li>
-    
-                    <li class="nav-list__item"><a href="#cta" class="nav-list__link">Join Us</a></li>
-                </ul>
+        <div class="mobile-header">
+          <a href="#" class="mobile-logo">
+            <span class="logo-text">GrainChain</span>
+          </a>
+        
+          <!-- Hamburger Toggle -->
+          <button 
+            id="menuToggle"
+            class="menu-toggle"
+            aria-expanded="false"
+            aria-controls="mobileSidebar"
+            aria-label="Toggle menu"
+          >
+            <!-- Inline SVG Hamburger -->
+            <svg class="hamburger-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path class="line top" d="M2 6h20" stroke="currentColor" stroke-width="2" />
+              <path class="line middle" d="M2 12h20" stroke="currentColor" stroke-width="2" />
+              <path class="line bottom" d="M2 18h20" stroke="currentColor" stroke-width="2" />
+            </svg>
+          </button>
+        
+          <!-- Overlay -->
+          <div id="sidebarOverlay" class="sidebar-overlay" tabindex="-1"></div>
+        
+          <!-- Mobile Sidebar -->
+          <aside 
+            id="mobileSidebar"
+            class="mobile-sidebar"
+            aria-hidden="true"
+            aria-label="Main menu"
+          >
+            <!-- Close Button (matches hamburger style) -->
+            <button class="mobile-sidebar__close-btn" aria-label="Close menu">
+              <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true">
+                <path 
+                  d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                  fill="currentColor"
+                />
+              </svg>
+            </button>
+            
+            <nav class="sidebar-nav">
+              <ul class="nav-list">
+                <li class="nav-item"><a href="#problem" class="nav-link">Problem</a></li>
+                <li class="nav-item"><a href="#hidden-cost" class="nav-link">Hidden Cost</a></li>
+                <li class="nav-item"><a href="#vision" class="nav-link">Vision</a></li>
+                <li class="nav-item"><a href="#mission" class="nav-link">Mission</a></li>
+                <li class="nav-item"><a href="#cta" class="nav-link">Join Us</a></li>
+              </ul>
             </nav>
-        </header>
+          </aside>
+        </div>
+        
+        <!-- Desktop Navigation -->
+        <nav class="header__nav">
+          <ul class="nav-list">
+            <li class="nav-list__item">
+              <a href="#problem" class="nav-list__link">Problem</a>
+            </li>
+            <li class="nav-list__item">
+              <a href="#hidden-cost" class="nav-list__link">Hidden Cost</a>
+            </li>
+            <li class="nav-list__item nav-list__dropdown">
+              <a href="#vision" class="nav-list__link">Vision</a>
+              <ul class="nav-list__dropdown-menu">
+                <li class="nav-list__dropdown-item">
+                  <a href="#">Cold Chain</a>
+                </li>
+                <li class="nav-list__dropdown-item">
+                  <a href="#">Mobile Alerts</a>
+                </li>
+                <li class="nav-list__dropdown-item">
+                  <a href="#">Direct Access</a>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-list__item nav-list__dropdown">
+              <a href="#mission" class="nav-list__link">Mission</a>
+              <ul class="nav-list__dropdown-menu">
+                <li class="nav-list__dropdown-item">
+                  <a href="">Farmer</a>
+                </li>
+                <li class="nav-list__dropdown-item">
+                  <a href="">Investor</a>
+                </li>
+                <li class="nav-list__dropdown-item">
+                  <a href="">Volunteer</a>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-list__item"><a href="#cta" class="nav-list__link">Join Us</a></li>
+          </ul>
+        </nav>
+      </header>
 
         <div class="scroll-wrapper">
             <!-- Main content sections -->
@@ -257,18 +298,6 @@
              <button class="sticky-cta bounce" onclick="scrollToCTA()">Join the Movement</button>
         </div>
       </main>
-      <aside class="mobile-sidebar" id="mobileSidebar">
-            <!-- Mobile navigation menu -->
-                <nav class="mobile-nav" id="mobileNav">
-                    <ul>
-                        <li><a href="#problem">Problem</a></li>
-                        <li><a href="#hidden-cost">Hidden Cost</a></li>
-                        <li><a href="#vision">Vision</a></li>
-                        <li><a href="#mission"> Mission</a></li>
-                        <li><a href="#cta">Join Us</a></li>
-                    </ul>
-                </nav>
-        </aside>
         <!-- Overlay (for closing sidebar when clicking outside) -->
         <div class="overlay" id="sidebarOverlay"></div>
       <footer id="cta" class="site-footer fade-in-stagger">
