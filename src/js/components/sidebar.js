@@ -1,98 +1,130 @@
-// Mobile sidebar toggle functionality
-const meneToggle = document.getElementById('menuToggle');
-const sidebar = document.getElementById('mobileSidebar');
-const header = document.querySelector('main .header');
-const overlay = document.getElementById('sidebarOverlay');
+import { gsap }from 'gsap';
+import ScrollTrigger from 'gsap/ScrollTrigger';
+gsap.registerPlugin(ScrollTrigger);
 
-let sidebarAutoCloseTimer;
-let touchStartX = 0;
-let touchEndX = 0;
-const swipeThreshold = 60; // Minimum distance to trigger a swipe
-export function initSidebar () {
-    if (!meneToggle || !sidebar || !overlay) return;
+// Elements
+let sidebar;
+let toggleBtn;
+let overlay;
+let navItems;
+let closeBtn;
 
-    // Open sidebar
-    menuToggle.addEventListener('click', () => {
-        sidebar.classList.remove('open');
-        header.classList.remove('hide');
-        overlay.classList.remove('show');
-        document.body.style.overflow = 'hidden';
+// Animation timelines
+let openTimeline;
+let closeTimeline;
 
-        sidebarAutoCloseTimer = setTimeout(() => {
-            closeSidebar();
-        }, 8000);
-    });
+// State
+let isOpen = false;
+let autoCloseTimer;
 
-    // Reset timer on interactions inside sidebar 
-    sidebar.addEventListener('mousedown', resetAutoCloseTimer);
-    sidebar.addEventListener('touchstart', resetAutoCloseTimer);
-    
-    // Click overlay to close sidebar
-    overlay.addEventListener('click', () => {
-        resetAutoCloseTimer();
-        closeSidebar();
-    });
-
-    //Close on nav link click 
-    document.querySelectorAll('.mobile-nav a').forEach(link => {
-        link.addEventListener('click', () => {
-            resetAutoCloseTimer();
-            closeSidebar();
-        });
-    });
-
-    // Close  on outside click 
-    document.addEventListener('click', (event) => {
-        if (
-            sidebar.classList.contains('open') &&
-            !sidebar.contains(event.target) &&
-            !meneToggle.contains(event.target) &&
-            !overlay.contains(event.target)
-        ) {
-            resetAutoCloseTimer();
-            closeSidebar();
-        }
-    });
-
-    // Close on ESC key press
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && sidebar.classList.contains('open')) {
-            resetAutoCloseTimer();
-            closeSidebar();
-        }
-    });
-
-    // Swipe gestures 
-    sidebar.addEventListener('touchstart', (e) => {
-        touchStartX = e.changedTouches[0].clientX;
-    }, { passive: true });
-    sidebar.addEventListener('touchend', (e) => {
-        touchEndX = e.changedTouches[0].clientX;
-        handleSwipeGesture();
-    }, { passive: true });
+// Initialize elements
+const initElements = () => {
+  sidebar = document.querySelector('#mobileSidebar');
+  toggleBtn = document.querySelector('#menuToggle'); 
+  overlay = document.querySelector('#sidebarOverlay');
+  navItems = document.querySelectorAll('.nav-item'); 
+  closeBtn = document.querySelector('.mobile-sidebar__close-btn');
 };
+
+// Create animations
+const createAnimations = () => {
+  openTimeline = gsap.timeline({ paused: true })
+    .to(overlay, {
+      opacity: 1,
+      pointerEvents: 'auto',
+      duration: 0.3
+    })
+    .to(sidebar, {
+      x: 0,
+      duration: 0.4,
+      ease: 'power2.out'
+    }, 0)
+    .to(navItems, {
+      x: 0,
+      opacity: 1,
+      stagger: 0.05,
+      duration: 0.3
+    }, 0.1);
+
+  closeTimeline = gsap.timeline({ paused: true })
+    .to(navItems, {
+      x: 20,
+      opacity: 0,
+      duration: 0.2,
+      stagger: 0.02
+    })
+    .to(sidebar, { 
+      x: '-100%', 
+      duration: 0.1 
+    }, 0)
+    .to(overlay, {
+      opacity: 0,
+      pointerEvents: 'none',
+      duration: 0.3
+    }, 0);
+};
+
+// Menu control functions
 export const closeSidebar = () => {
-    sidebar.classList.remove('open');
-    header.classList.remove('hide');
-    overlay.classList.remove('show');
-    document.body.style.overflow = '';
+  if (!isOpen) return;
+  isOpen = false;
+  document.body.classList.remove('mobile-menu-open'); 
+  toggleBtn?.setAttribute('aria-expanded', 'false');
+  sidebar?.setAttribute('aria-hidden', 'true');
+   overlay.classList.remove('active');
+  closeTimeline.restart();
+  if (autoCloseTimer) clearTimeout(autoCloseTimer);
 };
-export const resetAutoCloseTimer = () => {
-    clearTimeout(sidebarAutoCloseTimer);
-};
-const handleSwipeGesture = () => {
-    const swipeDistance = touchEndX - touchStartX;
-    if (swipeDistance > swipeThreshold) {
-        // Swipe right detected, close sidebar
-        resetAutoCloseTimer();
-        closeSidebar();
-    } else if (swipeDistance < -swipeThreshold) {
-        // Swipe left detected, open sidebar
-        resetAutoCloseTimer();
-        sidebar.classList.add('open');
-        header.classList.add('hide');
-        overlay.classList.add('show');
-        document.body.style.overflow = 'hidden';
-    }
-}
 
+export const resetAutoCloseTimer = () => {
+  if (autoCloseTimer) clearTimeout(autoCloseTimer);
+  autoCloseTimer = setTimeout(() => {
+    closeSidebar();
+  }, 5000); // 5 second timeout
+};
+
+const openSidebar = () => {
+  if (isOpen) return;
+  isOpen = true;
+  document.body.classList.add('mobile-menu-open'); // Changed to match your header's class
+  toggleBtn?.setAttribute('aria-expanded', 'true');
+  sidebar?.setAttribute('aria-hidden', 'false');
+  overlay.classList.add('active');
+  openTimeline.restart();
+  resetAutoCloseTimer();
+  
+  // Focus management
+  requestAnimationFrame(() => {
+    const firstItem = sidebar?.querySelector('.nav-item a');
+    firstItem?.focus();
+  });
+};
+
+const toggleSidebar = () => isOpen ? closeSidebar() : openSidebar();
+
+// Initialize
+export const initSidebar = () => {
+  initElements();
+  if (!sidebar || !toggleBtn) return;
+
+  createAnimations();
+
+  // Event listeners
+  toggleBtn.addEventListener('click', toggleSidebar);
+  overlay?.addEventListener('click', closeSidebar);
+  closeBtn?.addEventListener('click', closeSidebar);
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && isOpen) closeSidebar();
+  });
+
+  // Cleanup
+  return () => {
+    toggleBtn?.removeEventListener('click', toggleSidebar);
+    overlay?.removeEventListener('click', closeSidebar);
+    closeBtn?.removeEventListener('click', closeSidebar);
+    document.removeEventListener('keydown', closeSidebar);
+    if (autoCloseTimer) clearTimeout(autoCloseTimer);
+    openTimeline?.kill();
+    closeTimeline?.kill();
+  };
+};

@@ -105,11 +105,11 @@
     height: 100vh;
     width: var(--mobile-sidebar-width);
     background: map.get($mobile-header, "sidebar-bg");
-    transform: translateX(100%);
+    transform: translateX(-100%);
     transition: transform map.get($transition-durations, "slow")
       map.get($mobile-header, "sidebar-easing");
       padding: var(--space-xl) var(--space-lg);
-      z-index: var(--z-modal);
+      z-index: calc(var(--z-modal) + 10);
       will-change: transform;
 
       [aria-hidden="false"] & {

@@ -1,4 +1,3 @@
-// Import GSAP
 import { gsap } from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
@@ -21,34 +20,14 @@ export const initHeaderScroll = () => {
   if (!header) return;
 
   // ======================
-  // 1. State Management
-  // ======================
-  let isMobileMenuOpen = false;
-  let resizeTimeout;
-  let mobileMenuCleanup = null;
-  
-  const mobileMenuComponents = {
-    toggle: null,
-    sidebar: null,
-    overlay: null,
-    navItems: null,
-    openTimeline: null,
-    closeTimeline: null
-  };
-
-  // ======================
-  // 2. Device Detection
+  // 1. Device Detection
   // ======================
   const isTouchDevice = ('ontouchstart' in window) || 
                        (navigator.maxTouchPoints > 0) || 
                        window.matchMedia('(pointer: coarse)').matches;
-  
-  if (isTouchDevice) {
-    document.documentElement.classList.add('touch-device');
-  }
 
   // ======================
-  // 3. Scroll Effects
+  // 2. Scroll Effects
   // ======================
   const scrollTrigger = ScrollTrigger.create({
     start: 'top top+=10',
@@ -59,109 +38,7 @@ export const initHeaderScroll = () => {
   });
 
   // ======================
-  // 4. Mobile Menu System
-  // ======================
-  const initMobileMenu = () => {
-    // Get elements
-    mobileMenuComponents.toggle = document.querySelector('#menuToggle');
-    mobileMenuComponents.sidebar = document.querySelector('#mobileSidebar');
-    mobileMenuComponents.overlay = document.querySelector('#sidebarOverlay');
-    mobileMenuComponents.navItems = document.querySelectorAll('.nav-item');
-    const closeBtn = mobileMenuComponents.sidebar?.querySelector('.mobile-sidebar__close-btn');
-
-    // Null check
-    if (!mobileMenuComponents.toggle || !mobileMenuComponents.sidebar || !mobileMenuComponents.overlay) return;
-
-    // Clear existing timelines
-    if (mobileMenuComponents.openTimeline) mobileMenuComponents.openTimeline.kill();
-    if (mobileMenuComponents.closeTimeline) mobileMenuComponents.closeTimeline.kill();
-
-    // Create timelines
-    mobileMenuComponents.openTimeline = gsap.timeline({ paused: true })
-      .to(mobileMenuComponents.overlay, {
-        opacity: 1,
-        pointerEvents: 'auto',
-        duration: ANIMATION_DURATIONS.normal
-      })
-      .to(mobileMenuComponents.sidebar, {
-        x: 0,
-        duration: ANIMATION_DURATIONS.slow,
-        ease: EASING.out
-      }, 0)
-      .to(mobileMenuComponents.navItems, {
-        x: 0,
-        opacity: 1,
-        stagger: 0.05,
-        duration: ANIMATION_DURATIONS.normal
-      }, 0.1);
-
-    mobileMenuComponents.closeTimeline = gsap.timeline({ paused: true })
-      .to(mobileMenuComponents.navItems, {
-        x: -20,
-        opacity: 0,
-        duration: ANIMATION_DURATIONS.fast,
-        stagger: 0.02
-      })
-      .to(mobileMenuComponents.sidebar, { 
-        x: '100%', 
-        duration: 0.1 
-      }, 0)
-      .to(mobileMenuComponents.overlay, {
-        opacity: 0,
-        pointerEvents: 'none',
-        duration: ANIMATION_DURATIONS.normal
-      }, 0);
-
-    // Event handlers
-    const toggleMenu = () => isMobileMenuOpen ? closeMobileMenu() : openMobileMenu();
-    const handleEscape = (e) => e.key === 'Escape' && closeMobileMenu();
-
-    // Add event listeners
-    mobileMenuComponents.toggle.addEventListener('click', toggleMenu);
-    mobileMenuComponents.overlay.addEventListener('click', closeMobileMenu);
-    document.addEventListener('keydown', handleEscape);
-    closeBtn?.addEventListener('click', closeMobileMenu);
-
-    // Return cleanup function
-    return () => {
-      mobileMenuComponents.toggle?.removeEventListener('click', toggleMenu);
-      mobileMenuComponents.overlay?.removeEventListener('click', closeMobileMenu);
-      document.removeEventListener('keydown', handleEscape);
-      closeBtn?.removeEventListener('click', closeMobileMenu);
-    };
-  };
-
-  const openMobileMenu = () => {
-    if (isMobileMenuOpen) return;
-    
-    isMobileMenuOpen = true;
-    document.body.classList.add('mobile-menu-open');
-    mobileMenuComponents.toggle?.setAttribute('aria-expanded', 'true');
-    mobileMenuComponents.sidebar?.setAttribute('aria-hidden', 'false');
-    
-    // Focus management
-    requestAnimationFrame(() => {
-      const firstItem = mobileMenuComponents.sidebar?.querySelector('.nav-item a');
-      firstItem?.focus();
-    });
-    
-    mobileMenuComponents.openTimeline?.restart();
-  };
-
-  const closeMobileMenu = () => {
-    if (!isMobileMenuOpen) return;
-    
-    isMobileMenuOpen = false;
-    document.body.classList.remove('mobile-menu-open');
-    mobileMenuComponents.toggle?.setAttribute('aria-expanded', 'false');
-    mobileMenuComponents.sidebar?.setAttribute('aria-hidden', 'true');
-    mobileMenuComponents.toggle?.focus();
-    
-    mobileMenuComponents.closeTimeline?.restart();
-  };
-
-  // ======================
-  // 5. Desktop Dropdowns
+  // 3. Desktop Dropdowns
   // ======================
   const initDesktopDropdowns = () => {
     const dropdowns = document.querySelectorAll('.nav-list__dropdown');
@@ -236,22 +113,12 @@ export const initHeaderScroll = () => {
   };
 
   // ======================
-  // 6. Responsive Setup
+  // 4. Responsive Setup
   // ======================
+  let resizeTimeout;
   const checkViewport = () => {
-    // Cleanup previous instances
-    if (mobileMenuCleanup) mobileMenuCleanup();
-    
-    // Close menu if resizing to desktop
-    if (isMobileMenuOpen && window.innerWidth >= 992) {
-      closeMobileMenu();
-    }
-
-    // Initialize appropriate version
     if (window.innerWidth >= 992) {
       initDesktopDropdowns();
-    } else {
-      mobileMenuCleanup = initMobileMenu();
     }
   };
 
@@ -265,7 +132,7 @@ export const initHeaderScroll = () => {
   });
 
   // ======================
-  // 7. Reduced Motion
+  // 5. Reduced Motion
   // ======================
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
     gsap.set('.nav-list__dropdown-menu, .nav-list__dropdown-menu li', {
@@ -275,13 +142,11 @@ export const initHeaderScroll = () => {
   }
 
   // ======================
-  // 8. Cleanup Function
+  // 6. Cleanup Function
   // ======================
   return () => {
     // Cleanup GSAP instances
     scrollTrigger.kill();
-    mobileMenuComponents.openTimeline?.kill();
-    mobileMenuComponents.closeTimeline?.kill();
     
     // Cleanup dropdown timelines
     document.querySelectorAll('.nav-list__dropdown').forEach(dropdown => {
@@ -291,9 +156,5 @@ export const initHeaderScroll = () => {
     
     // Remove event listeners
     window.removeEventListener('resize', checkViewport);
-    document.removeEventListener('keydown', handleEscapeKey);
-    
-    // Execute mobile menu cleanup if exists
-    if (mobileMenuCleanup) mobileMenuCleanup();
   };
 };
