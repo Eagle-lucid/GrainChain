@@ -71,7 +71,6 @@ export const closeSidebar = () => {
   document.body.classList.remove('mobile-menu-open'); 
   toggleBtn?.setAttribute('aria-expanded', 'false');
   sidebar?.setAttribute('aria-hidden', 'true');
-   overlay.classList.remove('active');
   closeTimeline.restart();
   if (autoCloseTimer) clearTimeout(autoCloseTimer);
 };
@@ -89,9 +88,7 @@ const openSidebar = () => {
   document.body.classList.add('mobile-menu-open'); // Changed to match your header's class
   toggleBtn?.setAttribute('aria-expanded', 'true');
   sidebar?.setAttribute('aria-hidden', 'false');
-  overlay.classList.add('active');
   openTimeline.restart();
-  resetAutoCloseTimer();
   
   // Focus management
   requestAnimationFrame(() => {
@@ -107,10 +104,33 @@ export const initSidebar = () => {
   initElements();
   if (!sidebar || !toggleBtn) return;
 
+  // Active Link logic
+  const setActiveLink = () => {
+    const links = document.querySelectorAll('.nav-link');
+    const currentPath = window.location.hash || '#problem';
+
+    links.forEach(link => {
+        if (link.getAttribute('href') === currentPath) {
+            link.classList.add('active');
+            link.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+        } else {
+            link.classList.remove('active');
+            closeSidebar();
+        }
+    });
+  };
+
+  setActiveLink();
+
+  // update on hash change 
+  window.addEventListener('hashchange', setActiveLink);
   createAnimations();
 
   // Event listeners
-  toggleBtn.addEventListener('click', toggleSidebar);
+  toggleBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    toggleSidebar();
+  });
   overlay?.addEventListener('click', closeSidebar);
   closeBtn?.addEventListener('click', closeSidebar);
   document.addEventListener('keydown', (e) => {
