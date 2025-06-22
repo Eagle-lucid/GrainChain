@@ -52,6 +52,16 @@
     flex-grow: 1;
     overflow-y: auto;
     padding-right: map.get($spacing, 'xs');
+    scrollbar-width: thin;
+    scrollbar-color: var(--sidebar-accent) rgba(white, 0.1);
+
+    &::-webkit-scrollbar {
+      width: 6px;
+    }
+    &::-webkit-scrollbar-thumb {
+      background: var(--sidebar-accent);
+      border-radius: map.get($radii, 'sm');
+    }
   }
 
   .nav-list {
@@ -83,7 +93,7 @@
     color: var(--sidebar-text);
     font-size: map.get($font-sizes, 'md');
     font-weight: 500;
-    padding: map.get($spacing, 'xs');
+    padding: map.get($spacing, 'sm') map.get($spacing, 'md');
     transition: all map.get($transition-durations, fast) ease;
 
     &:hover {
