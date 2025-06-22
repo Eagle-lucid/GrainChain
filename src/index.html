@@ -122,13 +122,34 @@
           </aside>
         <div class="scroll-wrapper">
             <!-- Main content sections -->
-         <section id="problem" class="screen screen-1">
-            <!-- Headline -->
-             <div class="content">
-                <h2 class="headline fade-in">40% of food is wasted in the supply chain.</h2>
+         <section id="problem" class="screen screen--problem" aria-label="Food waste problem">
+            <!-- Layered BG -->
+             <div class="screen--problem__bg">
+              <!-- Primary BG (Optimized WebP + JPG Fallback) -->
+              <picture class="screen--problem__bg-img screen--problem__bg-img--primary">
+                <!--<source srcset="assets/images/rotting-potatoes.webp" type="image/webp">-->
+              <img src="./assets/images/rotting-potatoes.jpg" alt=" Rotting Potatoes" loading="lazy" aria-hidden="true">
+              </picture>
 
-             <p class="description fade-in">Not because we lack food, but because it's lost before it's eaten due to inefficiencies and lack of visibility.</p>
+              <!-- Secondary BG (Optimized WebP + JPG Fallback) -->
+              <picture class="screen--problem__bg-img screen--problem__bg-img--secondary">
+                <!--<source srcset="assets/images/farmer.webp" type="image/webp">-->
+                <img src="./assets/images/farmer.jpg" alt="Farmer in field" loading="lazy" aria-hidden="true">
+              </picture>
+
+              <!-- Overlay -->
+               <div class="screen--problem__overlay"></div>
              </div>
+             
+             <!-- Content -->
+              <div class="screen--problem__content">
+                <h2 class="screen--problem__headline" data-animation="fade-up">
+                  40% of food is wasted in the supply chain.
+                </h2>
+                <p class="screen--problem__description" data-animation="fade-up" data-delay="0.3s">
+                  Not because we lack food, but because it's lost before it's eaten.
+                </p>
+              </div>
          </section>
 
          <div class="slide-wrapper">
