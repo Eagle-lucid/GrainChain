@@ -1,56 +1,72 @@
-// src/js/screens/screen1.js
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+gsap.registerPlugin(ScrollTrigger);
+
 export class Screen1Animations {
     constructor() {
+        this.DOM = {
+            screen: document.querySelector('screen--problem'),
+            headline: document.querySelector('.screen--problem__headline'),
+            text: document.querySelector('.screen--problem__description'),
+            bgImages: document.querySelectorAll('.screen--problem__bg-img'),
+        };
         this.init();
     }
-    
+
     init() {
-        this.setupScreenAnimation();
-        this.setupContentAnimations();    
-    }
-
-    setupScreenAnimation() {
-        gsap.to('.screen-1', {
-            scale: 1,
-            ease: 'power1.out',
-            scrollTrigger: {
-                trigger: '.screen-1',
-                start: 'top top',
-                end: 'bottom top',
-                scrub: true
-            }
-        })
-    }
-
-    setupContentAnimations() {
-        this.animateHeadline();
-        this.animateDescription();
-    }
-
-    animateHeadline() {
-        gsap.from('.screen-1 .headline', {
-          opacity: 0,
-          y: 40,
-          duration: 1.5,
-          ease: 'power2.out',
-          scrollTrigger: {
-            trigger: '.screen-1',
-            start: 'top center'
-          }
+        // Wait for images to load
+        window.addEventListener('load', () => {
+            this.setupParallax();
+            this.setupTextAnimations();
         });
     }
 
-    animateDescription() {
-        gsap.from('.screen-1 .description', {
-            opacity: 0,
-            y: 20,
-            duration: 1.2,
-            delay: 0.3,
+    setupParallax() {
+        // Primary BG 
+        gsap.to(this.DOM.bgImages[0], {
+            y: '-5%',
+            scrollTrigger: {
+                trigger: this.DOM.screen,
+                start: 'top bottom',
+                end: 'bottom top',
+                scrub: 1,
+            },
+        });
+
+        // Secondary BG
+        gsap.to(this.DOM.bgImages[1], {
+            y: '15%',
+            scrollTrigger: {
+                trigger: this.DOM.screen,
+                start: 'top bottom',
+                end: 'bottom top',
+                scrub: 1,
+            },
+        });
+    }
+
+    setupTextAnimations() {
+        // Headline animation
+        gsap.to(this.DOM.headline, {
+            opacity: 1, y: 0,
+            duration: 1.5, ease: 'power2.out',
+            scrollTrigger: {
+                trigger: this.DOM.screen,
+                start: 'top 70%',
+                toggleActions: 'play none none reverse',
+            },
+        });
+
+        // Text description animation
+        gsap.to(this.DOM.description, {
+            opacity: 1, y: 0,
+            duration: 1.2, delay: 0.3,
             ease: 'power2.out',
             scrollTrigger: {
-                trigger: '.screen-1',
-                start: 'top center'
+                trigger: this.DOM.screen,
+                start: 'top 70%',
+                toggleActions: 'play none none reverse',
             }
-        })
+        });
     }
 }

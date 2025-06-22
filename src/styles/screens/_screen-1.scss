@@ -1,0 +1,75 @@
+@use "sass:map";
+@use "../abstracts/variables" as *;
+@use "../abstracts/mixins" as *;
+
+/* ===== SCREEN 1 STYLES ===== */
+.screen--problem {
+    position: relative;
+    min-height: 100dvh;
+    overflow: hidden;
+
+    &__bg {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        z-index: var(--z-behind);
+
+        // BG images 
+        &-img {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            will-change: transform;
+
+            &--primary {
+                z-index: var(--z-base);
+            }
+
+            &--secondary {
+                z-index: 2;
+                mix-blend-mode: overlay;
+                opacity: 0.8;
+            }
+        }
+
+        // Overlay
+        &__content {
+            position: relative;
+            z-index: var(--z-base);
+            padding: map.get($spacing, 'xxl');
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            min-height: 100dvh;
+        }
+
+        //Headline 
+        &__headline {
+            font-family: var(--header-font);
+            font-size: clamp(1.8rem, 5vw, map.get($spacing, 'xxl'));
+            color: map.get($colors, 'accent');
+            margin-bottom: map.get($spacing, 'md');
+            line-height: 1.2;
+            opacity: 0;
+        }
+
+        // Description 
+        &__description {
+            font-family: var(--primary-font);
+            font-size: clamp(map.get($font-sizes, 'base'), 2.5vw, map.get($font-sizes, 'lg'));
+            color: map.get($colors, 'secondary');
+            opacity: 0;
+        }
+
+        // Mobile Adjustments 
+        @include respond-to('sm') {
+            &__content {
+                padding: map.get($spacing, 'lg');
+            }
+        }
+    }
+}

@@ -80,6 +80,13 @@ $mobile-header: (
   sidebar-bg: hsl(0, 0%, 13%),
   sidebar-easing: map.get($screen-eases, 'intro')
 );
+// Breakpoints for Responsive Design
+$breakpoints: (
+  'sm': 576px,
+  'md': 768px,
+  'lg': 992px,
+  'xl': 1200px
+);
 // Export to CSS Variables
 :root {
   // Colors
