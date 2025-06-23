@@ -155,89 +155,105 @@
          </section>
 
          <div class="slide-wrapper">
-            <!-- Screen 2: The Hidden cost -->
-          <section id="hidden-cost" class="screen screen-2">
-            <!-- Gradient overlay -->
-             <div class="gradientBg-overlay"></div>
-            <!-- Floating Icons -->
-             <div class="floating-bg">
-                <!-- Multiple floating icons inserted  -->
-                <img src="assets/icons/broccoli-svgrepo-com.svg" alt="Broccoli Icon" class="floating-icon">
-                <img src="assets/icons/bread-svgrepo-com.svg" alt="Bread Icon" class="floating-icon"> 
-                <img src="assets/icons/fruit-graps-uvas-svgrepo-com.svg" alt="Grapes Icon" class="floating-icon">
-                <img src="assets/icons/milk-carton-svgrepo-com.svg" alt="Milk Icon" class="floating-icon">
-                <img src="assets/icons/grain-veg-svgrepo-com.svg" alt="Grain Icon" class="floating-icon">
-                <img src="assets/icons/onion-svgrepo-com.svg" alt="Onion Icon" class="floating-icon">
-                <img src="assets/icons/meat-on-bone-svgrepo-com.svg" alt="Meat Icon" class="floating-icon">
-                <img src="assets/icons/fish-svgrepo-com.svg" alt="Fish Icon" class="floating-icon">
-            </div>
-            <!-- Headline -->
-            <h2 class="headline fade-in">Where does it all go?</h2>
-
-            <!-- Visual Placeholder: Animated supply chain -->
-            <div class="supply-chain-visual">
-                <div class="supply-chain-flow">
-                    <div class="stage gsap-stage" data-stage="farm">
-                        <img src="assets/icons/leaf-solid.svg" alt="Farm" class="icon">
-                        <img src="assets/icons/triangle-exclamation-solid.svg" alt="Loss Point" class="loss-icon">
+          <!-- Screen 2: The Hidden Cost -->
+            <section id="hidden-cost" class="screen screen--hidden-cost" aria-label="Food loss visualization">
+              <!-- Background Elements -->
+              <div class="screen--hidden-cost__gradient-overlay" aria-hidden="true"></div>
+              
+              <!-- Floating Food Icons -->
+              <div class="screen--hidden-cost__floating-icons" aria-hidden="true">
+                <img src="assets/icons/broccoli-svgrepo-com.svg" alt="" class="screen--hidden-cost__floating-icon" loading="lazy">
+                <img src="assets/icons/bread-svgrepo-com.svg" alt="" class="screen--hidden-cost__floating-icon" loading="lazy">
+                <img src="assets/icons/fruit-graps-uvas-svgrepo-com.svg" alt="" class="screen--hidden-cost__floating-icon" loading="lazy">
+                <img src="assets/icons/milk-carton-svgrepo-com.svg" alt="" class="screen--hidden-cost__floating-icon" loading="lazy">
+                <img src="assets/icons/grain-veg-svgrepo-com.svg" alt="" class="screen--hidden-cost__floating-icon" loading="lazy">
+                <img src="assets/icons/onion-svgrepo-com.svg" alt="" class="screen--hidden-cost__floating-icon" loading="lazy">
+                <img src="assets/icons/meat-on-bone-svgrepo-com.svg" alt="" class="screen--hidden-cost__floating-icon" loading="lazy">
+                <img src="assets/icons/fish-svgrepo-com.svg" alt="" class="screen--hidden-cost__floating-icon" loading="lazy">
+              </div>
+            
+              <!-- Main Content -->
+              <div class="screen--hidden-cost__content">
+                <!-- Headline -->
+                <h2 class="screen--hidden-cost__headline" data-animation="fade-up">
+                  Where does it all go?
+                </h2>
+            
+                <!-- Supply Chain Visualization -->
+                <div class="supply-chain">
+                  <div class="supply-chain__flow">
+                    <div class="supply-chain__stage" data-stage="farm" aria-label="Farm production">
+                      <img src="assets/icons/leaf-solid.svg" alt="Farm" class="supply-chain__icon">
+                      <img src="assets/icons/triangle-exclamation-solid.svg" alt="Loss point" class="supply-chain__loss-marker">
                     </div>
-                    <div class="arrow">
-                        <img src="assets/icons/arrow-right.svg" alt="Arrow from farm to truck">
+                    
+                    <div class="supply-chain__arrow" aria-hidden="true">
+                      <img src="assets/icons/arrow-right.svg" alt="">
                     </div>
-                    <div class="stage gsap-stage" data-stage="truck">
-                        <img src="assets/icons/truck-fast-solid.svg" alt="Transport Truck" class="icon">
+                    
+                    <div class="supply-chain__stage" data-stage="truck" aria-label="Transportation">
+                      <img src="assets/icons/truck-fast-solid.svg" alt="Transport truck" class="supply-chain__icon">
                     </div>
-                    <div class="arrow">
-                        <img src="assets/icons/arrow-right.svg" alt="Arrow from truck to warehouse">
-                    </div>    
-                    <div class="stage gsap-stage" data-stage="warehouse">
-                        <img src="assets/icons/warehouse-solid.svg" alt="Warehouse" class="icon">
-                        <img src="assets/icons/triangle-exclamation-solid.svg" alt="Loss Point" class="loss-icon">
+                    
+                    <div class="supply-chain__arrow" aria-hidden="true">
+                      <img src="assets/icons/arrow-right.svg" alt="">
                     </div>
-                    <div class="arrow">
-                        <img src="assets/icons/arrow-right.svg" alt="Arrow from warehouse to store">
+                    
+                    <div class="supply-chain__stage" data-stage="warehouse" aria-label="Warehouse storage">
+                      <img src="assets/icons/warehouse-solid.svg" alt="Warehouse" class="supply-chain__icon">
+                      <img src="assets/icons/triangle-exclamation-solid.svg" alt="Loss point" class="supply-chain__loss-marker">
                     </div>
-                    <div class="stage gsap-stage" data-stage="store">
-                        <img src="assets/icons/store-solid.svg" alt="Retail Store" class="icon">
+                    
+                    <div class="supply-chain__arrow" aria-hidden="true">
+                      <img src="assets/icons/arrow-right.svg" alt="">
                     </div>
-                </div>    
-            </div>                
-
-             <!-- Interaction: Quiz -->
-              <div class="quiz-section">
-                <p class="quiz-question">Where do you think most food is lost?</p>
-                <div class="quiz-options">
-                    <button class="option" role="button" data-answer="1" data-correct="true">Farm</button>
-                    <button class="option" role="button" data-answer="2" data-correct="false">Transport</button>
-                    <button class="option" role="button" data-answer="3" data-correct="false">Storage</button>
-                    <button class="option" role="button" data-answer="4" data-correct="false">Retail</button>
+                    
+                    <div class="supply-chain__stage" data-stage="store" aria-label="Retail store">
+                      <img src="assets/icons/store-solid.svg" alt="Retail store" class="supply-chain__icon">
+                    </div>
+                  </div>
+                </div>
+            
+                <!-- Quiz Component -->
+                <div class="quiz" role="region" aria-labelledby="quiz-question">
+                  <p id="quiz-question" class="quiz__question">Where do you think most food is lost?</p>
+                  <div class="quiz__options">
+                    <button class="quiz__option" data-answer="farm" data-correct="true" aria-describedby="quiz-question">
+                      Farm
+                    </button>
+                    <button class="quiz__option" data-answer="transport" data-correct="false" aria-describedby="quiz-question">
+                      Transport
+                    </button>
+                    <button class="quiz__option" data-answer="storage" data-correct="false" aria-describedby="quiz-question">
+                      Storage
+                    </button>
+                    <button class="quiz__option" data-answer="retail" data-correct="false" aria-describedby="quiz-question">
+                      Retail
+                    </button>
+                  </div>
+                </div>
+            
+                <!-- Statistics -->
+                <div class="stats">
+                  <div class="stats__item" data-animation="count-up">
+                    <span class="stats__value" data-count="50" aria-label="30 to 50 percent"></span>
+                    <p class="stats__label">Loss in Harvesting</p>
+                  </div>
+                  <div class="stats__item" data-animation="count-up">
+                    <span class="stats__value" data-count="25" aria-label="10 to 25 percent"></span>
+                    <p class="stats__label">Loss in Storage</p>
+                  </div>
+                </div>
+            
+                <!-- Scroll Cue -->
+                <div class="scroll-cue" data-animation="bounce">
+                  <p class="scroll-cue__text">See what's possible</p>
+                  <button class="scroll-cue__button" aria-label="Continue to next section">
+                    <img src="assets/icons/arrow-right.svg" alt="" class="scroll-cue__icon">
+                  </button>
                 </div>
               </div>
-
-              <!-- Stat Animations -->
-               <div class="stat-counters">
-                <div class="stat fade-in-up">
-                    <div class="stat-value">
-                        <span class="percent" data-count="50" data-label="30-50%"></span>
-                    </div>
-                    <p class="stat-label">Loss in Harvesting</p>
-                </div>
-                <div class="stat fade-in-up">
-                   <div class="stat-value">
-                    <span class="percent" data-count="25" data-label="10-25%"></span>
-                   </div>
-                    <p class="stat-label">Loss in Storage</p>
-                </div>
-               </div>
-
-               <!-- Scroll Cue -->
-                <div class="scroll-cue fade-bounce">
-                    <p class="scroll-text">See what's possible</p>
-                    <button onclick="slideToVision()" class="slide-btn">
-                        <img src="assets/icons/arrow-right.svg" alt=" scroll right" class="bounce-arrow-right">
-                    </button>
-                </div>
-          </section>
+            </section>
           <!-- Screen 3: The Vision-->
            <section id="vision" class="screen screen-3 horizontal-scroll">
             <!-- Background Image -->
