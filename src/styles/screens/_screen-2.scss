@@ -1,0 +1,85 @@
+@use "sass:map";
+@use "../abstracts/variables" as *;
+@use "../abstracts/mixins" as *;
+@use "../components/quiz" as quiz;
+@use "../components/supply-chain" as supply-chain;
+
+/* ===== SCREEN 2 STYLES ===== */
+.screen--hidden-cost {
+    position: relative;
+    min-height: 100dvh;
+    overflow: hidden;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: var(--z-base);
+
+    // Gradient overlay (background animation)
+    &__gradient-overlay {
+        @include overlay(0.8);
+        background: linear-gradient(
+            270deg, 
+            hsl(120, 100%, 25%),
+            hsl(60, 100%, 50%),
+            hsl(0, 100%, 50%),
+            hsl(39, 100%, 50%),
+            hsl(300, 100%, 25%),
+            hsl(240, 100%, 50%));
+            background-size: 300% 100%;
+            background-position: 0% 50%;
+            animation: gradient-shift 20s linear infinite;
+            z-index: calc(var(--z-base) - 1);
+            will-change: background-position;
+    }
+
+    // Floating icons 
+    &__floating-icons {
+        @include overlay(0);
+        z-index: calc(var(--z-base) - 2);
+    }
+
+    // Content container
+    &__content {
+        position: relative;
+        z-index: var(--z-base);
+        padding: map.get($spacing, 'xxl');
+    }
+
+    //Headline 
+    &__headline {
+        font-family: var(--font-header); 
+        font-size: clamp(
+            var(--font-lg),
+            5vw,
+            var(--font-xxl)
+        );
+        color: map.get($colors, 'text-light');
+        text-align: center;
+        margin-bottom: map.get($spacing, 'xl');
+        text-shadow: 0 0 15px rgba(255, 0, 0, 0.5);
+    }
+
+    // Import components
+    @include quiz.styles;
+    @include supply-chain.styles;
+
+    // Background animation
+    @keyframes gradient-shift {
+        0% {
+            background-position: 0% 50%;
+        }
+        100% {
+            background-position: 100% 50%;
+        }
+    }
+
+    // Responsive adjustments
+    @media (max-width: 768px) {
+        &__headline {
+            font-size: clamp(
+                var(--font-md),
+                6vw,
+                var(--font-lg)
+            );
+            margin-bottom: map.get($spacing, 'lg');
+        }
+    }
+}
