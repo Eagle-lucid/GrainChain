@@ -5,7 +5,7 @@ gsap.registerPlugin(ScrollTrigger);
 export class Screen1Animations {
     constructor() {
         this.DOM = {
-            screen: document.querySelector('screen--problem'),
+            screen: document.querySelector('.screen--problem'),
             headline: document.querySelector('.screen--problem__headline'),
             text: document.querySelector('.screen--problem__description'),
             bgImages: document.querySelectorAll('.screen--problem__bg-img'),
@@ -47,26 +47,20 @@ export class Screen1Animations {
 
     setupTextAnimations() {
         // Headline animation
-        gsap.to(this.DOM.headline, {
-            opacity: 1, y: 0,
-            duration: 1.5, ease: 'power2.out',
+        gsap.fromTo([this.DOM.headline, this.DOM.text], 
+            { opacity: 0, y: 50, scale: 1.1, rotation: 10  },
+            {opacity: 1, y: 0,
+            scale: 1, rotation: 0,
+            stagger: 0.3,
+            duration: 1.8, ease: 'power3.out',
             scrollTrigger: {
                 trigger: this.DOM.screen,
-                start: 'top 70%',
-                toggleActions: 'play none none reverse',
-            },
-        });
-
-        // Text description animation
-        gsap.to(this.DOM.description, {
-            opacity: 1, y: 0,
-            duration: 1.2, delay: 0.3,
-            ease: 'power2.out',
-            scrollTrigger: {
-                trigger: this.DOM.screen,
-                start: 'top 70%',
-                toggleActions: 'play none none reverse',
+                start: 'top 80%',
+                end: 'bottom top',
+                toggleActions: 'play none none none',
+                once: true
             }
-        });
+        }
+        );
     }
 }
