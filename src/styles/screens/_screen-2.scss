@@ -6,80 +6,107 @@
 
 /* ===== SCREEN 2 STYLES ===== */
 .screen--hidden-cost {
-    position: relative;
-    min-height: 100dvh;
-    overflow: hidden;
-    background: rgba(0, 0, 0, 0.5);
+  position: relative;
+  min-height: 100dvh;
+  overflow: hidden;
+  isolation: isolate;
+  z-index: var(--z-base);
+  background: var(--background-color);
+
+  // Gradient overlay (background animation)
+  &__gradient-overlay {
+    @include overlay(0.8);
+    background: linear-gradient(
+      270deg, 
+      hsl(120, 100%, 25%),
+      map.get($colors, 'warning'),
+      map.get($colors, 'error'),
+      hsl(39, 100%, 50%),
+      hsl(300, 100%, 25%),
+      hsl(240, 100%, 50%)
+    );
+    background-size: 300% 100%;
+    animation: gradient-shift 20s linear infinite;
+    z-index: var(--z-behind);
+    will-change: background-position;
+
+    @media (prefers-reduced-motion: reduce) {
+      background: hsl(120, 100%, 25%);
+    }
+  }
+
+  // Floating icons 
+  &__floating-icons {
+    @include overlay(0);
     z-index: var(--z-base);
+    pointer-events: none;
+  }
 
-    // Gradient overlay (background animation)
-    &__gradient-overlay {
-        @include overlay(0.8);
-        background: linear-gradient(
-            270deg, 
-            hsl(120, 100%, 25%),
-            hsl(60, 100%, 50%),
-            hsl(0, 100%, 50%),
-            hsl(39, 100%, 50%),
-            hsl(300, 100%, 25%),
-            hsl(240, 100%, 50%));
-            background-size: 300% 100%;
-            background-position: 0% 50%;
-            animation: gradient-shift 20s linear infinite;
-            z-index: calc(var(--z-base) - 1);
-            will-change: background-position;
+  &__floating-icon {
+    position: absolute;
+    width: clamp(20px, 3vw, 40px);
+    height: auto;
+    aspect-ratio: 1/1;
+    opacity: 0.8;
+    filter: drop-shadow(var(--shadow-sm));
+    will-change: transform;
+
+    // Using your spacing scale for positioning
+      $icon-positions: (
+    1: (top: 8%, left: 15%),
+    2: (top: 22%, left: 75%),
+    3: (top: 38%, left: 35%),
+    4: (top: 12%, left: 55%),
+    5: (top: 58%, left: 20%),
+    6: (top: 68%, left: 65%),
+    7: (top: 82%, left: 40%),
+    8: (top: 48%, left: 85%)
+    );
+
+    @each $i, $pos in $icon-positions {
+      &:nth-child(#{$i}) {
+        top: map.get($pos, 'top');
+        left: map.get($pos, 'left');
+        animation-delay: #{$i * 0.5s};
+      }
     }
+  }
 
-    // Floating icons 
-    &__floating-icons {
-        @include overlay(0);
-        z-index: calc(var(--z-base) - 2);
+  // Content container
+  &__content {
+    position: relative;
+    z-index: var(--z-base);
+    padding: var(--space-xxl);
+    max-width: 1440px;
+    margin: 0 auto;
+
+    @include respond-to('lg') {
+      padding: var(--space-xl);
     }
+  }
 
-    // Content container
-    &__content {
-        position: relative;
-        z-index: var(--z-base);
-        padding: map.get($spacing, 'xxl');
-    }
+  // Headline 
+  &__headline {
+    font-family: var(--font-header);
+    font-size: clamp(
+      var(--font-size-lg),
+      5vw,
+      var(--font-size-xxl)
+    );
+    color: var(--text-white);
+    text-align: center;
+    margin-bottom: var(--space-xl);
+    text-shadow: 0 0 15px rgba(map.get($colors, 'error'), 0.5);
+    line-height: 1.2;
+    opacity: 0;
+  }
 
-    //Headline 
-    &__headline {
-        font-family: var(--font-header); 
-        font-size: clamp(
-            var(--font-lg),
-            5vw,
-            var(--font-xxl)
-        );
-        color: map.get($colors, 'text-light');
-        text-align: center;
-        margin-bottom: map.get($spacing, 'xl');
-        text-shadow: 0 0 15px rgba(255, 0, 0, 0.5);
-    }
+  // Import components
+  @include quiz.styles;
+  @include supply-chain.styles;
 
-    // Import components
-    @include quiz.styles;
-    @include supply-chain.styles;
-
-    // Background animation
-    @keyframes gradient-shift {
-        0% {
-            background-position: 0% 50%;
-        }
-        100% {
-            background-position: 100% 50%;
-        }
-    }
-
-    // Responsive adjustments
-    @media (max-width: 768px) {
-        &__headline {
-            font-size: clamp(
-                var(--font-md),
-                6vw,
-                var(--font-lg)
-            );
-            margin-bottom: map.get($spacing, 'lg');
-        }
-    }
+  @keyframes gradient-shift {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 100% 50%; }
+  }
 }
