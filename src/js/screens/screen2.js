@@ -2,10 +2,11 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { SplitText } from 'gsap/SplitText';
 import { CustomEase } from 'gsap/CustomEase';
+import { TextPlugin } from 'gsap/TextPlugin';
 import { SupplyChainQuiz } from '../components/scf.js';
 import { Quiz } from '../components/quiz.js';
 
-gsap.registerPlugin(ScrollTrigger, SplitText, CustomEase);
+gsap.registerPlugin(ScrollTrigger, SplitText, CustomEase, TextPlugin);
 
 export class Screen2Animations {
     constructor(options = {}) {
@@ -35,7 +36,7 @@ export class Screen2Animations {
             floatingIcons: document.querySelectorAll('.screen--hidden-cost__floating-icon'),
             gradientOverlay: document.querySelector('.screen--hidden-cost__gradient-overlay'),
             supplyChain: document.querySelector('.supply-chain'),
-            stats: document.querySelectorAll('.stats-value'),
+            stats: document.querySelectorAll('.stats__value'),
             quiz: document.querySelector('.quiz'),
             content: document.querySelector('.screen--hidden-cost__content')
         };
@@ -69,15 +70,17 @@ export class Screen2Animations {
             this.DOM.headline,
             this.DOM.supplyChain,
             this.DOM.quiz,
-            this.DOM.content
+            this.DOM.content,
+            ...this.DOM.stats
         ], { opacity: 1 });
     }
 
     animateHeadline() {
         if (!this.DOM.headline) return;
+
         if (this.options.useSplitText) {
             const split = new SplitText(this.DOM.headline, {
-                types: 'lines, words',
+                types: 'lines,words',
                 linesClass: 'line',
                 wordsClass: 'word'
             });
@@ -145,29 +148,73 @@ export class Screen2Animations {
     }
 
     animateStatsCounter() {
-        if (!this.DOM.stats.length) return;
+    if (!this.DOM.stats.length) return;
 
-        this.DOM.stats.forEach(counter => {
-            const target = parseInt(counter.dataset.count);
-            const isCritical = target >= 30;
+    this.DOM.stats.forEach(counter => {
+        const target = parseInt(counter.dataset.count, 10);
+        const item = counter.closest('.stats__item');
+        const label = item?.querySelector('.stats__label');
+        const valueElement = counter.querySelector('.stats__value'); // Get the span element
 
-            const anim = gsap.to(counter, {
-                textContent: target, duration: 2.5,
-                ease: 'power2.out',
-                scrollTrigger: {
-                    trigger: counter.closest('.stats__item') || counter,
-                    start: 'top 80%'
-                },
-                onUpdate: () => this.updateCounterColor(counter, isCritical),
-                modifiers: {
-                    innerText: value => `${Math.round(value)}%`
-                }
-            });
-            this.animations.push(anim);
+        // Reset initial display
+        valueElement.textContent = '0%'; // Initialize with 0%
+        label && (label.style.opacity = '0');
+
+        // Create dummy value to animate
+        const obj = { val: 0 };
+
+        const tl = gsap.timeline({
+            scrollTrigger: {
+                trigger: item || counter,
+                start: 'top 80%',
+                end: 'top 30%',
+                scrub: false,
+                toggleActions: 'play none none none',
+                once: true // Only play once
+            }
         });
+
+        // Fade in the counter and label
+        tl.to([counter, label], {
+            opacity: 1,
+            duration: 0.5,
+            ease: 'power1.out'
+        });
+
+        // Animate the counter value
+        tl.to(obj, {
+            val: target,
+            duration: 2,
+            ease: 'power2.out',
+            onUpdate: () => {
+                const val = Math.round(obj.val);
+                valueElement.textContent = `${val}%`;
+                this.updateCounterColor(valueElement, val);
+
+                // Optional: dynamic shadow effect
+                const intensity = val / 100 * 0.5;
+                valueElement.style.textShadow = `1px 1px 6px rgba(${val}, ${100 - val}, 0, ${intensity})`;
+            },
+            onComplete: () => {
+                // Ensure final value is exact
+                valueElement.textContent = `${target}%`;
+                this.updateCounterColor(valueElement, target);
+            }
+        }, "<"); // Start at same time as fade-in
+        this.animations.push(tl);
+    });
+}
+
+
+    updateCounterColor(counter, val) {
+        counter.style.color = 
+        val >= 40 ? 'var(--error-color)' :
+        val >= 30 ? 'var(--accent-color)' :
+        val >= 15 ? 'var(--warning-color)' :
+        'var(--success-color)';
     }
 
-    animateContent() {
+       animateContent() {
         if (!this.DOM.content) return;
 
         const anim = gsap.from(this.DOM.content, {
@@ -181,23 +228,12 @@ export class Screen2Animations {
         this.animations.push(anim);
     }
 
-    updateCounterColor(counter, isCritical) {
-        const val = parseInt(counter.innerText);
-        counter.style.color = isCritical ?
-        val < 15 ? 'var(--success-color)' :
-        val < 30 ? 'var(--warning-color)' :
-        val < 40 ? 'var(--accent-color)' :
-        'var(--error-color)' :
-        val < 15 ? 'var(--success-color)' :
-        'var(--warning-color)';
-    }
-
     cleanUp() {
         this.animations.forEach(anim => {
             anim?.kill?.();
             anim?.revert?.();
         });
-        ScrollTrigger.getAll().forEach(statusbar.kill());
+        ScrollTrigger.getAll().forEach(trigger => trigger.kill());
         this.quiz?.destroy?.();
         this.supplyChainQuiz?.destroy?.();
     }
