@@ -1,113 +1,204 @@
-// src/js/screens/screen2.js
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { SplitText } from 'gsap/SplitText';
+import { CustomEase } from 'gsap/CustomEase';
+import { SupplyChainQuiz } from '../components/scf.js';
+import { Quiz } from '../components/quiz.js';
+
+gsap.registerPlugin(ScrollTrigger, SplitText, CustomEase);
+
 export class Screen2Animations {
-    constructor() {
-        this.init();
+    constructor(options = {}) {
+        this.options = {
+            animateIcons: true,
+            useSplitText: true,
+            ...options
+        };
+
+        this.animations = [];
+        this.preferReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        this.DOM = this.getDOMElements();
+
+        try {
+            this.initComponents();
+            this.initAnimations()
+        } catch (error) {
+            console.error('[Screen2] Initialization failed:', error);
+            this.setupStaticFallback();
+        }
     }
 
-    init() {
+    getDOMElements() {
+        return {
+            screen: document.querySelector('.screen--hidden-cost'),
+            headline: document.querySelector('.screen--hidden-cost__headline'),
+            floatingIcons: document.querySelectorAll('.screen--hidden-cost__floating-icon'),
+            gradientOverlay: document.querySelector('.screen--hidden-cost__gradient-overlay'),
+            supplyChain: document.querySelector('.supply-chain'),
+            stats: document.querySelectorAll('.stats-value'),
+            quiz: document.querySelector('.quiz'),
+            content: document.querySelector('.screen--hidden-cost__content')
+        };
+    }
+
+    initComponents() {
+        if (this.DOM.quiz) {
+            this.quiz = new Quiz(this.DOM.quiz);
+        }
+        if (this.DOM.supplyChain) {
+            this.supplyChainQuiz = new SupplyChainQuiz(this.DOM.supplyChain)
+        }
+    }
+
+    initAnimations() {
+        if (this.preferReducedMotion) {
+            this.setupStaticFallback();
+            return;
+        }
+
         this.animateHeadline();
         this.animateFloatingIcons();
+        this.animateGradient();
         this.animateSupplyChainVisual();
-        this.animatePHLCounter();
+        this.animateStatsCounter();
+        this.animateContent();
+    }
+
+    setupStaticFallback() {
+        gsap.set([
+            this.DOM.headline,
+            this.DOM.supplyChain,
+            this.DOM.quiz,
+            this.DOM.content
+        ], { opacity: 1 });
     }
 
     animateHeadline() {
-        const headline = document.querySelector('.scree-2 .headline');
-        if (!headline) return;
+        if (!this.DOM.headline) return;
+        if (this.options.useSplitText) {
+            const split = new SplitText(this.DOM.headline, {
+                types: 'lines, words',
+                linesClass: 'line',
+                wordsClass: 'word'
+            });
 
-        const splitHeadline = new SplitText(headline, { type: 'words' });
-        gsap.from(splitHeadline.words, {
-            opacity: 0,
-            duration: 1.2,
-            y: 30,
-            scale: 0.95,
-            stagger: 0.2,
-            ease: 'power4.out',
-            scrollTrigger: {
-                trigger: headline,
-                start: 'top 95%',
-                toggleActions: 'play none none none'
-            }
-        });
+            const anim = gsap.from(split.words, {
+                opacity: 0, y: 30,
+                duration: 1.2, stagger: 0.05,
+                ease: 'power3.out',
+                scrollTrigger: {
+                    trigger: this.DOM.headline,
+                    start: 'top 85%',
+                    toggleActions: 'play none none none'
+                }
+            });
+            this.animations.push(anim);
+        } else {
+            const anim = gsap.from(this.DOM.headline, {
+                opacity: 0, y: 40,
+                duration: 1.2, ease: 'power3.out',
+                scrollTrigger: {
+                    trigger: this.DOM.headline,
+                    start: 'top 85%',
+                }
+            });
+            this.animations.push(anim);
+        }
     }
 
     animateFloatingIcons() {
-        const floatingIcons = document.querySelectorAll('.floating-icon');
-        floatingIcons.forEach((icon, i) => {
-            gsap.to(icon, {
-                y: -30,
-                x: gsap.utils.random(-10, 10),
-                duration: gsap.utils.random(4, 7),
-                rotation: gsap.utils.random(-5, 5),
-                repeat: -1,
-                yoyo: true,
-                ease: 'sine.inOut',
-                delay: i * 0.3
+        if (!this.DOM.floatingIcons?.length || !this.options.animateIcons) return;
+
+        const movements = [
+            { y: -15, x: -10, rotation: -3},
+            { y: 20, x: 5, rotation: 2},
+            { y: -10, x: 15, rotation: -1},
+            { y: 15, x: -5, rotation: 4},
+            { y: -5, x: 10, rotation: -2},
+            { y: 10, x: -15, rotation: 3},
+            { y:-20, x: 5, rotation: -4},
+            { y: 5, x: 15, rotation: 1}
+        ];
+
+        this.DOM.floatingIcons.forEach((icon, i) => {
+            const move = movements[i % movements.length];
+            const anim = gsap.to(icon, {
+                ...move,
+                duration: 5 + (i * 0.5),
+                repeat: -1, yoyo: true,
+                ease: 'sine.inOut', delay: i * 0.3,
             });
+            this.animations.push(anim);
         });
     }
 
-    animateSupplyChainVisual() {
-        gsap.from('.icon', {
-            opacity: 0,
-            y: 40,
-            scale: 0.9,
-            stagger: 0.25,
-            duration: 0.8,
-            ease: 'power3.out',
-            scrollTrigger: {
-                trigger: '.supply-chain-visual',
-                start: 'top bottom-=100',
-                once: true,
-                toggleActions: 'play none none none'
-            }
+    animateGradient() {
+        if (!this.DOM.gradientOverlay) return;
+
+        const anim = gsap.to(this.DOM.gradientOverlay, {
+          backgroundPosition: '100% 50%',
+          duration: 20,
+          ease: 'linear',
+          repeat: -1
         });
+        this.animations.push(anim);
     }
-    
-    animatePHLCounter() {
-        const counters = document.querySelectorAll('.percent');
-        
-        counters.forEach((counter) => {
+
+    animateStatsCounter() {
+        if (!this.DOM.stats.length) return;
+
+        this.DOM.stats.forEach(counter => {
             const target = parseInt(counter.dataset.count);
-            const isLargeValue = target >= 30; // Determine if this is a "red" case
-            
-            gsap.to(counter, {
-                innerText: target,
-                duration: 2.5,
-                ease: "power2.out",
-                snap: { innerText: 1 },
+            const isCritical = target >= 30;
+
+            const anim = gsap.to(counter, {
+                textContent: target, duration: 2.5,
+                ease: 'power2.out',
                 scrollTrigger: {
-                    trigger: counter,
-                    start: "top 80%",
-                    toggleActions: "play none none none"
+                    trigger: counter.closest('.stats__item') || counter,
+                    start: 'top 80%'
                 },
-                onUpdate: function() {
-                    const currentVal = parseInt(counter.innerText);
-                    // For large values (near 50), transition green → yellow → orange → red
-                    if (isLargeValue) {
-                        if (currentVal < 15) {
-                            counter.style.color = `hsl(145, 63%, 42%)`; // Green
-                        } else if (currentVal < 30) {
-                            counter.style.color = `hsl(51, 100%, 45%)`; // Gold
-                        } else if (currentVal < 40) {
-                            counter.style.color = `hsl(30, 100%, 50%)`; // Orange
-                        } else {
-                            counter.style.color = `hsl(0, 100%, 45%)`; // Red
-                        }
-                    } 
-                    // For smaller values (like 25), transition green → gold
-                    else {
-                        if (currentVal < 15) {
-                            counter.style.color = `hsl(145, 63%, 42%)`; // Green
-                        } else {
-                            counter.style.color = `hsl(51, 100%, 45%)`; // Gold
-                        }
-                    }
-                },
+                onUpdate: () => this.updateCounterColor(counter, isCritical),
                 modifiers: {
-                    innerText: (value) => Math.round(value) + "%"
+                    innerText: value => `${Math.round(value)}%`
                 }
             });
+            this.animations.push(anim);
         });
+    }
+
+    animateContent() {
+        if (!this.DOM.content) return;
+
+        const anim = gsap.from(this.DOM.content, {
+            opacity: 0, y: 20,
+            stagger: 0.1, duration: 0.6,
+            scrollTrigger: {
+                trigger: this.DOM.content,
+                start: 'top 85%'
+            }
+        });
+        this.animations.push(anim);
+    }
+
+    updateCounterColor(counter, isCritical) {
+        const val = parseInt(counter.innerText);
+        counter.style.color = isCritical ?
+        val < 15 ? 'var(--success-color)' :
+        val < 30 ? 'var(--warning-color)' :
+        val < 40 ? 'var(--accent-color)' :
+        'var(--error-color)' :
+        val < 15 ? 'var(--success-color)' :
+        'var(--warning-color)';
+    }
+
+    cleanUp() {
+        this.animations.forEach(anim => {
+            anim?.kill?.();
+            anim?.revert?.();
+        });
+        ScrollTrigger.getAll().forEach(statusbar.kill());
+        this.quiz?.destroy?.();
+        this.supplyChainQuiz?.destroy?.();
     }
 }

@@ -1,0 +1,108 @@
+@use "sass:map";
+@use "../abstracts/variables" as *;
+@use "../abstracts/mixins" as *;
+
+@mixin styles {
+    .quiz{
+        font-family: $font-primary;
+        margin-top: map.get($spacing, 'lg');
+
+        &__question {
+            font-family: $font-header;
+            font-size: clamp(
+                map.get($font-sizes, 'md'),
+                2.5vw,
+                map.get($font-sizes, 'lg')
+            );
+            color: map.get($colors, 'text-white');
+            margin-bottom: map.get($spacing, 'md');
+            text-align: center;
+            text-shadow: 1px 1px 6px var(--text-shadow-light);
+        }
+
+        &__options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: map.get($spacing, 'md');
+            justify-content: center;
+        }
+
+        &__option {
+            font-family: $font-btn;
+            font-size: clamp(
+                map.get($font-sizes, 'sm'),
+                2.5vw,
+                map.get($font-sizes, 'base')
+            );
+            font-weight: 600;
+            background: var(--light-color);
+            color: map.get($colors, 'text-dark');
+            padding: map.get($spacing, 'sm') map.get($spacing, 'md');
+            border: 2px solid transparent;
+            border-radius: map.get($radii, 'lg');
+            box-shadow: var(--shadow-sm);
+            backface-visibility: hidden;
+            transition: 
+            transform 0.4s ease, box-shadow 0.4s ease, 
+            background map.get($transition-durations, 'normal') ease, 
+            color map.get($transition-durations, 'normal') ease;
+            cursor: pointer;
+            min-width: 120px;
+
+            &:hover:not(:disabled) {
+              transform: scale(1.05);
+              box-shadow: 0 0 10px var(--accent-color);
+            }
+            
+             &:focus {
+               outline: none;
+               border-color: var(--accent-color);
+               box-shadow: 0 0 0 3px rgba(255, 193, 7, 0.5);
+            } 
+
+            &:disabled {
+                opacity: 0.6;
+                cursor: not-allowed;
+            }
+
+            &--correct {
+                background: var(--success-color);
+                color: var(--text-white);
+                border-color: var(--success-color);
+                box-shadow: 0 0 10px var(--success-color);
+            }
+
+            &--wrong {
+                background: var(--error-color);
+                color: var(--text-white);
+                border-color: var(--error-color);
+                box-shadow: 0 0 10px var(--error-color);
+            }
+        }
+
+        &__result {
+            font-family: $font-primary;
+            font-size: clamp(
+                map.get($font-sizes, 'sm'),
+                1.5vw,
+                map.get($font-sizes, 'md')
+            );
+            color: var(--text-white);
+            margin-top: map.get($spacing, 'md');
+            text-align: center;
+            font-weight: 600;
+            opacity: 0;
+            transition: opacity map.get($transition-durations, 'normal') ease;
+        }
+    }
+
+    .supply-chain__stage {
+        transition: all map.get($transition-durations, 'normal') ease;
+
+    &.highlighted {
+      transform: scale(1.05);
+      box-shadow: 0 0 20px var(--accent-color);
+      border-radius: map.get($radii, 'lg');
+    }
+}
+}
