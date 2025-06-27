@@ -101,6 +101,77 @@
     opacity: 0;
   }
 
+ // Stats
+.stats {
+  display: flex;
+  justify-content: center;
+  gap: map.get($spacing, 'md');
+  margin-top: map.get($spacing, 'lg');
+  flex-wrap: wrap;
+
+  &__item {
+    background: map.get($colors, 'light');
+    padding: map.get($spacing, 'md');
+    border-radius: map.get($radii, 'lg');
+    text-align: center;
+    width: min(150px, 100%);
+    box-shadow: var(--shadow-md);
+    transition: background 0.3s ease;
+    z-index: 3;
+    will-change: transform; // Performance optimization
+
+  }
+
+  &__value {
+    font-family: map.get($font-families, 'primary');
+    font-size: clamp(
+      map.get($font-sizes, 'lg'),
+      5vw,
+      map.get($font-sizes, 'xl')
+    );
+    font-weight: bold;
+    color: map.get($colors, 'success'); // Initial color
+    text-shadow: 1px 1px 6px rgba(map.get($colors, 'success'), 0.5);
+    transition: 
+      color 0.3s ease, 
+      text-shadow 0.3s ease,
+      opacity 0.5s ease; // Added opacity transition
+    display: inline-block;
+    opacity: 0; // Will be animated by GSAP
+    will-change: transform, opacity, color, text-shadow;
+    line-height: 1; // Ensures consistent height
+
+    // Dynamic colors for different value ranges
+    &--warning {
+      color: map.get($colors, 'warning');
+      text-shadow: 1px 1px 6px rgba(map.get($colors, 'warning'), 0.5);
+    }
+    
+    &--accent {
+      color: map.get($colors, 'accent');
+      text-shadow: 1px 1px 6px rgba(map.get($colors, 'accent'), 0.5);
+    }
+    
+    &--error {
+      color: map.get($colors, 'error');
+      text-shadow: 1px 1px 6px rgba(map.get($colors, 'error'), 0.5);
+    }
+  }
+
+  &__label {
+    font-family: map.get($font-families, 'primary');
+    font-size: map.get($font-sizes, 'sm');
+    font-weight: 700;
+    color: map.get($colors, 'accent-hover');
+    margin-top: map.get($spacing, 'sm');
+    text-shadow: 1px 1px 6px rgba(hsl(0, 0%, 70%), 0.7);
+    opacity: 0; // Will be animated by GSAP
+    transition: opacity 0.5s ease;
+    will-change: transform, opacity;
+    transform: translateY(10px); // For subtle fade-up effect
+  }
+}
+
   // Import components
   @include quiz.styles;
   @include supply-chain.styles;
