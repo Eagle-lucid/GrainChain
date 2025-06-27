@@ -13,6 +13,10 @@ $colors: (
   accent-hover: hsl(0, 79%, 53%),
   success: hsl(145, 63%, 42%),
   text-white: hsl(0, 0%, 100%),
+  text-secondary: hsl(0, 0%, 70%),
+  warning: hsl(45, 86%, 62%),
+  error: hsl(0, 79%, 63%),
+  light: hsl(0, 0%, 96%)
 );
 
 // Spacing Scale
@@ -25,6 +29,13 @@ $spacing: (
   xl: 2rem,
   xxl: 3rem,
   xxxl: 4rem
+);
+
+// Font Families
+$font-families: (
+  'primary': "'Helvetica Neue', Arial, sans-serif", // Main body font
+  'header': "'Montserrat', sans-serif", // Headings
+  'btn': "'Inter', sans-serif" // Buttons and interactive elements
 );
 
 // Font Sizes
@@ -100,6 +111,10 @@ $breakpoints: (
     --space-#{$size}: #{$value};
   }
 
+   // Font Families
+  @each $name, $font in $font-families {
+    --font-#{$name}: #{$font};
+  }
   // Font Sizes
   @each $size, $value in $font-sizes {
     --font-size-#{$size}: #{$value};
@@ -109,6 +124,10 @@ $breakpoints: (
   @each $size, $value in $radii {
     --radius-#{$size}: #{$value};
   }
+   // SCF Colors 
+  --warning-color: #{map.get($colors, 'warning')};
+  --error-color: #{map.get($colors, 'error')};
+  --light-color: #{map.get($colors, 'light')};
 
   // Shadows
   --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.12);
@@ -133,3 +152,6 @@ $accent-color: map.get($colors, accent);
 $success-color: map.get($colors, success);
 $space-md: map.get($spacing, md);
 $font-size-base: map.get($font-sizes, base);
+$font-primary: map.get($font-families, 'primary');
+$font-header: map.get($font-families, 'header');
+$font-btn: map.get($font-families, 'btn');
