@@ -148,71 +148,62 @@ export class Screen2Animations {
     }
 
     animateStatsCounter() {
-    if (!this.DOM.stats.length) return;
+  const statItems = document.querySelectorAll('.stats__item');
 
-    this.DOM.stats.forEach(counter => {
-        const target = parseInt(counter.dataset.count, 10);
-        const item = counter.closest('.stats__item');
-        const label = item?.querySelector('.stats__label');
-        const valueElement = counter.querySelector('.stats__value'); // Get the span element
+  if (!statItems.length) return;
 
-        // Reset initial display
-        valueElement.textContent = '0%'; // Initialize with 0%
-        label && (label.style.opacity = '0');
+  statItems.forEach(item => {
+    const valueElement = item.querySelector('.stats__value');
+    const label = item.querySelector('.stats__label');
 
-        // Create dummy value to animate
-        const obj = { val: 0 };
+    if (!valueElement || !label) return;
 
-        const tl = gsap.timeline({
-            scrollTrigger: {
-                trigger: item || counter,
-                start: 'top 80%',
-                end: 'top 30%',
-                scrub: false,
-                toggleActions: 'play none none none',
-                once: true // Only play once
-            }
-        });
+    const target = parseInt(valueElement.dataset.count, 10);
+    const obj = { val: 0 };
 
-        // Fade in the counter and label
-        tl.to([counter, label], {
-            opacity: 1,
-            duration: 0.5,
-            ease: 'power1.out'
-        });
+    // Initialize
+    valueElement.textContent = '0%';
+    valueElement.style.opacity = '0';
+    label.style.opacity = '0';
 
-        // Animate the counter value
-        tl.to(obj, {
-            val: target,
-            duration: 2,
-            ease: 'power2.out',
-            onUpdate: () => {
-                const val = Math.round(obj.val);
-                valueElement.textContent = `${val}%`;
-                this.updateCounterColor(valueElement, val);
-
-                // Optional: dynamic shadow effect
-                const intensity = val / 100 * 0.5;
-                valueElement.style.textShadow = `1px 1px 6px rgba(${val}, ${100 - val}, 0, ${intensity})`;
-            },
-            onComplete: () => {
-                // Ensure final value is exact
-                valueElement.textContent = `${target}%`;
-                this.updateCounterColor(valueElement, target);
-            }
-        }, "<"); // Start at same time as fade-in
-        this.animations.push(tl);
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: item,
+        start: 'top 80%',
+        once: true
+      }
     });
+
+    // Animate opacity of value and label
+    tl.to([valueElement, label], {
+      opacity: 1,
+      duration: 0.5,
+      ease: 'power1.out'
+    });
+
+    // Animate number count
+    tl.to(obj, {
+      val: target,
+      duration: 2,
+      ease: 'power2.out',
+      onUpdate: () => {
+        const val = Math.round(obj.val);
+        valueElement.textContent = `${val}%`;
+        this.updateCounterColor(valueElement, val);
+
+        const intensity = val / 100 * 0.5;
+        valueElement.style.textShadow = `1px 1px 6px rgba(${val}, ${100 - val}, 0, ${intensity})`;
+      },
+      onComplete: () => {
+        valueElement.textContent = `${target}%`;
+        this.updateCounterColor(valueElement, target);
+      }
+    }, "<");
+    
+    this.animations.push(tl);
+  });
 }
 
-
-    updateCounterColor(counter, val) {
-        counter.style.color = 
-        val >= 40 ? 'var(--error-color)' :
-        val >= 30 ? 'var(--accent-color)' :
-        val >= 15 ? 'var(--warning-color)' :
-        'var(--success-color)';
-    }
 
        animateContent() {
         if (!this.DOM.content) return;

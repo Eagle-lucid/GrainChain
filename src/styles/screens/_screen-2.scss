@@ -104,7 +104,7 @@
  // Stats
 .stats {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   gap: map.get($spacing, 'md');
   margin-top: map.get($spacing, 'lg');
   flex-wrap: wrap;
@@ -180,4 +180,75 @@
     0% { background-position: 0% 50%; }
     100% { background-position: 100% 50%; }
   }
+
+  // Bounce keyframes as reusable mixin
+@mixin bounce($name, $distance: 8px) {
+  @keyframes #{$name} {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-#{$distance});
+    }
+  }
+}
+
+
+  .scroll-cue {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: map.get($spacing, 'xl');
+  gap: map.get($spacing, 'sm');
+  animation: bounce 2s cubic-bezier(0.68, -0.55, 0.27, 1.55) infinite;
+  text-align: center;
+  will-change: transform;
+
+  &__text {
+    font-family: $font-header;
+    font-size: clamp(
+      map.get($font-sizes, 'sm'),
+      2vw,
+      map.get($font-sizes, 'md')
+    );
+    font-weight: bold;
+    color: map.get($colors, 'accent-hover');
+    text-shadow: 4px 4px 16px rgba(0, 0, 0, 0.2);
+  }
+
+  &__button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: map.get($spacing, 'xs');
+    transform-origin: center;
+    transition: transform 0.4s ease, filter 0.4s ease;
+    
+    &:hover {
+     transform: translateY(-4px) scale(1.1) rotate(90deg);
+     filter: drop-shadow(0 0 10px var(--accent-color));
+    }
+  }
+
+  &__icon {
+    width: 32px;
+    height: 32px;
+    filter: drop-shadow(0 0 4px var(--accent-color));
+    transition: filter 0.4s ease;
+
+    .scroll-cue__button:hover & {
+      filter: drop-shadow(0 0 12px var(--accent-color));
+    }
+  }
+
+  @include bounce(bounce, 8px);
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+
+    &__button:hover {
+      transform: none;
+    }
+  }
+}
 }
