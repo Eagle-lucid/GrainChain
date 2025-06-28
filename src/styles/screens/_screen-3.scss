@@ -1,0 +1,172 @@
+@use "sass:map";
+@use "../abstracts/variables" as *;
+@use "../abstracts/mixins" as *;
+
+.screen--vision {
+    // Layout
+    @include flex-center(column);
+    position: relative;
+    min-height: 100dvh;
+    padding: map.get($spacing, 'xl') map.get($spacing, 'md');
+    background: map.get($colors, 'background');
+    overflow: hidden;
+
+    // Overlay 
+    &::before {
+        @include overlay(0.2);
+        z-index: var(--z-behind);
+        transition: background map.get($transition-durations, 'slow') ease-in-out;
+    }
+
+    // Modifiers (When active)
+    &.active::before {
+        background: rgba($primary-color, 0.5);
+    }
+
+    // BG Image 
+    &__bg {
+        @include overlay(0);
+        background-size: cover;
+        background-position: center;
+        opacity: 0.25;
+        transition: 
+        opacity map.get($transition-durations, 'slow') ease-in-out,
+        background-image map.get($transition-durations, 'slow') ease-in-out
+        ;
+        transform: translateZ(0);
+        backface-visibility: hidden;
+        z-index: var(--z-base);
+
+        // Color Shift Modifier 
+        &.rich-color::before {
+            background: rgba($success-color, 0.5);
+        }
+    }
+
+    // Headline
+    &__headline {
+        font-family: map.get($font-families, 'header');
+        font-size: clamp(
+            map.get($font-sizes, 'lg'),
+            5vw,
+            map.get($font-sizes, 'xxl')
+        );
+        @include gradient-text(45deg, $primary-color, $accent-color);
+        text-shadow: 0 0 15px rgba($accent-color, 0.5);
+        margin-bottom: map.get($spacing, 'xxl');
+        text-align: center;
+        max-width: 800px;
+        opacity: 0;
+    }
+
+    // SLIDES
+    &__sequence {
+        @include flex-center(column);
+        gap: map.get($spacing, 'xl');
+        position: relative;
+        contain: layout paint style;
+        z-index: var(--z-base);
+    }
+
+    &__slide {
+        width: 100%;
+        max-width: 800px;
+        padding: map.get($spacing, 'lg');
+        background: rgba(white, 0.9);
+        box-shadow: map.get($shadows, 'md');
+        opacity: 0;
+        transform: translateX(80px);
+        transition: transform map.get($transition-durations, 'normal') ease;
+
+        &:hover {
+        transform: translateX(80px) scale(1.02);
+        box-shadow: map.get($shadows, 'lg');
+        }
+
+        figcaption {
+            font-family: map.get($font-families, 'primary');
+            font-size: clamp(
+                map.get($font-sizes, 'md'),
+                2vw,
+                map.get($font-sizes, 'lg')
+            );
+            font-weight: 600;
+            color: map.get($colors, 'text-dark');
+        }
+    }
+    
+    &__tags .tag {
+        transition: all map.get($transition-durations, 'normal') ease;
+        &:hover {
+            transform: scale(1.05);
+            background: linear-gradient(135deg, 
+                map.get($colors, 'secondary'), 
+                map.get($colors, 'accent')
+            );
+        }
+    }
+    // TAGS 
+    &__tags {
+        display: flex;
+        gap: map.get($spacing, 'sm');
+        margin-top: map.get($spacing, 'xxl');
+        transform: translateY(40px);
+    }
+
+    blockquote {
+        font-family: map.get($font-families, 'primary');
+        font-size: clamp(
+            map.get($font-sizes, 'md'),
+            2.5vw,
+            map.get($font-sizes, 'xl')
+        );
+        font-style: italic;
+        font-weight: 600;
+        line-height: 1.4;
+        text-align: center;
+        max-width: 800px;
+        position: relative;
+        margin-top: map.get($spacing, 'xxl');
+        padding: 0 map.get($spacing, 'lg');
+        color: map.get($colors, 'text-dark');
+        text-shadow: 0 2px 4px var(--text-shadow-light);
+        opacity: 0;
+
+        &::before,
+        &::after {
+            content: '';
+            font-size: map.get($font-sizes, 'lg');
+            font-weight: 700;
+            color: map.get($colors, 'primary');
+            opacity: 0.8;
+            position: absolute;
+            transition: opacity map.get($transition-durations, 'fast') ease;
+        }
+
+        &:hover::before, 
+        &:hover::after {
+          opacity: 1;
+          color: map.get($colors, 'accent');
+        }
+
+        &::before {
+            content: '"';
+            top: -0.5em;
+            left: 0;
+        }
+
+        &::after {
+            content: '"';
+            bottom: -0.8em;
+            right: 0;
+        }
+
+        p {
+            margin: 0;
+        }
+    }
+
+      &__slide, &__tags, blockquote {
+        will-change: opacity, transform;
+    }
+}
