@@ -92,3 +92,11 @@
     }
   }
 }
+
+// abstracts/_mixins.scss
+@mixin flex-center($direction: column) {
+  display: flex;
+  flex-direction: $direction;
+  justify-content: center;
+  align-items: center;
+}
