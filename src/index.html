@@ -154,7 +154,6 @@
               </div>
          </section>
 
-         <div class="slide-wrapper">
           <!-- Screen 2: The Hidden Cost -->
             <section id="hidden-cost" class="screen screen--hidden-cost" aria-label="Food loss visualization">
               <!-- Background Elements -->
@@ -254,38 +253,47 @@
                 </div>
               </div>
             </section>
-          <!-- Screen 3: The Vision-->
-           <section id="vision" class="screen screen-3 horizontal-scroll">
-            <!-- Background Image -->
-            <div class="bg-dynamic"></div>
+          
+            <!-- Screen 3: The Vision -->
+             <section id="vision" class="screen screen--vision" aria-label="The food vision">
+              <!-- Dynamic BG -->
+              <div class="screen--vision__bg" data-bg-dynamic></div>
 
-            <!-- Headline -->
-             <h2 class="headline fade-in">Now imagine a world where food is never wasted</h2>
+              <!-- Headline -->
+               <h2 class="screen--vision__headline" role="heading" aria-level="2">
+                 Now imagine a world where food is never wasted
+               </h2>
 
-             <!-- Scene Visualization -->
-              <div class="vision-sequence">
-                <div class="vision-slide active" data-bg="assets/images/cold-truck.jpg">
-                    <p>Cold chain truck arrives in time</p>
-                </div>
-                <div class="vision-slide" data-bg="assets/images/farmer-alert-call.jpg">
-                    <p>Mobile alerts for farmers</p>
-                </div>
-                <div class="vision-slide" data-bg="assets/images/produce-data.jpg">
-                    <p>Direct access to markets</p>
-                </div>
-                <!-- Visual Scroll Tags -->
-                <div class="tech-tags scroll-reveal">
+               <!-- Scene Slides -->
+                <div class="screen--vision__sequence">
+                  <!-- Slide 1 -->
+                  <figure class="screen--vision__slide" data-active data-bg="src/assets/images/cold-truck.jpg">
+                    <figcaption>Cold chain truck arrives in time</figcaption>
+                  </figure>
+
+                  <!-- Slide 2 -->
+                  <figure class="screen--vision__slide" data-bg="src/assets/images/farmer-alert-call.jpg">
+                    <figcaption>Mobile alerts for farmers</figcaption>
+                  </figure>
+
+                  <!-- Slide 3 -->
+                  <figure class="screen--vision__slide" data-bg="src/assets/images/produce-data.jpg">
+                    <figcaption>Direct access to markets</figcaption>
+                  </figure>
+
+                  <!-- Tech Tags -->
+                   <div class="screen--vision__tags" data-scroll-reveal>
                     <span class="tag">Cold Chain</span>
                     <span class="tag">Smart Alerts</span>
                     <span class="tag">Direct Access</span>
-                </div>
-                <!-- Voiceover Text Placeholder -->
-                 <div class="voiceover-text fade-in">
+                  </div>
+
+                  <!-- Voiceover -->
+                   <blockquote class="screen--vision__voiceover">
                     <p>"Tech can fix what tradition couldn't"</p>
-                 </div>
-              </div>
-           </section>  
-         </div>
+                   </blockquote>
+                </div>
+              </section>
 
            <!-- Screen 4: The Mission -->
             <section id="mission" class="screen screen-4 fade-in-stagger">
@@ -335,7 +343,7 @@
             </section>
             <!-- Sticky CTA Button -->
              <button class="sticky-cta bounce" onclick="scrollToCTA()">Join the Movement</button>
-        </div>
+        </section>
       </main>
         <!-- Overlay (for closing sidebar when clicking outside) -->
         <div class="overlay" id="sidebarOverlay"></div>
