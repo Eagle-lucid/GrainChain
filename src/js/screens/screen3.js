@@ -1,115 +1,128 @@
 // src/js/screens/screen3.js
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { SplitText } from 'gsap/SplitText';
+gsap.registerPlugin(ScrollTrigger, SplitText);
 export class Screen3Animations {
     constructor() {
-        this.bgContainer = document.querySelector('.screen-3 .bg-dynamic');
-        this.init();
+        this.DOM = {
+            screen: document.querySelector('.screen--vision'),
+            bg: document.querySelector('.screen--vision__bg'),
+            headline: document.querySelector('.screen--vision__headline'),
+            slides: document.querySelectorAll('.screen--vision__slide'),
+            tags: document.querySelector('.screen--vision__tags'),
+            voiceover: document.querySelector('.screen--vision__voiceover')
+        };
+
+        if (this.DOM.screen) {
+            this.resetInitialStates();
+            this.init();
+        }
+    }
+
+    resetInitialStates() {
+        gsap.set([this.DOM.headline, this.DOM.slides, this.DOM.tags, this.DOM.voiceover], {
+            opacity: 1,
+            visibility: 'visible'
+        });
+
+        gsap.set([this.DOM.headline, this.DOM.slides, this.DOM.tags, this.DOM.voiceover], {
+            opacity: 0
+        });
     }
 
     init() {
         this.animateHeadline();
-        this.animateVisionSlides();
+        this.animateSlides();
         this.setupBackgroundChanges();
-        this.animateColorShift();
-        this.animateTechTags();
-        this.animateVoiceover();
+        this.animateTagsAndVoiceover(); 
     }
 
     animateHeadline() {
-        // animate the headline
-        const headline = document.querySelector('.screen-3 .headline');
-        if (!headline) return;
-
-        const splitHeadline = new SplitText(headline, {type: 'words'});
-        gsap.from(splitHeadline.words, {
-            opacity: 0,
-            y: 40, duration: 1.2,
-            stagger: 0.2, ease: 'power3.out',
-            scrollTrigger: {
-                trigger: headline,
-                start: 'top 85%',
-                toggleActions: 'play none none none'
-            }
-        });
-    }
-
-    animateVisionSlides() {
-        gsap.utils.toArray('.vision-slide').forEach((slide, i) => {
-            gsap.from(slide, {
-                opacity: 0,
-                x: 80,
-                duration: 1.2,
-                delay: 1 * 0.2, ease: 'power3.out',
+        try {
+            const split = new SplitText(this.DOM.headline,{ type: 'words' });
+            gsap.from(split.words, {
+                opacity: 0, y: 40,
+                durations: 1.2, stagger: 0.1,
+                ease: 'power3.out',
                 scrollTrigger: {
-                    trigger: slide,
-                    start: 'top 90%',
-                    toggleActions: 'play  none none none' 
+                    trigger: this.DOM.headline,
+                    start: 'top 75%',
+                    toggleActions: 'play none none none'
                 }
             });
+        } catch (e) {
+           console.warn("SplitText failed, using fallback animation");
+           gsap.from(this.DOM.headline, {
+            opacity: 0, y: 40, duration: 1
+           }) 
+        }
+    }
 
-            gsap.from(slide.querySelector('p'), {
-                opacity: 0,
-                y: 30, duration: 1.2,
-                ease: 'power2.out',
+    animateSlides() {
+        this.DOM.slides.forEach((slide, i) => {
+            // Slide container animation 
+            gsap.from(slide, {
+                opacity: 0, 
+                x: i % 2 === 0 ? 80 : -80,
+                duration: 1, delay: i * 0.2,
+                ease: 'power3.out',
                 scrollTrigger: {
                     trigger: slide,
                     start: 'top 80%',
                     toggleActions: 'play none none none'
                 }
             });
+
+            // Figcaption animation 
+            gsap.from(slide.querySelector('figcaption'), {
+                opacity: 0, y: 20,
+                duration: 0.8, delay: i * 0.2 + 0.3,
+                ease: 'back.out'
+            });
         });
     }
 
     setupBackgroundChanges() {
-        gsap.utils.toArray('.vision-slide').forEach(slide => {
+        this.DOM.slides.forEach(slide => {
             ScrollTrigger.create({
-                trigger: slide,
-                start: 'top 85%',
+                trigger: slide, start: 'top 50%',
                 onEnter: () => {
-                    this.bgContainer.computedStyleMap.backgroundImages = `url(${slide.dataset.bg})`;
-                }, 
-                onLeaveBack: () => {
-                    const prevSlide = slide.previousElementSibling;
-                    if (prevSlide?.classList.contains('vision-slide')) {
-                        this.bgContainer.computedStyleMap.backgroundImages = `url(${prevSlide.dataset.bg})`;
-                    }
+                    this.DOM.bg.style.backgroundImage = `url(${slide.dataset.bg})`;
+                    gsap.to(this.DOM.bg, { opacity: 0.25, duration: 1 });
+                },
+                onEnterBack: () => {
+                    this.DOM.bg.style.backgroundImage = `url(${slide.dataset.bg})`;
+                    gsap.to(this.DOM.bg, { opacity: 0.25, duration: 1 });
                 }
             });
         });
     }
 
-    animateColorShift() {
-        ScrollTrigger.create({
-            trigger: '.vision-slide:last-child',
-            start: 'top 85%',
-            onEnter: () => this.bgContainer.classList.add('rich-color'),
-            onLeaveBack: () => this.bgContainer.classList.remove('rich-color')
-        });
-    }
-
-    animateTechTags() {
-        gsap.from('.tech-tags', {
-            opacity: 0,
-            y: 40,
-            duration: 1,
-            ease: 'power3.out',
+    animateTagsAndVoiceover() {
+        // Tags Animation 
+        gsap.from(this.DOM.tags.children, {
+            opacity: 0, y: 40,
+            duration: 0.8, stagger: 0.15,
+            ease: 'back.out',
             scrollTrigger: {
-                trigger: '.tech-tags',
-                start: 'top 85%',
+                trigger: this.DOM.tags,
+                start: 'top 75%',
                 toggleActions: 'play none none none'
             }
         });
-    }
 
-    animateVoiceover() {
-        gsap.from('.voiceover-text', {
-            opacity: 0,
-            y: 40, duration: 1.2,
-            delay: 0.3, ease: 'power3.out',
+        // Voiceover animation 
+        gsap.from(this.DOM.voiceover, {
+            opacity: 0, y: 40, 
+            duration: 1, ease: 'power2.out',
             scrollTrigger: {
-                trigger: '.voiceover-text',
-                start: 'top 85%',
+                trigger: this.DOM.voiceover, 
+                start: 'top 70%',
                 toggleActions: 'play none none none'
             } 
         });
     }
 }
+console.log("GSAP version:", gsap.version); 
+console.log("ScrollTrigger:", ScrollTrigger ? "Loaded" : "Missing");
