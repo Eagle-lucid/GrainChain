@@ -73,39 +73,45 @@ export class Screen2Animations {
         ], { opacity: 1 });
     }
 
-    animateHeadline() {
-        if (!this.DOM.headline) return;
+        animateHeadline() {
+      if (!this.DOM.headline) return;
 
-        if (this.options.useSplitText) {
-            const split = new SplitText(this.DOM.headline, {
-                types: 'lines,words',
-                linesClass: 'line',
-                wordsClass: 'word'
-            });
+      if (this.options.useSplitText) {
+        const split = new SplitText(this.DOM.headline, {
+          type: 'lines,words',
+          linesClass: 'line',
+          wordsClass: 'word'
+        });
 
-            const anim = gsap.from(split.words, {
-                opacity: 0, y: 30,
-                duration: 1.2, stagger: 0.05,
-                ease: 'power3.out',
-                scrollTrigger: {
-                    trigger: this.DOM.headline,
-                    start: 'top 85%',
-                    toggleActions: 'play none none none'
-                }
-            });
-            this.animations.push(anim);
-        } else {
-            const anim = gsap.from(this.DOM.headline, {
-                opacity: 0, y: 40,
-                duration: 1.2, ease: 'power3.out',
-                scrollTrigger: {
-                    trigger: this.DOM.headline,
-                    start: 'top 85%',
-                }
-            });
-            this.animations.push(anim);
-        }
+        console.log('SplitText words:', split.words);
+
+        // Make sure parent is visible
+        gsap.set(this.DOM.headline, { opacity: 1, visibility: 'visible' });
+
+        const anim = gsap.from(split.words, {
+          opacity: 0, y: 30,
+          duration: 1.2, stagger: 0.05,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: this.DOM.headline,
+            start: 'top 85%',
+            toggleActions: 'play none none none',
+      }
+    });
+        this.animations.push(anim);
+      } else {
+        const anim = gsap.from(this.DOM.headline, {
+          opacity: 0, y: 40,
+          duration: 1.2, ease: 'power3.out',
+          scrollTrigger: {
+            trigger: this.DOM.headline,
+            start: 'top 85%',
+          }
+        });
+        this.animations.push(anim);
+      }
     }
+
 
     animateFloatingIcons() {
         if (!this.DOM.floatingIcons?.length || !this.options.animateIcons) return;
