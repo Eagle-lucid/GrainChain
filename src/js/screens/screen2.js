@@ -35,7 +35,6 @@ export class Screen2Animations {
             headline: document.querySelector('.screen--hidden-cost__headline'),
             floatingIcons: document.querySelectorAll('.screen--hidden-cost__floating-icon'),
             gradientOverlay: document.querySelector('.screen--hidden-cost__gradient-overlay'),
-            supplyChain: document.querySelector('.supply-chain'),
             stats: document.querySelectorAll('.stats__value'),
             quiz: document.querySelector('.quiz'),
             content: document.querySelector('.screen--hidden-cost__content')
@@ -60,7 +59,6 @@ export class Screen2Animations {
         this.animateHeadline();
         this.animateFloatingIcons();
         this.animateGradient();
-        this.animateSupplyChainVisual();
         this.animateStatsCounter();
         this.animateContent();
     }
@@ -148,8 +146,8 @@ export class Screen2Animations {
     }
 
     animateStatsCounter() {
-  const statItems = document.querySelectorAll('.stats__item');
 
+  const statItems = document.querySelectorAll('.stats__item');
   if (!statItems.length) return;
 
   statItems.forEach(item => {
@@ -161,7 +159,6 @@ export class Screen2Animations {
     const target = parseInt(valueElement.dataset.count, 10);
     const obj = { val: 0 };
 
-    // Initialize
     valueElement.textContent = '0%';
     valueElement.style.opacity = '0';
     label.style.opacity = '0';
@@ -170,18 +167,18 @@ export class Screen2Animations {
       scrollTrigger: {
         trigger: item,
         start: 'top 80%',
-        once: true
+        once: true,
+        markers: true,
+        onEnter: () => console.log(`Triggered stats for ${target}%`)
       }
     });
 
-    // Animate opacity of value and label
     tl.to([valueElement, label], {
       opacity: 1,
       duration: 0.5,
       ease: 'power1.out'
     });
 
-    // Animate number count
     tl.to(obj, {
       val: target,
       duration: 2,
@@ -199,11 +196,20 @@ export class Screen2Animations {
         this.updateCounterColor(valueElement, target);
       }
     }, "<");
-    
+
     this.animations.push(tl);
   });
 }
 
+    updateCounterColor(el, val) {
+      if (val < 30) {
+        el.style.color = 'orange';
+      } else if (val < 70) {
+        el.style.color = 'red';
+      } else {
+        el.style.color = 'green';
+      }
+    }
 
        animateContent() {
         if (!this.DOM.content) return;
