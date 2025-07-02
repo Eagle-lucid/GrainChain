@@ -53,7 +53,7 @@ export class Screen3Animations {
 
     gsap.set([
       this.DOM.slides,
-      this.DOM.tags,
+      this.DOM.tags.children,
       this.DOM.voiceover,
       this.DOM.blockquote
     ], { autoAlpha: 0, y: 40, x: 0 });
@@ -148,10 +148,12 @@ export class Screen3Animations {
       this.animations.push(anim);
     }
   }
-
-  // Tags & Voiceover 
+  
+// Tags & Voiceover 
   animateTagsAndVoiceover() {
     if (this.DOM.tags) {
+      gsap.set(this.DOM.tags.children, { autoAlpha: 0, y: 40 });
+
       const tagsAnim =gsap.to(this.DOM.tags.children, {
         autoAlpha: 1, y: 0,
         duration: 0.8, stagger: 0.15,

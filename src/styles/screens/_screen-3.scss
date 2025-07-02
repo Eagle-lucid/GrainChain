@@ -91,8 +91,6 @@
     display: flex;
     gap: map.get($spacing, 'sm');
     margin-top: map.get($spacing, 'xxl');
-    transform: translateY(40px);
-    will-change: opacity, transform;
 
     .tag {
       position: relative;
@@ -104,12 +102,14 @@
       font-family: var(--btn-font);
       font-size: clamp(var(--font-size-sm), 2vw, var(--font-size-md));
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      transform: translateY(40px);
       cursor: pointer;
-      opacity: 0;
+      opacity: 1;
       transform-style: preserve-3d;
       backface-visibility: hidden;
       z-index: 3;
       transition: all map.get($transition-durations, 'normal') ease;
+      will-change: opacity, transform;
 
       &:hover {
         transform: scale(1.05);
