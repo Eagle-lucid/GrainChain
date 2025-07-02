@@ -91,8 +91,7 @@ export class Screen3Animations {
       scrollTrigger: {
         trigger: this.DOM.headline,
         start: 'top 80%',
-        toggleActions: 'play none none none',
-        markers: true
+        toggleActions: 'play none none none'
       }
     });
     this.animations.push(anim);
@@ -107,8 +106,7 @@ export class Screen3Animations {
         scrollTrigger: {
           trigger: slide,
           start: 'top 80%',
-          toggleActions: 'play none none none',
-          markers: true
+          toggleActions: 'play none none none'
         }
       });
       
@@ -141,8 +139,7 @@ export class Screen3Animations {
         scrollTrigger: {
           trigger: this.DOM.blockquote,
           start: 'top 80%',
-          toggleActions: 'play none none none',
-          markers: true
+          toggleActions: 'play none none none'
         }
       });
       this.animations.push(anim);
@@ -161,8 +158,7 @@ export class Screen3Animations {
         scrollTrigger: {
           trigger: this.DOM.tags,
           start: 'top 80%',
-          toggleActions: 'play none none none',
-          markers: true
+          toggleActions: 'play none none none'
         }
       });
       this.animations.push(tagsAnim);
@@ -175,8 +171,7 @@ export class Screen3Animations {
         scrollTrigger: {
           trigger: this.DOM.voiceover,
           start: 'top 80%',
-          toggleActions: 'play none none none',
-          markers: true
+          toggleActions: 'play none none none'
         }
       });
       this.animations.push(voiceAnim);
@@ -190,8 +185,7 @@ export class Screen3Animations {
         trigger: slide,
         start: 'top 50%',
         onEnter: () => this.updateBackground(slide),
-        onEnterBack: () => this.updateBackground(slide),
-        markers: true
+        onEnterBack: () => this.updateBackground(slide)
       });
       this.animations.push(trigger);
     });
@@ -202,7 +196,7 @@ export class Screen3Animations {
       opacity: 0, duration: 0.5,
       onComplete: () => {
         this.DOM.bg.style.backgroundImage = `url(${slide.dataset.bg})`;
-        gsap.to(this.DOM.bg, { opacity: 0.15, duration: 1 });
+        gsap.to(this.DOM.bg, { opacity: 0.2, duration: 1 });
       }
     })
   }
