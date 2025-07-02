@@ -148,7 +148,7 @@ export class Screen3Animations {
       this.animations.push(anim);
     }
   }
-  
+
 // Tags & Voiceover 
   animateTagsAndVoiceover() {
     if (this.DOM.tags) {
@@ -202,7 +202,7 @@ export class Screen3Animations {
       opacity: 0, duration: 0.5,
       onComplete: () => {
         this.DOM.bg.style.backgroundImage = `url(${slide.dataset.bg})`;
-        gsap.to(this.DOM.bg, { opacity: 0.5, duration: 1 });
+        gsap.to(this.DOM.bg, { opacity: 0.15, duration: 1 });
       }
     })
   }
