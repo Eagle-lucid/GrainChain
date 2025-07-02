@@ -24,7 +24,7 @@
     @include overlay(0);
     background-size: cover;
     background-position: center;
-    opacity: 0.25;
+    opacity: 0.5;
     transition:
       opacity map.get($transition-durations, 'slow') ease-in-out,
       background-image map.get($transition-durations, 'slow') ease-in-out;
@@ -50,7 +50,7 @@
     backface-visibility: hidden;
     will-change: opacity, transform;
   }
-  
+
   .split-word {
       display: inline-block;
       @include gradient-text(45deg, $primary-color, $accent-color);

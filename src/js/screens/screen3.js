@@ -2,6 +2,9 @@
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { SplitText } from 'gsap/SplitText';
+import ColdTruck from '../../assets/images/cold-truck.jpg';
+import FarmerAlert from '../../assets/images/farmer-alert-call.jpg';
+import ProduceData from '../../assets/images/produce-data.jpg';
 
 gsap.registerPlugin(ScrollTrigger, SplitText);
 
@@ -10,6 +13,9 @@ export class Screen3Animations {
     this.DOM = this.getDOMElements();
     this.animations = [];
     this.preferReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    this.setSlideBackgrounds();
+    this.DOM.bg.style.backgroundImage = `url(${this.DOM.slides[0].dataset.bg})`;
 
     if (this.DOM.screen) {
       this.resetInitialStates();
@@ -32,6 +38,13 @@ export class Screen3Animations {
       voiceover: document.querySelector('.screen--vision__voiceover'),
       blockquote: document.querySelector('.screen--vision blockquote')
     };
+  }
+
+  setSlideBackgrounds() {
+    // Import images 
+    this.DOM.slides[0].dataset.bg = ColdTruck;
+    this.DOM.slides[1].dataset.bg = FarmerAlert;
+    this.DOM.slides[2].dataset.bg = ProduceData;
   }
 
   resetInitialStates() {
@@ -183,8 +196,13 @@ export class Screen3Animations {
   }
 
   updateBackground(slide) {
-    this.DOM.bg.style.backgroundImage = `url(${slide.dataset.bg})`;
-    gsap.to(this.DOM.bg, { opacity: 0.25, duration: 1 });
+    gsap.to(this.DOM.bg, {
+      opacity: 0, duration: 0.5,
+      onComplete: () => {
+        this.DOM.bg.style.backgroundImage = `url(${slide.dataset.bg})`;
+        gsap.to(this.DOM.bg, { opacity: 0.5, duration: 1 });
+      }
+    })
   }
   
   cleanUp() {
