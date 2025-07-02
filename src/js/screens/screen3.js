@@ -66,7 +66,9 @@ export class Screen3Animations {
 
   // Headline Animation 
   animateHeadline() {
-    const split = new SplitText(this.DOM.headline, { type: 'words' });
+    const split = new SplitText(this.DOM.headline, { 
+      type: 'words', wordsClass: 'split-word' 
+    });
     gsap.set(split.words, { autoAlpha: 0, y: 40 });
 
     const anim = gsap.to(split.words, {
