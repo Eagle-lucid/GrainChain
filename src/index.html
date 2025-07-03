@@ -296,54 +296,80 @@
               </section>
 
            <!-- Screen 4: The Mission -->
-            <section id="mission" class="screen screen-4 fade-in-stagger">
-                <!-- Headline -->
-                <h2 class="headline fade-in">We're building the tech to stop food loss</h2>
+<section id="mission" class="screen screen--mission" aria-label="Mission sign-up">
+  <!-- Inner Container for GSAP stagger control -->
+  <div class="screen--mission__inner">
+    <!-- Headline Group -->
+    <div class="screen--mission__header">
+      <h2 class="screen--mission__header-title" data-animate="fade-up">
+        We're building the tech to stop food loss
+      </h2>
 
-                <!-- Mission Statements -->
-                <p class="microcopy fade-in">Together we create smarter supply chains.</p>
-                
-                <!-- CTA Form -->
-                 <form action="" class="cta-form">
-                    <div class="form-group fade-in-up">
-                        <label for="name">
-                            Name:
-                            <input type="text" name="name" id="name" placeholder="Your Name" required />
-                        </label>
-                    </div>
-                    <div class="form-group fade-in-up">
-                        <label for="email">
-                            Email:
-                            <input type="email" name="email" id="email" placeholder="Your Email" required />
-                        </label>
-                    </div>
-                    <div class="form-group fade-in-up">
-                        <label for="role">Select your role:</label>
-                        <select name="role" id="role" >
-                            <option value="" disabled selected>Select your role</option>
-                            <option value="farmer">Farmer</option>
-                            <option value="distributor">Distributor</option>
-                            <option value="retailer">Retailer</option>
-                            <option value="partner">Partner</option>
-                            <option value="investor">Investor</option>
-                            <option value="volunteer">Volunteer</option>
-                            <option value="other">Other</option>
-                        </select>
-                    </div>
-                    <div class="form-group fade-in-up">
-                       <label for="location">
-                            Location:
-                            <input type="text" name="location" id="location" placeholder="Your Location" required />
-                        </label>
-                    </div>
-                    <button type="submit" class="submit-btn fade-in-up">Join the Mission</button>
+      <p class="screen--mission__header-tagline" data-animate="fade-up" data-delay="0.1">
+        Together we create smarter supply chains.
+      </p>
+    </div>
 
-                    <!-- TODO: Add support logos/testimonials in Phase 2 -->
-                 </form>
-            </section>
-            <!-- Sticky CTA Button -->
-             <button class="sticky-cta bounce" onclick="scrollToCTA()">Join the Movement</button>
-        </section>
+    <!-- Form -->
+    <form class="screen--mission__form" id="missionForm" novalidate data-animate="fade-up" data-delay="0.2">
+      <!-- Name Field -->
+      <div class="form-field">
+        <label for="missionName" class="form-label">
+          <span class="form-label__text">Name</span>
+          <input type="text" id="missionName" class="form-input" name="name" placeholder=" " required aria-describedby="nameError" />
+        </label>
+        <div id="nameError" class="form-error" aria-live="polite"></div>
+      </div>
+
+      <!-- Email Field -->
+      <div class="form-field">
+        <label for="missionEmail" class="form-label">
+          <span class="form-label__text">Email</span>
+          <input type="email" id="missionEmail" class="form-input" name="email" placeholder=" " required aria-describedby="emailError" />
+        </label>
+        <div id="emailError" class="form-error" aria-live="polite"></div>
+      </div>
+
+      <!-- Role Dropdown -->
+      <div class="form-field">
+        <label for="missionRole" class="form-label">
+          <span class="form-label__text">Select your role</span>
+          <select name="role" id="missionRole" class="form-select" required aria-describedby="roleError">
+            <option value="" disabled selected hidden>Select your role</option>
+            <option value="farmer">Farmer</option>
+            <option value="distributor">Distributor</option>
+            <option value="retailer">Retailer</option>
+            <option value="partner">Partner</option>
+            <option value="investor">Investor</option>
+            <option value="volunteer">Volunteer</option>
+          </select>
+        </label>
+        <div id="roleError" class="form-error" aria-live="polite"></div>
+      </div>
+
+      <!-- Location Field -->
+      <div class="form-field">
+        <label for="missionLocation" class="form-label">
+          <span class="form-label__text">Location</span>
+          <input type="text" id="missionLocation" class="form-input" name="location" placeholder=" " required aria-describedby="locationError" />
+        </label>
+        <div id="locationError" class="form-error" aria-live="polite"></div>
+      </div>
+
+      <button type="submit" class="screen--mission__submit" aria-live="polite">
+        <span class="btn__text">Join the Mission</span>
+        <span class="btn__loader" hidden aria-hidden="true"></span>
+      </button>
+    </form>
+  </div>
+
+  <!-- Future Testimonials Container -->
+  <div class="screen--mission__testimonials" data-animate="fade" data-delay="0.3" loading="lazy"></div>
+</section>
+
+<!-- Sticky CTA Button -->
+<button class="sticky-cta bounce" onclick="scrollToCTA()">Join the Movement</button>
+
       </main>
         <!-- Overlay (for closing sidebar when clicking outside) -->
         <div class="overlay" id="sidebarOverlay"></div>
