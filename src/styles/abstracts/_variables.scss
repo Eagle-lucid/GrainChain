@@ -106,6 +106,14 @@ $breakpoints: (
   'lg': 992px,
   'xl': 1200px
 );
+$form-states: (
+  'focus-ring': 0 0 0 3px rgba(map.get($colors, 'primary'), 0.3),
+  'error-ring': 0 0 0 3px rgba(map.get($colors, 'error'), 0.3)
+);
+$animation-delays: (
+  'form-field': 0.05s,
+  'stagger-group': 0.1s  
+);
 // Export to CSS Variables
 :root {
   // Colors
