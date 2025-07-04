@@ -1,4 +1,5 @@
 @use "sass:map";
+@use "sass:color";
 @use "../abstracts/variables" as *;
 @use "../abstracts/mixins" as *;
 
@@ -180,7 +181,7 @@
       height: 3rem;
 
       &:hover {
-        background: lighten(map.get($colors, 'success'), 5%);
+        background: color.scale(map.get($colors, 'success'), $lightness: 8.62%);
         transform: translateY(-2px);
         box-shadow: map.get($shadows, 'md');
       }
