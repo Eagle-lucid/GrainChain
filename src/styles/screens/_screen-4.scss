@@ -1,0 +1,204 @@
+@use "sass:map";
+@use "../abstracts/variables" as *;
+@use "../abstracts/mixins" as *;
+
+.screen--mission {
+  @include flex-center;
+  flex-direction: column;
+  position: relative;
+  min-height: 100dvh;
+  padding: map.get($spacing, 'xxl') map.get($spacing, 'xl');
+  background: linear-gradient(
+    135deg,
+    hsl(160, 80%, 30%),
+    hsl(210, 90%, 60%),
+    hsl(0, 100%, 50%)
+  );
+  overflow: hidden;
+  z-index: var(--z-base);
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: var(--z-behind);
+  }
+
+  &::before {
+    background: linear-gradient(
+      120deg,
+      hsla(0, 0%, 100%, 0.03) 0%,
+      hsla(0, 0%, 100%, 0.08) 50%,
+      hsla(0, 0%, 100%, 0.03) 100%
+    );
+  }
+
+  &::after {
+    background: radial-gradient(
+      circle at center,
+      hsla(0, 0%, 100%, 0.05),
+      transparent 60%
+    );
+  }
+
+  // Inner container
+  &__inner {
+    width: 100%;
+    max-width: 800px;
+    @include flex-center;
+    flex-direction: column;
+    gap: map.get($spacing, 'xl');
+    padding: map.get($spacing, 'md');
+  }
+
+  // Header
+  &__header {
+    text-align: center;
+    width: 100%;
+    padding: 0 map.get($spacing, 'md');
+
+    &-title {
+      font-family: map.get($font-families, 'header');
+      font-size: clamp(map.get($font-sizes, 'lg'), 5vw, map.get($font-sizes, 'xxl'));
+      color: map.get($colors, 'text-white');
+      line-height: 1.3;
+      margin-bottom: map.get($spacing, 'md');
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+    }
+
+    &-tagline {
+      font-family: map.get($font-families, 'primary');
+      font-size: clamp(map.get($font-sizes, 'md'), 2.5vw, map.get($font-sizes, 'lg'));
+      font-weight: 500;
+      color: map.get($colors, 'text-white');
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+      letter-spacing: var(--space-xs);
+    }
+  }
+
+  // Form wrapper
+  &__form {
+    background: map.get($colors, 'background');
+    border-radius: map.get($radii, 'lg');
+    padding: map.get($spacing, 'xl');
+    box-shadow: map.get($shadows, 'lg');
+    width: 100%;
+    max-width: 600px;
+    display: grid;
+    gap: map.get($spacing, 'lg');
+
+    // Form field
+    .form-field {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        margin-bottom: map.get($spacing, 'md');
+
+        .form-input, .form-select {
+            width: 100%;
+            padding: map.get($spacing, 'xs') map.get($spacing, 'xxs');
+            font-family: map.get($font-families, 'primary');
+            font-size: clamp(
+                map.get($font-sizes, 'sm'),
+                5vw,
+                map.get($font-sizes, 'base')
+            );
+            border: 2px solid map.get($colors, 'border');
+            border-radius: map.get($radii, 'md');
+            background: rgba(map.get($colors, 'background'), 0.95);
+            transition: border-color map.get($transition-durations, 'normal'),
+                        box-shadow map.get($transition-durations, 'normal');
+            appearance: none; 
+            
+            &:focus {
+                border-color: map.get($colors, 'primary');
+                box-shadow: map.get($form-states, 'focus-ring');
+                outline: none;
+            }
+
+            &[aria-invalid="true"] {
+                border-color: map.get($colors, 'error');
+                box-shadow: map.get($form-states, 'error-ring');
+            }
+        }
+
+        // Floating labels
+        .form-label {
+            position: absolute;
+            left: map.get($spacing, 'md');
+            top: 50%;
+            transform: translateY(-50%);
+            color: map.get($colors, 'text-secondary');
+            font-size: map.get($font-sizes, 'sm');
+            background: map.get($colors, 'background');
+            padding: 0 map.get($spacing, 'xs');
+            border-radius: map.get($radii, 'sm');
+             transition: 
+                top map.get($transition-durations, 'fast'),
+                left map.get($transition-durations, 'fast'),
+                font-size map.get($transition-durations, 'fast'),
+                color map.get($transition-durations, 'fast')
+            ;
+            pointer-events: none;
+        }
+        .form-input:focus + .form-label,
+        .form-input:not(:placeholder-shown) + .form-label {
+            top: 0;
+            left: map.get($spacing, 'sm');
+            font-size: map.get($font-sizes, 'xxs');
+            color: map.get($colors, 'primary');
+        }
+
+        // Error or helper 
+        .form-error {
+            color: map.get($colors, 'error');
+            font-size: map.get($font-sizes, 'xs');
+            margin-top: map.get($spacing, 'xs');
+            padding-left: map.get($spacing, 'sm');
+        }
+
+        .form-helper {
+           color: map.get($colors, 'text-secondary');
+           font-size: map.get($font-sizes, 'xs');
+           margin-top: map.get($spacing, 'xs');
+           padding-left: map.get($spacing, 'sm'); 
+        }
+    }
+
+    .screen--mission__submit {
+      background: map.get($colors, 'success');
+      color: map.get($colors, 'text-white');
+      padding: map.get($spacing, 'md') map.get($spacing, 'xl');
+      border-radius: map.get($radii, 'md');
+      font-family: map.get($font-families, 'btn');
+      font-weight: 600;
+      transition: all map.get($transition-durations, 'normal');
+      cursor: pointer;
+      border: none;
+      height: 3rem;
+
+      &:hover {
+        background: lighten(map.get($colors, 'success'), 5%);
+        transform: translateY(-2px);
+        box-shadow: map.get($shadows, 'md');
+      }
+
+      &:active {
+        transform: translateY(0);
+      }
+    }
+  }
+
+  &__testimonials {
+    margin-top: map.get($spacing, 'xl');
+    width: 100%;
+  }
+
+  [data-animate] {
+    opacity: 0;
+    will-change: opacity, transform;
+
+  }
+}
