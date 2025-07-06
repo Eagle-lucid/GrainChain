@@ -82,92 +82,121 @@
   // Form wrapper
   &__form {
     background: map.get($colors, 'background');
-    border-radius: map.get($radii, 'lg');
-    padding: map.get($spacing, 'xl');
-    box-shadow: map.get($shadows, 'lg');
-    width: 100%;
-    max-width: 600px;
-    display: grid;
-    gap: map.get($spacing, 'lg');
+  border-radius: map.get($radii, 'lg');
+  padding: map.get($spacing, 'xl');
+  box-shadow: map.get($shadows, 'lg');
+  width: 100%;
+  max-width: 600px;
+  display: grid;
+  gap: map.get($spacing, 'lg');
 
-    // Form field
-    .form-field {
-        position: relative;
-        display: flex;
-        flex-direction: column;
-        margin-bottom: map.get($spacing, 'md');
+  .form-field {
+    position: relative;
+    display: flex;
+    flex-direction: column;
 
-        .form-input, .form-select {
-            width: 100%;
-            padding: map.get($spacing, 'xs') map.get($spacing, 'xxs');
-            font-family: map.get($font-families, 'primary');
-            font-size: clamp(
-                map.get($font-sizes, 'sm'),
-                5vw,
-                map.get($font-sizes, 'base')
-            );
-            border: 2px solid map.get($colors, 'border');
-            border-radius: map.get($radii, 'md');
-            background: rgba(map.get($colors, 'background'), 0.95);
-            transition: border-color map.get($transition-durations, 'normal'),
-                        box-shadow map.get($transition-durations, 'normal');
-            appearance: none; 
-            
-            &:focus {
-                border-color: map.get($colors, 'primary');
-                box-shadow: map.get($form-states, 'focus-ring');
-                outline: none;
-            }
+    // Base Inputs
+    .form-input,
+    .form-select {
+      width: 100%;
+      padding: calc(map.get($spacing, 'md') + map.get($spacing, 'xs'))
+               map.get($spacing, 'xs')
+               map.get($spacing, 'xs');
+      font-family: map.get($font-families, 'primary');
+      font-size: clamp(map.get($font-sizes, 'sm'), 5vw, map.get($font-sizes, 'base'));
+      border: 2px solid map.get($colors, 'border');
+      border-radius: map.get($radii, 'md');
+      background: rgba(map.get($colors, 'background'), 0.95);
+      transition:
+        border-color map.get($transition-durations, 'normal'),
+        box-shadow map.get($transition-durations, 'normal');
+      appearance: none;
 
-            &[aria-invalid="true"] {
-                border-color: map.get($colors, 'error');
-                box-shadow: map.get($form-states, 'error-ring');
-            }
-        }
+      &:focus {
+        border-color: map.get($colors, 'primary');
+        box-shadow: map.get($form-states, 'focus-ring');
+        outline: none;
+      }
 
-        // Floating labels
-        .form-label {
-            position: absolute;
-            left: map.get($spacing, 'md');
-            top: 50%;
-            transform: translateY(-50%);
-            color: map.get($colors, 'text-secondary');
-            font-size: map.get($font-sizes, 'sm');
-            background: map.get($colors, 'background');
-            padding: 0 map.get($spacing, 'xs');
-            border-radius: map.get($radii, 'sm');
-             transition: 
-                top map.get($transition-durations, 'fast'),
-                left map.get($transition-durations, 'fast'),
-                font-size map.get($transition-durations, 'fast'),
-                color map.get($transition-durations, 'fast')
-            ;
-            pointer-events: none;
-        }
-        .form-input:focus + .form-label,
-        .form-input:not(:placeholder-shown) + .form-label {
-            top: 0;
-            left: map.get($spacing, 'sm');
-            font-size: map.get($font-sizes, 'xxs');
-            color: map.get($colors, 'primary');
-        }
-
-        // Error or helper 
-        .form-error {
-            color: map.get($colors, 'error');
-            font-size: map.get($font-sizes, 'xs');
-            margin-top: map.get($spacing, 'xs');
-            padding-left: map.get($spacing, 'sm');
-        }
-
-        .form-helper {
-           color: map.get($colors, 'text-secondary');
-           font-size: map.get($font-sizes, 'xs');
-           margin-top: map.get($spacing, 'xs');
-           padding-left: map.get($spacing, 'sm'); 
-        }
+      &[aria-invalid="true"] {
+        border-color: map.get($colors, 'error');
+        box-shadow: map.get($form-states, 'error-ring');
+      }
     }
 
+    .form-select {
+      background: url(/src/assets/icons/chevron-down.svg) no-repeat right 1rem center;
+      background-size: 1rem;
+      padding-right: map.get($spacing, 'xl');
+
+      option {
+        background: map.get($colors, 'background');
+        color: map.get($colors, 'text-primary');
+      }
+    }
+
+    // Floating Labels
+    .form-label {
+      position: absolute;
+      left: map.get($spacing, 'md');
+      top: map.get($spacing, 'md');
+      transform: translateY(0);
+      color: map.get($colors, 'text-secondary');
+      font-size: map.get($font-sizes, 'sm');
+      background: map.get($colors, 'background');
+      padding: 0 map.get($spacing, 'xs');
+      border-radius: map.get($radii, 'sm');
+      transition:
+        top map.get($transition-durations, 'fast'),
+        left map.get($transition-durations, 'fast'),
+        font-size map.get($transition-durations, 'fast'),
+        color map.get($transition-durations, 'fast');
+      pointer-events: none;
+    }
+
+    .form-input:focus ~ .form-label,
+    .form-input:not(:placeholder-shown) ~ .form-label,
+    .form-select:focus ~ .form-label,
+    .form-select:valid ~ .form-label {
+      top: 0;
+      left: map.get($spacing, 'sm');
+      font-size: map.get($font-sizes, 'xxs');
+      color: map.get($colors, 'primary');
+    }
+
+    // Error & Helper
+    .form-error {
+      color: map.get($colors, 'error');
+      font-size: map.get($font-sizes, 'xs');
+      margin-top: map.get($spacing, 'xs');
+      padding-left: map.get($spacing, 'sm');
+    }
+
+    .form-helper {
+      color: map.get($colors, 'text-secondary');
+      font-size: map.get($font-sizes, 'xs');
+      margin-top: map.get($spacing, 'xs');
+      padding-left: map.get($spacing, 'sm');
+    }
+
+    .form-error,
+    .form-helper {
+      transition: opacity map.get($transition-durations, 'normal') ease,
+                  transform map.get($transition-durations, 'normal') ease;
+      opacity: 0.25;
+      transform: translateY(-5px);
+    }
+
+    .form-field:has(.invalid) .form-error {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .form-field:has(.valid) .form-helper {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
     .screen--mission__submit {
       background: map.get($colors, 'success');
       color: map.get($colors, 'text-white');
