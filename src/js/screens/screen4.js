@@ -1,64 +1,124 @@
-// src/js/screens/scree4.js
+// src/js/screens/screen4.js
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { SplitText } from 'gsap/SplitText';
+import { FormValidator } from '../components/form-validation.js';
+
+gsap.registerPlugin(ScrollTrigger, SplitText);
+
 export class Screen4Animations {
-    constructor() {
-        this.init();
+  constructor() {
+    this.DOM = this.getDOMElements();
+    if (!this.DOM.screen) return;
+
+    this.FormValidator = new FormValidator(this.DOM.form);
+
+    this.resetInitialStates();
+    this.initAnimations();
+    this.setupScrollTriggers();
+  }
+
+  getDOMElements() {
+    return {
+      screen: document.querySelector('.screen--mission'),
+      headerTitle: document.querySelector('.screen--mission__header-title'),
+      tagline: document.querySelector('.screen--mission__header-tagline'),
+      form: document.querySelector('.screen--mission__form'),
+      fields: gsap.utils.toArray(document.querySelectorAll('.screen--mission .form-field'))
+    };
+  }
+
+  resetInitialStates() {
+    // Make sure states match the animation
+    if (this.DOM.headerTitle) gsap.set(this.DOM.headerTitle, { autoAlpha: 1, y: 0 });
+    if (this.DOM.tagline) gsap.set(this.DOM.tagline, { autoAlpha: 0, y: 20 });
+    if (this.DOM.form) gsap.set(this.DOM.form, { autoAlpha: 0, y: 30 });
+    if (this.DOM.fields.length > 0) {
+      gsap.set(this.DOM.fields, { autoAlpha: 0, y: 20 });
     }
+  }
 
-    init() {
-        this.animateHeadline();
-        this.animateMicrocopy();
-        this.animateForm();
-    }
+  initAnimations() {
+    this.animateHeader();
+    this.animateTagline();
+    this.animateForm();
+  }
 
-    animateHeadline() {
-        const headline = document.querySelector('.screen-4 .headline');
-        if (!headline) return;
+  animateHeader() {
+    const { headerTitle } = this.DOM;
+    if (!headerTitle) return;
 
-        const splitHeadline = new SplitText(headline, { type: 'words'});
-        gsap.from(splitHeadline.words, {
-            opacity: 0, y: 40,
-            duration: 1.2, stagger: 0.2,
-            ease: 'power3.out',
-            scrollTrigger: {
-                trigger: headline,
-                start: 'top 85%',
-                toggleActions: 'play none none none'
-            }
-        })
-    }
+    const splitHeadline = new SplitText(headerTitle, {
+      type: 'words,chars',
+      wordsClass: 'word',
+      charsClass: 'char'
+    });
 
-    animateMicrocopy() {
-        const microcopy = document.querySelector('.screen-4 .microcopy');
-        if (!microcopy) return;
+    gsap.from(splitHeadline.chars, {
+      autoAlpha: 0, y: 30,
+      duration: 1, stagger: 0.03,
+      ease: 'power3.out',
+      scrollTrigger: {
+        trigger: headerTitle,
+        start: 'top 85%',
+        toggleActions: 'play none none none',
+        markers: true
+      }
+    });
+  }
 
-        const splitText = new SplitText(microcopy, { type: 'chars' });
-        gsap.fromTo(splitText.chars,
-            { opacity: 0, y: 20, scale: 0.95 },
-            {
-                opacity: 1, y: 0,
-                scale: 1, duration: 1.2,
-                stagger: 0.05, ease: 'power3.out',
-                scrollTrigger: {
-                    trigger: microcopy,
-                    start: 'top 85%',
-                    toggleActions: 'play none none none'
-                }
-            }
-        );
-    }
+  animateTagline() {
+    const { tagline } = this.DOM;
+    if (!tagline) return;
 
-    animateForm() {
-        const form = document.querySelector('.screen-4 .cta-form');
-        if (!form) return;
+    gsap.from(tagline, {
+      autoAlpha: 0, y: 20,
+      duration: 0.8,
+      ease: 'power2.out',
+      scrollTrigger: {
+        trigger: tagline,
+        start: 'top 85%',
+        toggleActions: 'play none none none',
+        markers: true
+      }
+    });
+  }
 
-        gsap.from(form, {
-            opacity: 0, y: 40,
-            duration: 1.2, ease: 'power3.out',
-            scrollTrigger: {
-                trigger: form,
-                start: 'top 85%',
-                toggleActions: 'play none none none'
-            } 
-        });
-    }
+  animateForm() {
+    const { form, fields } = this.DOM;
+    if (!form) return;
+
+    // Animate form wrapper
+    gsap.from(form, {
+      autoAlpha: 0, y: 30,
+      duration: 1,
+      ease: 'back.out(1.2)',
+      scrollTrigger: {
+        trigger: form,
+        start: 'top 90%',
+        toggleActions: 'play none none none',
+        markers: true
+      }
+    });
+
+    // Animate each field independently
+    fields.forEach((field, i) => {
+      gsap.from(field, {
+        autoAlpha: 0, y: 20,
+        duration: 0.6,
+        delay: i * 0.1,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: field,
+          start: 'top 95%',
+          toggleActions: 'play none none none',
+          markers: true
+        }
+      });
+    });
+  }
+
+  setupScrollTriggers() {
+    window.addEventListener('load', () => ScrollTrigger.refresh(true));
+  }
 }
