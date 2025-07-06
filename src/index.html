@@ -296,83 +296,75 @@
               </section>
 
            <!-- Screen 4: The Mission -->
-<section id="mission" class="screen screen--mission" aria-label="Mission sign-up">
-  <!-- Inner Container for GSAP stagger control -->
-  <div class="screen--mission__inner">
-    <!-- Headline Group -->
-    <div class="screen--mission__header">
-      <h2 class="screen--mission__header-title" data-animate="fade-up">
-        We're building the tech to stop food loss
-      </h2>
+      <section id="mission" class="screen screen--mission" aria-label="Mission sign-up">
+        <!-- Inner Container for GSAP stagger control -->
+        <div class="screen--mission__inner">
+          <!-- Headline Group -->
+          <div class="screen--mission__header">
+            <h2 class="screen--mission__header-title" data-animate="fade-up">
+              We're building the tech to stop food loss
+            </h2>
+      
+            <p class="screen--mission__header-tagline" data-animate="fade-up" data-delay="0.1">
+              Together we create smarter supply chains.
+            </p>
+          </div>
+      
+          <!-- Form -->
+          <form class="screen--mission__form" id="missionForm" novalidate data-animate="fade-up" data-delay="0.2">
+            <!-- Name Field -->
+            <div class="form-field">
+              <input type="text" id="missionName" class="form-input" name="name" placeholder=" " required aria-describedby="nameError" />
+              <label for="missionName" class="form-label">Name</label>
+              <div id="nameError" class="form-error" aria-live="polite"></div>
+              <div id="nameHelper" class="form-helper" aria-live="polite"></div>
+            </div>
+      
+            <!-- Email Field -->
+            <div class="form-field">
+              <input type="email" id="missionEmail" class="form-input" name="email" placeholder=" " required aria-describedby="emailError" />
+              <label for="missionEmail" class="form-label">Email</label>
+              <div id="emailError" class="form-error" aria-live="polite"></div>
+              <div id="emailHelper" class="form-helper" aria-live="polite"></div>
+            </div>
+      
+            <!-- Role Dropdown -->
+            <div class="form-field">
+                <select name="role" id="missionRole" class="form-select" required aria-describedby="roleError">
+                  <option value="" disabled selected hidden></option>
+                  <option value="farmer">Farmer</option>
+                  <option value="distributor">Distributor</option>
+                  <option value="retailer">Retailer</option>
+                  <option value="partner">Partner</option>
+                  <option value="investor">Investor</option>
+                  <option value="volunteer">Volunteer</option>
+                </select>
+              <label for="missionRole" class="form-label">Select your role</label>
+              <div id="roleError" class="form-error" aria-live="polite"></div>
+              <div id="roleHelper" class="form-helper" aria-live="polite"></div>
+            </div>
+      
+            <!-- Location Field -->
+            <div class="form-field">
+              <input type="text" id="missionLocation" class="form-input" name="location" placeholder=" " required aria-describedby="locationError" />
+              <label for="missionLocation" class="form-label">Location</label>
+              <div id="locationError" class="form-error" aria-live="polite"></div>
+              <div id="locationHelper" class="form-helper" aria-live="polite"></div>
+            </div>
+      
+            <button type="submit" class="screen--mission__submit" aria-live="polite">
+              <span class="btn__text">Join the Mission</span>
+              <span class="btn__loader" hidden aria-hidden="true"></span>
+            </button>
+          </form>
+        </div>
+      
+        <!-- Future Testimonials Container -->
+        <div class="screen--mission__testimonials" data-animate="fade" data-delay="0.3" loading="lazy"></div>
+      </section>
 
-      <p class="screen--mission__header-tagline" data-animate="fade-up" data-delay="0.1">
-        Together we create smarter supply chains.
-      </p>
-    </div>
-
-    <!-- Form -->
-    <form class="screen--mission__form" id="missionForm" novalidate data-animate="fade-up" data-delay="0.2">
-      <!-- Name Field -->
-      <div class="form-field">
-        <label for="missionName" class="form-label">
-          <span class="form-label__text">Name</span>
-          <input type="text" id="missionName" class="form-input" name="name" placeholder=" " required aria-describedby="nameError" />
-        </label>
-        <div id="nameError" class="form-error" aria-live="polite"></div>
-        <div id="nameHelper" class="form-helper" aria-live="polite"></div>
-      </div>
-
-      <!-- Email Field -->
-      <div class="form-field">
-        <label for="missionEmail" class="form-label">
-          <span class="form-label__text">Email</span>
-          <input type="email" id="missionEmail" class="form-input" name="email" placeholder=" " required aria-describedby="emailError" />
-        </label>
-        <div id="emailError" class="form-error" aria-live="polite"></div>
-        <div id="emailHelper" class="form-helper" aria-live="polite"></div>
-      </div>
-
-      <!-- Role Dropdown -->
-      <div class="form-field">
-        <label for="missionRole" class="form-label">
-          <span class="form-label__text">Select your role</span>
-          <select name="role" id="missionRole" class="form-select" required aria-describedby="roleError">
-            <option value="" disabled selected hidden>Select your role</option>
-            <option value="farmer">Farmer</option>
-            <option value="distributor">Distributor</option>
-            <option value="retailer">Retailer</option>
-            <option value="partner">Partner</option>
-            <option value="investor">Investor</option>
-            <option value="volunteer">Volunteer</option>
-          </select>
-        </label>
-        <div id="roleError" class="form-error" aria-live="polite"></div>
-        <div id="roleHelper" class="form-helper" aria-live="polite"></div>
-      </div>
-
-      <!-- Location Field -->
-      <div class="form-field">
-        <label for="missionLocation" class="form-label">
-          <span class="form-label__text">Location</span>
-          <input type="text" id="missionLocation" class="form-input" name="location" placeholder=" " required aria-describedby="locationError" />
-        </label>
-        <div id="locationError" class="form-error" aria-live="polite"></div>
-        <div id="locationHelper" class="form-helper" aria-live="polite"></div>
-      </div>
-
-      <button type="submit" class="screen--mission__submit" aria-live="polite">
-        <span class="btn__text">Join the Mission</span>
-        <span class="btn__loader" hidden aria-hidden="true"></span>
-      </button>
-    </form>
-  </div>
-
-  <!-- Future Testimonials Container -->
-  <div class="screen--mission__testimonials" data-animate="fade" data-delay="0.3" loading="lazy"></div>
-</section>
-
-<!-- Sticky CTA Button -->
-<button class="sticky-cta bounce" onclick="scrollToCTA()">Join the Movement</button>
+      <!-- Sticky CTA Button -->
+      <button class="sticky-cta bounce" onclick="scrollToCTA()">Join the Movement</button>
 
       </main>
         <!-- Overlay (for closing sidebar when clicking outside) -->
