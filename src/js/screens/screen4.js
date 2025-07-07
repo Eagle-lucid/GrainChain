@@ -71,51 +71,56 @@ export class Screen4Animations {
     const { tagline } = this.DOM;
     if (!tagline) return;
 
-    gsap.from(tagline, {
-      autoAlpha: 0, y: 20,
-      duration: 0.8,
-      ease: 'power2.out',
-      scrollTrigger: {
-        trigger: tagline,
-        start: 'top 85%',
-        toggleActions: 'play none none none',
-        markers: true
+    gsap.fromTo(tagline, 
+      {autoAlpha: 0, y: 20},
+      {
+        autoAlpha: 1, y: 0,
+        duration: 0.8,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: tagline,
+          start: 'top 85%',
+          toggleActions: 'play none none none',
+          markers: true
+        }
       }
-    });
+    );
   }
 
   animateForm() {
     const { form, fields } = this.DOM;
     if (!form) return;
 
-    // Animate form wrapper
-    gsap.from(form, {
-      autoAlpha: 0, y: 30,
-      duration: 1,
-      ease: 'back.out(1.2)',
+    // Timeline for the form & fields
+    const tl =gsap.timeline({
       scrollTrigger: {
         trigger: form,
         start: 'top 90%',
-        toggleActions: 'play none none none',
+        toggleActions: 'play none none none', 
         markers: true
       }
-    });
+    })
 
-    // Animate each field independently
-    fields.forEach((field, i) => {
-      gsap.from(field, {
-        autoAlpha: 0, y: 20,
-        duration: 0.6,
-        delay: i * 0.1,
-        ease: 'power2.out',
-        scrollTrigger: {
-          trigger: field,
-          start: 'top 95%',
-          toggleActions: 'play none none none',
-          markers: true
-        }
-      });
-    });
+    // Animate form wrapper
+    tl.fromTo(form, 
+      { autoAlpha: 0, y: 30 }, 
+    {
+      autoAlpha: 1, y: 0,
+      duration: 1, ease: 'back.out(1.2)'
+    }
+  );
+
+  // Animate each field
+
+  tl.fromTo(fields, 
+    {autoAlpha: 0, y: 20 },
+    {
+      autoAlpha: 1, y: 0,
+      duration: 0.6, stagger: 0.1,
+      ease: 'power2.out'
+    },
+    '-=0.5'
+    );
   }
 
   setupScrollTriggers() {
