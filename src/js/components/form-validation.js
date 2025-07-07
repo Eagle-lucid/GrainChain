@@ -120,13 +120,13 @@ export class FormValidator {
 
   showLoader() {
     this.submitBtn.disabled = true;
-    if (this.btnText) this.btnText.style.display = 'none';
+    if (this.btnText) this.btnText.hidden = true;
     if (this.btnLoader) this.btnLoader.hidden = false;
   }
 
   hideLoader() {
     this.submitBtn.disabled = false;
-    if (this.btnText) this.btnText.style.display = 'inline-block';
+    if (this.btnText) this.btnText.hidden = true;
     if (this.btnLoader) this.btnLoader.hidden = true;
   }
 
