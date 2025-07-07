@@ -174,7 +174,6 @@ export class Screen2Animations {
         trigger: item,
         start: 'top 80%',
         once: true,
-        markers: true,
         onEnter: () => console.log(`Triggered stats for ${target}%`)
       }
     });

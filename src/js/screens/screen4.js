@@ -61,8 +61,7 @@ export class Screen4Animations {
       scrollTrigger: {
         trigger: headerTitle,
         start: 'top 85%',
-        toggleActions: 'play none none none',
-        markers: true
+        toggleActions: 'play none none none'
       }
     });
   }
@@ -80,8 +79,7 @@ export class Screen4Animations {
         scrollTrigger: {
           trigger: tagline,
           start: 'top 85%',
-          toggleActions: 'play none none none',
-          markers: true
+          toggleActions: 'play none none none'
         }
       }
     );
@@ -96,8 +94,7 @@ export class Screen4Animations {
       scrollTrigger: {
         trigger: form,
         start: 'top 90%',
-        toggleActions: 'play none none none', 
-        markers: true
+        toggleActions: 'play none none none'
       }
     })
 
@@ -111,7 +108,6 @@ export class Screen4Animations {
   );
 
   // Animate each field
-
   tl.fromTo(fields, 
     {autoAlpha: 0, y: 20 },
     {
