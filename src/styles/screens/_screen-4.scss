@@ -251,6 +251,7 @@
       font-family: map.get($font-families, 'header');
       font-size: clamp(map.get($font-sizes, 'lg'), 4vw, map.get($font-sizes, 'xxl'));
       color: map.get($colors, 'success');
+      text-shadow: 0 4px 6px map.get($colors, 'text-dark');
       margin-top: map.get($spacing, 'md');
     }   
 
