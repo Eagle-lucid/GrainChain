@@ -66,6 +66,16 @@ $shadows: (
   lg: 0 10px 25px rgba(0, 0, 0, 0.2)
 );
 
+// Z-index
+$z-indexes: (
+  'sticky-cta': 9999,
+  'modal': 9998,
+  'overlay': 1000,
+  'nav': 100,
+  'base': 1,
+  'behind': -1
+) !default;
+
 // Additional Tokens
 $food-types: (
   'broccoli': 'vegetable',
