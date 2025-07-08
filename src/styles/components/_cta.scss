@@ -1,0 +1,189 @@
+@use "sass:map";
+@use "../abstracts/variables" as *;
+@use "../abstracts/mixins" as *;
+
+// Core Container 
+.sticky-cta-container {
+    --cta-position: fixed;
+    --cta-z-index: map.get($z-indexes, 'sticky-cta');
+    --cta-transition: all map.get($transition-durations, 'normal') ease-out;
+
+    position: var(--cta-position);
+    right: map.get($spacing, 'lg');
+    bottom: map.get($spacing, 'lg');
+    z-index: var(--cta-z-index);
+    transition: var(--cta-transition);
+
+    // Contextual States 
+    &[data-cta-state="default"] {
+        --cta-bg: map.get($colors, 'primary');
+        --cta-pulse: none;
+    }
+
+    &[data-cta-state="urgent"] {
+        --cta-bg: map.get($colors, 'accent');
+        --cta-pulse: pulse 2s infinite;
+    }
+
+    &[data-cta-state="success"] {
+        --cta-bg: map.get($colors, 'success');
+        --cta-pulse: none;
+    }
+
+    @include respond-to('md') {
+        --cta-inset: auto 2rem 2rem auto;
+    }
+}
+
+// Main BTN
+.sticky-cta {
+    @include button-reset;
+    position: relative;
+    padding: map.get($spacing, 'md') map.get($spacing, 'lg');
+    background: var(--cta-bg);
+    color: map.get($colors, 'text-white');
+    border-radius: map.get($radii, 'pill');
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    font-family: map.get($font-families, 'btn');
+    font-weight: 600;
+    cursor: pointer;
+    overflow: hidden;
+    transform: translate3d(0, 0, 0);
+    animation: var(--cta-pulse);
+
+    .cta-core {
+        position: relative;
+        z-index: map.get($z-indexes, 'base');
+        display: flex;
+        align-items: center;
+        gap: map.get($spacing, 'sm');
+    }
+
+    .cta-badge {
+        padding: map.get($spacing, 'xxs') map.get($spacing, 'sm');
+        background: rgba(0, 0, 0, 0.2);
+        border-radius: map.get($radii, 'pill');
+        font-size: clamp(
+            map.get($font-sizes, 'xs'),
+            1.5vw,
+            map.get($font-sizes, 'sm')
+        );
+    }
+
+    &::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: var(--progress-width, 0%);
+        height: 3px;
+        background: rgba(white, 0.7);
+        transition: width map.get($transition-durations, 'slow') ease-out;
+    }
+
+    // Hover/Focus States
+    &:hover,
+    &:focus-visible {
+        transform: translate3d(0, -3px, 0);
+        box-shadow: map.get($shadows, 'xl');
+    }
+
+    // Active State
+    &:active {
+        transform: translate3d(0, 0, 0);
+    }
+
+    // Tooltip 
+    .cta-tooltip {
+        position: absolute;
+        bottom: 100%;
+        right: 0;
+        margin-bottom: map.get($spacing, 'sm');
+        padding: map.get($spacing, 'sm');
+        background: map.get($colors, 'text-dark');
+        color: map.get($colors, 'text-white');
+        border-radius: map.get($radii, 'sm');
+        font-size: clamp(
+            map.get($font-sizes, 'xs'),
+            1.5vw,
+            map.get($font-sizes, 'sm')
+        );
+        opacity: 0;
+        pointer-events: none;
+        transform: translateY(10px);
+        transition: var(--cta-transition);
+        width: max-content;
+        max-width: min(200px, 80vw);
+
+        &::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            right: 20px;
+            border-width: 8px;
+            border-style: solid;
+            border-color: map.get($colors, 'text-dark') transparent transparent;
+        }
+    }
+
+    &:hover .cta-tooltip {
+        opacity: 1;
+        transform: translateY(0);
+        transition-delay: 0.1s;
+    }
+}
+
+// Popup Dialog
+.cta-form-popup {
+    --popup-width: min(600px, 95vw);
+    --popup-padding: map.get($spacing, 'xl');
+
+    width: var(--popup-width);
+    padding: var(--popup-padding);
+    border: none;
+    border-radius: map.get($radii, 'lg');
+    box-shadow: map.get($shadows, 'xl');
+
+    &::backdrop {
+        background: rgba(0, 0, 0, 0.5);
+        -webkit-backdrop-filter: blur(4px);
+        backdrop-filter: blur(4px);
+    }
+
+    // Close BTN 
+    .cta-popup-close {
+        @include button-reset;
+        position: absolute;
+        top: map.get($spacing, 'md');
+        right: map.get($spacing, 'md');
+        font-size: clamp(
+            map.get($font-sizes, 'lg'),
+            2vw,
+            map.get($font-sizes, 'xl')
+        );
+        line-height: 1;
+    }
+
+    @include respond-to('sm') {
+        --popup-padding: map.get($spacing, 'xxl');
+    }
+}
+
+// Animations 
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+// Reduce Motion 
+@media (prefers-reduced-motion: reduce) {
+    .stick-cta {
+        --cta-transition: none;
+        animation: none !important;
+
+        &::after {
+            transition: none;
+        }
+    }
+}
