@@ -362,13 +362,78 @@
         <!-- Future Testimonials Container -->
         <div class="screen--mission__testimonials" data-animate="fade" data-delay="0.3" loading="lazy"></div>
       </section>
+      </div>  
 
-      <!-- Sticky CTA Button -->
-      <button class="sticky-cta bounce" onclick="scrollToCTA()">Join the Movement</button>
-
-      </main>
-        <!-- Overlay (for closing sidebar when clicking outside) -->
-        <div class="overlay" id="sidebarOverlay"></div>
+      
+      <!-- Sticky CTA -->
+        <div class="sticky-cta-container"
+             data-cta-state="default"
+             aria-live="polite">
+        
+          <!-- Main Button -->
+          <button class="sticky-cta"
+                  id="mainStickyCTA"
+                  aria-label="Join the movement"
+                  aria-haspopup="dialog"
+                  aria-expanded="false"
+                  aria-controls="ctaFormPopup">
+            
+            <span class="cta-core">
+              <span class="cta-text">Join the Movement</span>
+              <span class="cta-badge" aria-hidden="true">3 spots left</span>
+            </span>
+          </button>
+        
+          <!-- Popup Dialog -->
+          <dialog id="ctaFormPopup"
+                  class="cta-form-popup"
+                  aria-labelledby="mainStickyCTA">
+            
+            <form class="cta-form" id="ctaForm" novalidate>
+              <!-- Name -->
+              <div class="form-field">
+                <input type="text" id="ctaName" name="name" 
+                       class="form-input" placeholder=" " required
+                       aria-describedby="ctaNameError">
+                <label for="ctaName" class="form-label">Name</label>
+                <div id="ctaNameError" class="form-error" aria-live="polite"></div>
+              </div>
+              
+              <!-- Email -->
+              <div class="form-field">
+                <input type="email" id="ctaEmail" name="email" 
+                       class="form-input" placeholder=" " required
+                       aria-describedby="ctaEmailError">
+                <label for="ctaEmail" class="form-label">Email</label>
+                <div id="ctaEmailError" class="form-error" aria-live="polite"></div>
+              </div>
+              
+              <!-- Role Dropdown -->
+              <div class="form-field">
+                <select id="ctaRole" name="role" class="form-select" required
+                        aria-describedby="ctaRoleError">
+                  <option value="" disabled selected hidden>Select role</option>
+                  <option value="farmer">Farmer</option>
+                  <option value="distributor">Distributor</option>
+                </select>
+                <label for="ctaRole" class="form-label">Your Role</label>
+                <div id="ctaRoleError" class="form-error" aria-live="polite"></div>
+              </div>
+              
+              <button type="submit" class="cta-submit">
+                <span class="btn__text">Join Now</span>
+              </button>
+            </form>
+            
+            <button class="cta-popup-close" 
+                    aria-label="Close form"
+                    onclick="this.closest('dialog').close()">
+              &times;
+            </button>
+          </dialog>
+        </div>
+    </main>
+       
       <footer id="cta" class="site-footer fade-in-stagger">
         <div class="footer-bio">
             <p><strong>GrainChain: </strong>Using tech to reduce food loss and create smarter supply chains. Together, we can make a difference.</p>
