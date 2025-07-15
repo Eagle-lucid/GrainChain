@@ -1,4 +1,5 @@
 @use "sass:map";
+@use "sass:color";
 // DESIGN TOKENS
 
 // Color Palette
@@ -11,6 +12,7 @@ $colors: (
   text-dark: hsl(0, 0%, 13%),
   accent: hsl(0, 79%, 63%),
   accent-hover: hsl(0, 79%, 53%),
+  accent-light: color.adjust(#ff6d00, $lightness: 15%),
   success: hsl(145, 63%, 42%),
   text-white: hsl(0, 0%, 100%),
   text-secondary: hsl(0, 0%, 70%),
