@@ -4,7 +4,7 @@ import '../styles/main.scss'
 import { initGSAPPlugins } from './core/gsap-register.js';
 import { lockScroll } from './core/animation-controller.js';
 import { initHeaderScroll } from './components/header.js';
-import { initCTA } from './components/cta.js';
+import { StickyCTA } from './components/cta.js';
 import { initSidebar } from './components/sidebar.js';
 import { AllScreensAnimations } from './screens/screens.js';
 import { SupplyChainQuiz } from './components/scf.js';
@@ -34,7 +34,7 @@ class GrainChainApp {
 
   initComponents() {
     initHeaderScroll();
-    initCTA();
+    new StickyCTA();
     initSidebar();
     new FormValidator('.cta-form');
     new SupplyChainQuiz();
