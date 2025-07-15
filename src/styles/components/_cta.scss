@@ -1,189 +1,417 @@
 @use "sass:map";
+@use "sass:math";
+@use "sass:list";
+@use "sass:color";
 @use "../abstracts/variables" as *;
 @use "../abstracts/mixins" as *;
 
-// Core Container 
+/* ==========================================================================
+   STICKY CTA COMPONENT
+   ========================================================================== */
+
+// Core Container
 .sticky-cta-container {
-    --cta-position: fixed;
-    --cta-z-index: map.get($z-indexes, 'sticky-cta');
-    --cta-transition: all map.get($transition-durations, 'normal') ease-out;
+  --cta-position: fixed;
+  --cta-z-index: map.get($z-indexes, 'sticky-cta');
+  --cta-transition: all map.get($transition-durations, 'normal') ease-out;
+  
+  position: var(--cta-position);
+  right: map.get($spacing, 'lg');
+  bottom: map.get($spacing, 'lg');
+  z-index: var(--cta-z-index);
+  transition: var(--cta-transition);
+  contain: layout paint;
 
-    position: var(--cta-position);
-    right: map.get($spacing, 'lg');
-    bottom: map.get($spacing, 'lg');
-    z-index: var(--cta-z-index);
-    transition: var(--cta-transition);
+  // Shrink state on scroll
+  &[data-shrink="true"] .sticky-cta {
+    transform: scale(0.85);
+    opacity: 0.9;
+  }
 
-    // Contextual States 
-    &[data-cta-state="default"] {
-        --cta-bg: map.get($colors, 'primary');
-        --cta-pulse: none;
+  // Contextual States
+  &[data-cta-state="default"] {
+    --cta-bg: map.get($colors, 'primary');
+    --cta-pulse: none;
+  }
+
+  &[data-cta-state="urgent"] {
+    --cta-bg: map.get($colors, 'accent');
+    --cta-pulse: pulse 2s infinite;
+    
+    .sticky-cta::before {
+      content: '';
+      position: absolute;
+      inset: -2px;
+      border: 2px solid rgba(map.get($colors, 'accent-light') or lighten(map.get($colors, 'accent'), 15%), 0.7);
+      border-radius: map.get($radii, 'pill');
+      animation: border-pulse 1.5s infinite;
+      pointer-events: none;
     }
+  }
 
-    &[data-cta-state="urgent"] {
-        --cta-bg: map.get($colors, 'accent');
-        --cta-pulse: pulse 2s infinite;
+  &[data-cta-state="success"] {
+    --cta-bg: map.get($colors, 'success');
+    
+    .cta-badge::after {
+      content: '✓';
+      margin-left: map.get($spacing, 'xs');
     }
+  }
 
-    &[data-cta-state="success"] {
-        --cta-bg: map.get($colors, 'success');
-        --cta-pulse: none;
-    }
-
-    @include respond-to('md') {
-        --cta-inset: auto 2rem 2rem auto;
-    }
+  @include respond-to('md') {
+    right: map.get($spacing, 'xl');
+    bottom: map.get($spacing, 'xl');
+  }
 }
 
-// Main BTN
+// Main Button
 .sticky-cta {
-    @include button-reset;
+  @include button-reset;
+  position: relative;
+  padding: map.get($spacing, 'md') map.get($spacing, 'lg');
+  background: var(--cta-bg);
+  color: map.get($colors, 'text-white');
+  border-radius: map.get($radii, 'pill');
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  font-family: map.get($font-families, 'btn');
+  font-weight: 600;
+  cursor: pointer;
+  overflow: hidden;
+  transform: translate3d(0, 0, 0);
+  animation: float 4s ease-in-out infinite, var(--cta-pulse);
+  transition: 
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+
+  // Core content
+  .cta-core {
     position: relative;
-    padding: map.get($spacing, 'md') map.get($spacing, 'lg');
-    background: var(--cta-bg);
-    color: map.get($colors, 'text-white');
+    z-index: map.get($z-indexes, 'base');
+    display: flex;
+    align-items: center;
+    gap: map.get($spacing, 'sm');
+  }
+
+  // Urgency badge
+  .cta-badge {
+    padding: map.get($spacing, 'xxs') map.get($spacing, 'sm');
+    background: rgba(0, 0, 0, 0.2);
     border-radius: map.get($radii, 'pill');
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-    font-family: map.get($font-families, 'btn');
-    font-weight: 600;
-    cursor: pointer;
-    overflow: hidden;
-    transform: translate3d(0, 0, 0);
-    animation: var(--cta-pulse);
+    font-size: clamp(
+      map.get($font-sizes, 'xs'),
+      1.5vw,
+      map.get($font-sizes, 'sm')
+    );
+    transition: background 0.3s ease;
+  }
 
-    .cta-core {
-        position: relative;
-        z-index: map.get($z-indexes, 'base');
-        display: flex;
-        align-items: center;
-        gap: map.get($spacing, 'sm');
-    }
+  // Progress indicator
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: var(--progress-width, 0%);
+    height: 3px;
+    background: linear-gradient(90deg, rgba(white, 0.9), rgba(white, 0.2));
+    transition: width map.get($transition-durations, 'slow') ease-out;
+  }
 
-    .cta-badge {
-        padding: map.get($spacing, 'xxs') map.get($spacing, 'sm');
-        background: rgba(0, 0, 0, 0.2);
-        border-radius: map.get($radii, 'pill');
-        font-size: clamp(
-            map.get($font-sizes, 'xs'),
-            1.5vw,
-            map.get($font-sizes, 'sm')
-        );
-    }
+  // Ripple effect
+  &:active::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(
+      circle at center,
+      rgba(white, 0.4) 0%,
+      transparent 70%
+    );
+    animation: ripple 0.6s ease-out;
+  }
+
+  // Hover/Focus
+  &:hover,
+  &:focus-visible {
+    transform: translate3d(0, -3px, 0) scale(1.02);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+  }
+
+  // Tooltip
+  .cta-tooltip {
+    position: absolute;
+    bottom: 100%;
+    right: 0;
+    margin-bottom: map.get($spacing, 'sm');
+    padding: map.get($spacing, 'sm');
+    background: map.get($colors, 'text-dark');
+    color: map.get($colors, 'text-white');
+    border-radius: map.get($radii, 'sm');
+    font-size: clamp(
+      map.get($font-sizes, 'xs'),
+      1.5vw,
+      map.get($font-sizes, 'sm')
+    );
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(10px);
+    transition: var(--cta-transition);
+    width: max-content;
+    max-width: min(200px, 80vw);
 
     &::after {
-        content: '';
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        width: var(--progress-width, 0%);
-        height: 3px;
-        background: rgba(white, 0.7);
-        transition: width map.get($transition-durations, 'slow') ease-out;
+      content: '';
+      position: absolute;
+      top: 100%;
+      right: 20px;
+      border-width: 8px;
+      border-style: solid;
+      border-color: map.get($colors, 'text-dark') transparent transparent;
     }
+  }
 
-    // Hover/Focus States
-    &:hover,
-    &:focus-visible {
-        transform: translate3d(0, -3px, 0);
-        box-shadow: map.get($shadows, 'xl');
-    }
-
-    // Active State
-    &:active {
-        transform: translate3d(0, 0, 0);
-    }
-
-    // Tooltip 
-    .cta-tooltip {
-        position: absolute;
-        bottom: 100%;
-        right: 0;
-        margin-bottom: map.get($spacing, 'sm');
-        padding: map.get($spacing, 'sm');
-        background: map.get($colors, 'text-dark');
-        color: map.get($colors, 'text-white');
-        border-radius: map.get($radii, 'sm');
-        font-size: clamp(
-            map.get($font-sizes, 'xs'),
-            1.5vw,
-            map.get($font-sizes, 'sm')
-        );
-        opacity: 0;
-        pointer-events: none;
-        transform: translateY(10px);
-        transition: var(--cta-transition);
-        width: max-content;
-        max-width: min(200px, 80vw);
-
-        &::after {
-            content: '';
-            position: absolute;
-            top: 100%;
-            right: 20px;
-            border-width: 8px;
-            border-style: solid;
-            border-color: map.get($colors, 'text-dark') transparent transparent;
-        }
-    }
-
-    &:hover .cta-tooltip {
-        opacity: 1;
-        transform: translateY(0);
-        transition-delay: 0.1s;
-    }
+  &:hover .cta-tooltip {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: 0.1s;
+  }
 }
 
-// Popup Dialog
+/* ==========================================================================
+   FORM POPUP
+   ========================================================================== */
 .cta-form-popup {
-    --popup-width: min(600px, 95vw);
-    --popup-padding: map.get($spacing, 'xl');
+  --popup-width: min(600px, 95vw);
+  --popup-padding: map.get($spacing, 'xl');
 
-    width: var(--popup-width);
-    padding: var(--popup-padding);
-    border: none;
-    border-radius: map.get($radii, 'lg');
-    box-shadow: map.get($shadows, 'xl');
+  width: var(--popup-width);
+  padding: var(--popup-padding);
+  border: none;
+  border-radius: map.get($radii, 'lg');
+  box-shadow: map.get($shadows, 'xl');
+  background: rgba(255, 255, 255, 0.85);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
 
-    &::backdrop {
-        background: rgba(0, 0, 0, 0.5);
-        -webkit-backdrop-filter: blur(4px);
-        backdrop-filter: blur(4px);
+  &::backdrop {
+    background: rgba(0, 0, 0, 0.5);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+  }
+
+  // Close button
+  .cta-popup-close {
+    @include button-reset;
+    position: absolute;
+    top: map.get($spacing, 'md');
+    right: map.get($spacing, 'md');
+    font-size: clamp(
+      map.get($font-sizes, 'lg'),
+      2vw,
+      map.get($font-sizes, 'xl')
+    );
+    line-height: 1;
+    transition: transform 0.2s ease;
+
+    &:hover {
+      transform: rotate(90deg);
     }
+  }
 
-    // Close BTN 
-    .cta-popup-close {
-        @include button-reset;
-        position: absolute;
-        top: map.get($spacing, 'md');
-        right: map.get($spacing, 'md');
-        font-size: clamp(
-            map.get($font-sizes, 'lg'),
-            2vw,
-            map.get($font-sizes, 'xl')
-        );
-        line-height: 1;
-    }
-
-    @include respond-to('sm') {
-        --popup-padding: map.get($spacing, 'xxl');
-    }
+  @include respond-to('sm') {
+    --popup-padding: map.get($spacing, 'xxl');
+  }
 }
 
-// Animations 
-@keyframes pulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.05); }
-    100% { transform: scale(1); }
-}
+/* ==========================================================================  
+   CTA FORM STYLING  
+   ========================================================================== */
+.cta-form {
+    display: flex;
+    flex-direction: column;
+    gap: map.get($spacing, 'lg');
 
-// Reduce Motion 
-@media (prefers-reduced-motion: reduce) {
-    .stick-cta {
-        --cta-transition: none;
-        animation: none !important;
+    .form-field {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        margin-bottom: map.get($spacing, 'md');
 
-        &::after {
-            transition: none;
+        .form-input, .form-select {
+            width: 100%;
+            padding: map.get($spacing, 'md') map.get($spacing, 'sm');
+            border: 1px solid map.get($colors, 'border-light');
+            border-radius: map.get($radii, 'sm');
+            background: map.get($colors, 'background-light');
+            font-family: map.get($font-families, 'primary');
+            font-size: map.get($font-sizes, 'base');
+            color: map.get($colors, 'text-dark');
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+
+            &:focus {
+                outline: none;
+                border-color: map.get($colors, 'primary');
+                box-shadow: 0 0 0 2px rgba(map.get($colors, 'primary'), 0.2);
+            }
+
+            &:not(:placeholder-shown) + .form-label,
+            &:focus + .form-label {
+                transform: translateY(-1.5rem) scale(0.85);
+                opacity: 1;
+                color: map.get($colors, 'primary');
+            }
+        }
+
+        .form-input.valid,
+        .form-select.valid {
+          border-color: map.get($colors, 'success');
+          box-shadow: 0 0 0 2px rgba(map.get($colors, 'success'), 0.15);
+        }
+
+
+        .form-label {
+            position: absolute;
+            left: map.get($spacing, 'sm');
+            top: 50%;
+            transform: translateY(-50%);
+            background: map.get($colors, 'background-light');
+            padding: map.get($spacing, 'xs');
+            transition: 0.2s ease all;
+            pointer-events: none;
+            font-size: map.get($font-sizes, 'sm');
+            opacity: 0.7;
+        }
+
+        .form-error {
+            color: map.get($colors, 'error');
+            font-size: map.get($font-sizes, 'xs');
+            margin-top: map.get($spacing, 'xxs');
+            opacity: 0;
+            transition: opacity map.get($transition-durations, 'slow') ease;
+
+            &.active {
+                opacity: 1;
+            }
         }
     }
+
+    .cta-submit {
+        @include button-reset;
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        padding: map.get($spacing, 'md') map.get($spacing, 'lg');
+        background: map.get($colors, 'primary');
+        color: map.get($colors, 'text-white');
+        border-radius: map.get($radii, 'pill');
+        font-weight: 600;
+        cursor: pointer;
+        transition: background map.get($transition-durations, 'slow') ease;
+
+        &:hover {
+            background: color.adjust(map.get($colors, 'primary'), $lightness: -80%);
+
+        }
+        
+        &:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+    }
+}
+/* ==========================================================================
+   ANIMATIONS
+   ========================================================================== */
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+@keyframes border-pulse {
+  0%, 100% { opacity: 0.7; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.03); }
+}
+
+@keyframes ripple {
+  from { transform: scale(0); opacity: 1; }
+  to { transform: scale(4); opacity: 0; }
+}
+
+@keyframes farm-confetti {
+  0% { transform: translateY(0) rotate(0); opacity: 1; }
+  100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+}
+/* CONFETTI SYSTEM */
+.confetti-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: map.get($z-indexes, 'max');
+}
+
+.confetti {
+    position: absolute;
+    font-size: 1.8rem;
+    animation: farm-confetti 2.5s ease-out forwards,
+            farm-rotate 3s linear infinite;
+}
+
+@keyframes farm-rotate {
+    to { transform: rotate(360deg); }
+}
+/* ==========================================================================
+   SUCCESS CONFETTI (Farm-themed)
+   ========================================================================== */
+.success-confetti {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: map.get($z-indexes, 'max');
+
+  @for $i from 1 through 8 {
+    &:nth-child(#{$i})::before {
+      content: list.nth(("🌾", "🚜", "🌱", "✨", "🌾", "🚜", "🌱", "✨"), $i);
+      position: absolute;
+      font-size: 1.8rem;
+      animation: 
+        farm-confetti 2.5s ease-out forwards,
+        farm-rotate 3s linear infinite;
+      left: math.random(100) + 1%;
+      animation-delay: $i * 0.15s;
+    }
+  }
+}
+
+@keyframes farm-rotate {
+  to { transform: rotate(360deg); }
+}
+
+/* ==========================================================================
+   REDUCED MOTION
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .sticky-cta {
+    transform: none !important;
+  }
 }
