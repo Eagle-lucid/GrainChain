@@ -1,0 +1,249 @@
+// _footer.scss
+@use "sass:map";
+@use "sass:math";
+@use "sass:list";
+@use "sass:color";
+@use "../abstracts/variables" as v;
+@use "../abstracts/mixins" as m;
+
+.footer {
+  // Root styles
+  background: linear-gradient(
+    135deg,
+    map.get(v.$colors, 'text-dark'),
+    color.adjust(map.get(v.$colors, 'secondary'), $lightness: -30%)
+  );
+  padding: map.get(v.$spacing, 'lg') map.get(v.$spacing, 'md');
+  color: map.get(v.$colors, 'text-white');
+  font-family: map.get(v.$font-families, 'primary');
+  position: relative;
+  overflow: hidden;
+
+  // Layout container
+  &__content {
+    max-width: 1440px;
+    margin: 0 auto;
+    display: grid;
+    gap: map.get(v.$spacing, 'xl');
+  }
+
+  /* ==========================================================================
+     Brand / Mission
+     ========================================================================== */
+  &__brand {
+    text-align: center;
+    margin-bottom: map.get(v.$spacing, 'lg');
+  }
+
+  &__brand-name {
+    color: map.get(v.$colors, 'accent');
+    font-weight: 700;
+    font-family: map.get(v.$font-families, 'header');
+
+    @include m.respond-to('md') {
+      display: block;
+    }
+  }
+
+  &__mission-text {
+    display: inline-block;
+    max-width: 60ch;
+    line-height: 1.6;
+  }
+
+  /* ==========================================================================
+     Columns
+     ========================================================================== */
+  &__columns {
+    display: grid;
+    gap: map.get(v.$spacing, 'lg');
+
+    @include m.respond-to('md') {
+      grid-template-columns: repeat(3, 1fr);
+      align-items: start;
+    }
+  }
+
+  &__subheading {
+    font-family: map.get(v.$font-families, 'header');
+    font-size: map.get(v.$font-sizes, 'lg');
+    margin-bottom: map.get(v.$spacing, 'md');
+    color: map.get(v.$colors, 'secondary');
+  }
+
+  /* ==========================================================================
+     Nav Links
+     ========================================================================== */
+  &__nav-list {
+    display: grid;
+    gap: map.get(v.$spacing, 'sm');
+  }
+
+  &__nav-link {
+    color: inherit;
+    text-decoration: none;
+    transition: color map.get(v.$transition-durations, 'fast') ease;
+
+    &:hover {
+      color: map.get(v.$colors, 'secondary');
+    }
+  }
+
+  /* ==========================================================================
+     Newsletter Form
+     ========================================================================== */
+  &__form {
+    display: grid;
+    gap: map.get(v.$spacing, 'sm');
+  }
+
+  &__form-group {
+    display: flex;
+    border-radius: map.get(v.$radii, 'pill');
+    overflow: hidden;
+    box-shadow: map.get(v.$shadows, 'md');
+  }
+
+  
+
+  &__input {
+    flex: 1;
+    padding: map.get(v.$spacing, 'sm') map.get(v.$spacing, 'md');
+    border: none;
+    font-family: inherit;
+
+    &:focus {
+      outline: 2px solid map.get(v.$colors, 'primary');
+    }
+  }
+
+  &__submit {
+    background: map.get(v.$colors, 'accent');
+    color: #fff;
+    padding: 0 map.get(v.$spacing, 'lg');
+    border: none;
+    cursor: pointer;
+    transition: background map.get(v.$transition-durations, 'fast') ease;
+
+    &:hover {
+      background: map.get(v.$colors, 'accent-hover');
+    }
+  }
+
+  &__disclaimer {
+    font-size: map.get(v.$font-sizes, 'xs');
+    color: map.get(v.$colors, 'text-secondary');
+  }
+
+  /* ==========================================================================
+     Contact
+     ========================================================================== */
+  &__contact-list {
+    display: grid;
+    gap: map.get(v.$spacing, 'sm');
+  }
+
+  &__contact-link {
+    color: inherit;
+    text-decoration: none;
+    display: inline-block;
+    transition: transform map.get(v.$transition-durations, 'fast') ease, color map.get(v.$transition-durations, 'fast') ease;
+
+    &:hover {
+      color: map.get(v.$colors, 'secondary');
+      transform: translateX(4px);
+    }
+  }
+
+  /* ==========================================================================
+     Social
+     ========================================================================== */
+  &__social {
+    margin-top: map.get(v.$spacing, 'xl');
+  }
+
+  &__social-list {
+    display: flex;
+    justify-content: center;
+    gap: map.get(v.$spacing, 'lg');
+
+    @include m.respond-to('md') {
+      justify-content: flex-start;
+    }
+  }
+
+  &__social-link {
+    display: inline-flex;
+    padding: map.get(v.$spacing, 'sm');
+    border-radius: 50%;
+    transition: background map.get(v.$transition-durations, 'normal') ease, transform map.get(v.$transition-durations, 'normal') ease;
+
+    &:hover {
+      background: rgba(map.get(v.$colors, 'secondary'), 0.2);
+      transform: translateY(-3px);
+
+      .footer__social-icon {
+        fill: map.get(v.$colors, 'secondary');
+      }
+    }
+  }
+
+  &__social-icon {
+    width: 24px;
+    height: 24px;
+    fill: #fff;
+    transition: fill map.get(v.$transition-durations, 'fast') ease;
+  }
+
+  /* ==========================================================================
+     Legal / Credits
+     ========================================================================== */
+  &__legal {
+    text-align: center;
+    margin-top: map.get(v.$spacing, 'xl');
+    padding-top: map.get(v.$spacing, 'lg');
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    font-size: map.get(v.$font-sizes, 'sm');
+  }
+
+  &__legal-links {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: map.get(v.$spacing, 'sm');
+    margin-bottom: map.get(v.$spacing, 'sm');
+  }
+
+  &__legal-link {
+    color: map.get(v.$colors, 'text-secondary');
+    text-decoration: none;
+    transition: color map.get(v.$transition-durations, 'fast') ease;
+
+    &:hover {
+      color: map.get(v.$colors, 'secondary');
+    }
+  }
+
+  &__copyright {
+    margin-bottom: map.get(v.$spacing, 'xs');
+  }
+
+  &__credits {
+    color: map.get(v.$colors, 'text-secondary');
+
+    span {
+      color: map.get(v.$colors, 'accent');
+    }
+  }
+
+  /* ==========================================================================
+     Responsive
+     ========================================================================== */
+  @include m.respond-to('lg') {
+    padding: map.get(v.$spacing, 'xxl') map.get(v.$spacing, 'lg');
+
+    &__content {
+      gap: map.get(v.$spacing, 'xxl');
+    }
+  }
+}
