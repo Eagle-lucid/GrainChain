@@ -1,0 +1,92 @@
+@use "sass:map";
+@use "../abstracts/variables" as *;
+@use "../abstracts/mixins" as *;
+
+@mixin styles {
+    .supply-chain{
+        $this: &; // Store parent selector 
+
+        margin: map.get($spacing, ' xl');
+        position: relative;
+        z-index: var(--z-base);
+
+        &__flow {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: map.get($spacing, 'md');
+
+            @include respond-to('md') {
+                flex-direction: row;
+                justify-content: center;
+            }
+        }
+
+        &__stage {
+            background: hsla(0, 0%, 100%, 0.9);
+            border-radius: map.get($radii, 'md');
+            padding: map.get($spacing, 'sm');
+            position: relative;
+            transition: map.get($transition-durations, 'normal') ease-in-out;
+            z-index: calc(var(--z-base) + 1);
+
+            &[data-stage="farm"],
+            &[data-stage="warehouse"] {
+                #{$this}__loss-marker {
+                    opacity: 1;
+                }
+            }
+        }
+
+        &__icon {
+            width: 2.5rem;
+            height: 2.5rem;
+            transition:  transform map.get($transition-durations, 'normal') ease-in-out,
+            filter map.get($transition-durations, 'normal') ease-in-out;
+        }
+
+        &__loss-marker {
+            position: absolute;
+            top: -0.5rem;
+            right: -0.5rem;
+            width: 1.25rem;
+            height: 1.25rem;
+            opacity: 0;
+            transition : opacity map.get($transition-durations, 'normal') ease-in-out;
+        }
+
+        &__arrow {
+            img {
+                width: 1.5rem;
+                height: 1.5rem;
+                opacity: 0.6;
+                transition: transform map.get($transition-durations, 'normal') ease-in-out;
+
+                @include respond-to('md') {
+                    transform: rotate(0);
+                }
+                @include respond-to('sm') {
+                    transform: rotate(90deg);
+                }
+            }
+        }
+
+        // Animation 
+        &--animated {
+            #{$this}__stage {
+                &:hover {
+                    transform: translateY(-0.5rem);
+                    background: map.get($colors, 'primary');
+
+                    color: map.get($colors, 'text-light');
+
+                    #{$this}__icon {
+                        transform: scale(1.1);
+                        transform-origin: center;
+                        filter: drop-shadow(0 0 5px map.get($colors, 'primary'));
+                    }
+                }
+            }
+        }
+    }
+}

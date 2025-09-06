@@ -1,0 +1,32 @@
+/*=== SCSS Structure ===*/
+// Abstracts
+@use './abstracts/animations' as *;
+@use './abstracts/functions' as *;
+@use './abstracts/mixins' as *;
+@use './abstracts/variables' as *;
+
+// Base
+@use './base/reset';
+@use './base/typography';
+
+// Components 
+@use './components/buttons';
+@use './components/cta';
+@use './components/header';
+@use './components/quiz';
+@use './components/footer';
+@use './components/sidebar.scss';
+
+// Layouts 
+@use './layouts/grid';
+@use './layouts/navigation';
+
+// Screens 
+@use './screens/screen-0';
+@use './screens/screen-1';
+@use './screens/screen-2';
+@use './screens/screen-3';
+@use './screens/screen-4';
+
+// Google fonts import 
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Inter:wght@400;500;700&display=swap');

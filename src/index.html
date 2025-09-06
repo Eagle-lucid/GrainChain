@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GrainChain</title>
+</head>
+<body>
+    <!-- Screen 0: Intro animation -->
+     <div class="screen-0">
+        <div class="screen-0-overlay"></div>
+        <!-- Logo & Animation -->
+        <div class="screen-0-logo">
+            <h1 class="logo fade-in">GrainChain</h1>
+        </div>
+
+        <!-- subheading and animation -->
+         <div class="screen-0-subheading">
+            <p>Solving food loss with Tech.</p>
+         </div>
+         <div class="continue-hint">Tap to continue</div>
+     </div>
+
+     <!-- After screen 0 main content will load -->
+      <main>
+         <!-- Sticky header (will appear after Screen 0 fades out) & mobile header when we are on any screen lower than desktop screen -->
+        <header class="header transparent">
+        <div class="mobile-header">
+          <a href="#" class="mobile-logo">
+            <span class="logo-text">GrainChain</span>
+          </a>
+        
+          <!-- Hamburger Toggle -->
+          <button 
+            id="menuToggle"
+            class="menu-toggle"
+            aria-expanded="false"
+            aria-controls="mobileSidebar"
+            aria-label="Toggle menu"
+          >
+            <!-- Inline SVG Hamburger -->
+            <svg class="hamburger-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path class="line top" d="M2 6h20" stroke="currentColor" stroke-width="2" />
+              <path class="line middle" d="M2 12h20" stroke="currentColor" stroke-width="2" />
+              <path class="line bottom" d="M2 18h20" stroke="currentColor" stroke-width="2" />
+            </svg>
+          </button>
+        
+        </div>
+        
+        <!-- Desktop Navigation -->
+        <nav class="header__nav">
+          <ul class="nav-list">
+            <li class="nav-list__item">
+              <a href="#problem" class="nav-list__link">Problem</a>
+            </li>
+            <li class="nav-list__item">
+              <a href="#hidden-cost" class="nav-list__link">Hidden Cost</a>
+            </li>
+            <li class="nav-list__item nav-list__dropdown">
+              <a href="#vision" class="nav-list__link">Vision</a>
+              <ul class="nav-list__dropdown-menu">
+                <li class="nav-list__dropdown-item">
+                  <a href="#">Cold Chain</a>
+                </li>
+                <li class="nav-list__dropdown-item">
+                  <a href="#">Mobile Alerts</a>
+                </li>
+                <li class="nav-list__dropdown-item">
+                  <a href="#">Direct Access</a>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-list__item nav-list__dropdown">
+              <a href="#mission" class="nav-list__link">Mission</a>
+              <ul class="nav-list__dropdown-menu">
+                <li class="nav-list__dropdown-item">
+                  <a href="">Farmer</a>
+                </li>
+                <li class="nav-list__dropdown-item">
+                  <a href="">Investor</a>
+                </li>
+                <li class="nav-list__dropdown-item">
+                  <a href="">Volunteer</a>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-list__item"><a href="#cta" class="nav-list__link">Join Us</a></li>
+          </ul>
+        </nav>
+      </header>
+        
+      <!-- Overlay -->
+        <div id="sidebarOverlay" class="sidebar-overlay" tabindex="-1"></div>
+        
+      <!-- Mobile Sidebar -->
+          <aside 
+            id="mobileSidebar"
+            class="sidebar"
+            aria-hidden="true"
+            aria-label="Main menu"
+          >
+            <!-- Close Button -->
+            <button class="mobile-sidebar__close-btn" aria-label="Close menu">
+              <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true">
+                <path 
+                  d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                  fill="currentColor"
+                />
+              </svg>
+            </button>
+            
+            <nav class="sidebar-nav">
+              <ul class="nav-list">
+                <li class="nav-item"><a href="#problem" class="nav-link">Problem</a></li>
+                <li class="nav-item"><a href="#hidden-cost" class="nav-link">Hidden Cost</a></li>
+                <li class="nav-item"><a href="#vision" class="nav-link">Vision</a></li>
+                <li class="nav-item"><a href="#mission" class="nav-link">Mission</a></li>
+                <li class="nav-item"><a href="#cta" class="nav-link">Join Us</a></li>
+              </ul>
+            </nav>
+          </aside>
+        <div class="scroll-wrapper">
+            <!-- Main content sections -->
+         <section id="problem" class="screen screen--problem" aria-label="Food waste problem">
+            <!-- Layered BG -->
+             <div class="screen--problem__shade"></div>
+
+             <div class="screen--problem__bg">
+              <!-- Primary BG (Optimized WebP + JPG Fallback) -->
+              <picture class="screen--problem__bg-img screen--problem__bg-img--primary">
+                <!--<source srcset="assets/images/rotting-potatoes.webp" type="image/webp">-->
+              <img src="./assets/images/rotting-potatoes.jpg" alt=" Rotting Potatoes" loading="lazy" aria-hidden="true">
+              </picture>
+
+              <!-- Secondary BG (Optimized WebP + JPG Fallback) -->
+              <picture class="screen--problem__bg-img screen--problem__bg-img--secondary">
+                <!--<source srcset="assets/images/farmer.webp" type="image/webp">-->
+                <img src="./assets/images/farmer.jpg" alt="Farmer in field" loading="lazy" aria-hidden="true">
+              </picture>
+
+              <!-- Overlay -->
+               <div class="screen--problem__overlay"></div>
+             </div>
+             
+             <!-- Content -->
+              <div class="screen--problem__content">
+                <h2 class="screen--problem__headline" data-animation="fade-up">
+                  40% of food is wasted in the supply chain.
+                </h2>
+                <p class="screen--problem__description" data-animation="fade-up" data-delay="0.3s">
+                  Not because we lack food, but because it's lost before it's eaten.
+                </p>
+              </div>
+         </section>
+
+          <!-- Screen 2: The Hidden Cost -->
+            <section id="hidden-cost" class="screen screen--hidden-cost" aria-label="Food loss visualization">
+              <!-- Background Elements -->
+              <div class="screen--hidden-cost__gradient-overlay" aria-hidden="true"></div>
+              
+              <!-- Floating Food Icons -->
+              <div class="screen--hidden-cost__floating-icons" aria-hidden="true">
+                <img src="assets/icons/broccoli-svgrepo-com.svg" alt="" class="screen--hidden-cost__floating-icon" loading="lazy">
+                <img src="assets/icons/bread-svgrepo-com.svg" alt="" class="screen--hidden-cost__floating-icon" loading="lazy">
+                <img src="assets/icons/fruit-graps-uvas-svgrepo-com.svg" alt="" class="screen--hidden-cost__floating-icon" loading="lazy">
+                <img src="assets/icons/milk-carton-svgrepo-com.svg" alt="" class="screen--hidden-cost__floating-icon" loading="lazy">
+                <img src="assets/icons/grain-veg-svgrepo-com.svg" alt="" class="screen--hidden-cost__floating-icon" loading="lazy">
+                <img src="assets/icons/onion-svgrepo-com.svg" alt="" class="screen--hidden-cost__floating-icon" loading="lazy">
+                <img src="assets/icons/meat-on-bone-svgrepo-com.svg" alt="" class="screen--hidden-cost__floating-icon" loading="lazy">
+                <img src="assets/icons/fish-svgrepo-com.svg" alt="" class="screen--hidden-cost__floating-icon" loading="lazy">
+              </div>
+            
+              <!-- Main Content -->
+              <div class="screen--hidden-cost__content">
+                <!-- Headline -->
+                <h2 class="screen--hidden-cost__headline" data-animation="fade-up">
+                  Where does it all go?
+                </h2>
+            
+                <!-- Supply Chain Visualization -->
+                <div class="supply-chain">
+                  <div class="supply-chain__flow">
+                    <div class="supply-chain__stage" data-stage="farm" aria-label="Farm production">
+                      <img src="assets/icons/leaf-solid.svg" alt="Farm" class="supply-chain__icon">
+                      <img src="assets/icons/triangle-exclamation-solid.svg" alt="Loss point" class="supply-chain__loss-marker">
+                    </div>
+                    
+                    <div class="supply-chain__arrow" aria-hidden="true">
+                      <img src="assets/icons/arrow-right.svg" alt="">
+                    </div>
+                    
+                    <div class="supply-chain__stage" data-stage="truck" aria-label="Transportation">
+                      <img src="assets/icons/truck-fast-solid.svg" alt="Transport truck" class="supply-chain__icon">
+                    </div>
+                    
+                    <div class="supply-chain__arrow" aria-hidden="true">
+                      <img src="assets/icons/arrow-right.svg" alt="">
+                    </div>
+                    
+                    <div class="supply-chain__stage" data-stage="warehouse" aria-label="Warehouse storage">
+                      <img src="assets/icons/warehouse-solid.svg" alt="Warehouse" class="supply-chain__icon">
+                      <img src="assets/icons/triangle-exclamation-solid.svg" alt="Loss point" class="supply-chain__loss-marker">
+                    </div>
+                    
+                    <div class="supply-chain__arrow" aria-hidden="true">
+                      <img src="assets/icons/arrow-right.svg" alt="">
+                    </div>
+                    
+                    <div class="supply-chain__stage" data-stage="store" aria-label="Retail store">
+                      <img src="assets/icons/store-solid.svg" alt="Retail store" class="supply-chain__icon">
+                    </div>
+                  </div>
+                </div>
+            
+                <!-- Quiz Component -->
+                <div class="quiz" role="region" aria-labelledby="quiz-question">
+                  <p id="quiz-question" class="quiz__question">Where do you think most food is lost?</p>
+                  <div class="quiz__options">
+                    <button class="quiz__option" data-answer="farm" data-correct="true" aria-describedby="quiz-question">
+                      Farm
+                    </button>
+                    <button class="quiz__option" data-answer="transport" data-correct="false" aria-describedby="quiz-question">
+                      Transport
+                    </button>
+                    <button class="quiz__option" data-answer="storage" data-correct="false" aria-describedby="quiz-question">
+                      Storage
+                    </button>
+                    <button class="quiz__option" data-answer="retail" data-correct="false" aria-describedby="quiz-question">
+                      Retail
+                    </button>
+                  </div>
+                </div>
+            
+                <!-- Statistics -->
+                <div class="stats">
+                  <div class="stats__item" data-animation="count-up">
+                    <span class="stats__value" data-count="50" aria-label="30 to 50 percent"></span>
+                    <p class="stats__label">Loss in Harvesting</p>
+                  </div>
+                  <div class="stats__item" data-animation="count-up">
+                    <span class="stats__value" data-count="25" aria-label="10 to 25 percent"></span>
+                    <p class="stats__label">Loss in Storage</p>
+                  </div>
+                </div>
+            
+                <!-- Scroll Cue -->
+                <div class="scroll-cue" data-animation="bounce">
+                  <p class="scroll-cue__text">See what's possible</p>
+                  <button class="scroll-cue__button" aria-label="Continue to next section">
+                    <img src="assets/icons/arrow-right.svg" alt="" class="scroll-cue__icon">
+                  </button>
+                </div>
+              </div>
+            </section>
+          
+            <!-- Screen 3: The Vision -->
+             <section id="vision" class="screen screen--vision" aria-label="The food vision">
+              <!-- Dynamic BG -->
+              <div class="screen--vision__bg" data-bg-dynamic></div>
+
+              <!-- Headline -->
+               <h2 class="screen--vision__headline" role="heading" aria-level="2">
+                 Now imagine a world where food is never wasted
+               </h2>
+
+               <!-- Scene Slides -->
+                <div class="screen--vision__sequence">
+                  <!-- Slide 1 -->
+                  <figure class="screen--vision__slide" data-active>
+                    <figcaption>Cold chain truck arrives in time</figcaption>
+                  </figure>
+
+                  <!-- Slide 2 -->
+                  <figure class="screen--vision__slide">
+                    <figcaption>Mobile alerts for farmers</figcaption>
+                  </figure>
+
+                  <!-- Slide 3 -->
+                  <figure class="screen--vision__slide">
+                    <figcaption>Direct access to markets</figcaption>
+                  </figure>
+
+                  <!-- Tech Tags -->
+                   <div class="screen--vision__tags" data-scroll-reveal>
+                    <span class="tag">Cold Chain</span>
+                    <span class="tag">Smart Alerts</span>
+                    <span class="tag">Direct Access</span>
+                  </div>
+
+                  <!-- Voiceover -->
+                   <blockquote class="screen--vision__voiceover">
+                    <p>"Tech can fix what tradition couldn't"</p>
+                   </blockquote>
+                </div>
+              </section>
+
+           <!-- Screen 4: The Mission -->
+      <section id="mission" class="screen screen--mission" aria-label="Mission sign-up">
+        <!-- Inner Container for GSAP stagger control -->
+        <div class="screen--mission__inner">
+          <!-- Headline Group -->
+          <div class="screen--mission__header">
+            <h2 class="screen--mission__header-title" data-animate="fade-up">
+              We're building the tech to stop food loss
+            </h2>
+      
+            <p class="screen--mission__header-tagline" data-animate="fade-up" data-delay="0.1">
+              Together we create smarter supply chains.
+            </p>
+          </div>
+      
+          <!-- Form -->
+          <form class="screen--mission__form" id="missionForm" novalidate data-animate="fade-up" data-delay="0.2">
+            <!-- Name Field -->
+            <div class="form-field">
+              <input type="text" id="missionName" class="form-input" name="name" placeholder=" " required aria-describedby="nameError" />
+              <label for="missionName" class="form-label">Name</label>
+              <div id="nameError" class="form-error" aria-live="polite"></div>
+              <div id="nameHelper" class="form-helper" aria-live="polite"></div>
+            </div>
+      
+            <!-- Email Field -->
+            <div class="form-field">
+              <input type="email" id="missionEmail" class="form-input" name="email" placeholder=" " required aria-describedby="emailError" />
+              <label for="missionEmail" class="form-label">Email</label>
+              <div id="emailError" class="form-error" aria-live="polite"></div>
+              <div id="emailHelper" class="form-helper" aria-live="polite"></div>
+            </div>
+      
+            <!-- Role Dropdown -->
+            <div class="form-field">
+                <select name="role" id="missionRole" class="form-select" required aria-describedby="roleError">
+                  <option value="" disabled selected hidden></option>
+                  <option value="farmer">Farmer</option>
+                  <option value="distributor">Distributor</option>
+                  <option value="retailer">Retailer</option>
+                  <option value="partner">Partner</option>
+                  <option value="investor">Investor</option>
+                  <option value="volunteer">Volunteer</option>
+                </select>
+              <label for="missionRole" class="form-label">Select your role</label>
+              <div id="roleError" class="form-error" aria-live="polite"></div>
+              <div id="roleHelper" class="form-helper" aria-live="polite"></div>
+            </div>
+      
+            <!-- Location Field -->
+            <div class="form-field">
+              <input type="text" id="missionLocation" class="form-input" name="location" placeholder=" " required aria-describedby="locationError" />
+              <label for="missionLocation" class="form-label">Location</label>
+              <div id="locationError" class="form-error" aria-live="polite"></div>
+              <div id="locationHelper" class="form-helper" aria-live="polite"></div>
+            </div>
+      
+            <button type="submit" class="screen--mission__submit" aria-live="polite">
+              <span class="btn__text">Join the Mission</span>
+              <span class="btn__loader" hidden aria-hidden="true"></span>
+            </button>
+          </form>
+        </div>
+      
+        <!-- Future Testimonials Container -->
+        <div class="screen--mission__testimonials" data-animate="fade" data-delay="0.3" loading="lazy"></div>
+      </section>
+      </div>  
+    </main>
+
+    <!-- Sticky CTA -->
+        <div class="sticky-cta-container"
+             data-cta-state="default"
+             aria-live="polite">
+        
+          <!-- Main Button -->
+          <button class="sticky-cta"
+                  id="mainStickyCTA"
+                  aria-label="Join the movement"
+                  aria-haspopup="dialog"
+                  aria-expanded="false"
+                  aria-controls="ctaFormPopup">
+            
+            <span class="cta-core">
+              <span class="cta-text">Join the Movement</span>
+              <span class="cta-badge" aria-hidden="true">3 spots left</span>
+            </span>
+          </button>
+        
+          <!-- Popup Dialog -->
+          <dialog id="ctaFormPopup"
+                  class="cta-form-popup"
+                  aria-labelledby="mainStickyCTA">
+            
+            <form class="cta-form" id="ctaForm" novalidate>
+              <!-- Name -->
+              <div class="form-field">
+                <input type="text" id="ctaName" name="name" 
+                       class="form-input" placeholder=" " required
+                       aria-describedby="ctaNameError">
+                <label for="ctaName" class="form-label">Name</label>
+                <div id="ctaNameError" class="form-error" aria-live="polite"></div>
+              </div>
+              
+              <!-- Email -->
+              <div class="form-field">
+                <input type="email" id="ctaEmail" name="email" 
+                       class="form-input" placeholder=" " required
+                       aria-describedby="ctaEmailError">
+                <label for="ctaEmail" class="form-label">Email</label>
+                <div id="ctaEmailError" class="form-error" aria-live="polite"></div>
+              </div>
+              
+              <!-- Role Dropdown -->
+              <div class="form-field">
+                <select id="ctaRole" name="role" class="form-select" required
+                        aria-describedby="ctaRoleError">
+                  <option value="" disabled selected hidden>Select role</option>
+                  <option value="farmer">Farmer</option>
+                  <option value="distributor">Distributor</option>
+                  <option value="retailer">Retailer</option>
+                  <option value="partner">Partner</option>
+                  <option value="investor">Investor</option>
+                  <option value="volunteer">Volunteer</option>
+                </select>
+                <label for="ctaRole" class="form-label">Your Role</label>
+                <div id="ctaRoleError" class="form-error" aria-live="polite"></div>
+              </div>
+              
+              <button type="submit" class="cta-submit">
+                <span class="btn__text">Join Now</span>
+              </button>
+            </form>
+            
+            <button class="cta-popup-close" 
+                    aria-label="Close form"
+                    onclick="this.closest('dialog').close()">
+              &times;
+            </button>
+          </dialog>
+        </div>
+       
+      <footer id="cta" class="footer" role="contentinfo" aria-label="Site footer">
+  <div class="footer__content">
+    
+    <!-- Brand/Mission Statement -->
+    <section class="footer__brand" aria-labelledby="brand-heading">
+      <h2 id="brand-heading" class="visually-hidden">GrainChain Mission</h2>
+      <p class="footer__statement">
+        <strong class="footer__brand-name">GrainChain:</strong> 
+        <span class="footer__mission-text">Using tech to reduce food loss and create smarter supply chains. Together, we can make a difference.</span>
+      </p>
+    </section>
+
+    <!-- Main Footer Columns -->
+    <div class="footer__columns">
+      <!-- Quick Links -->
+      <nav class="footer__nav" aria-labelledby="quicklinks-heading">
+        <h3 id="quicklinks-heading" class="footer__subheading">Quick Links</h3>
+        <ul class="footer__nav-list">
+          <li class="footer__nav-item">
+            <a href="/about" class="footer__nav-link">About Us</a>
+          </li>
+          <li class="footer__nav-item">
+            <a href="/solutions" class="footer__nav-link">Solutions</a>
+          </li>
+          <li class="footer__nav-item">
+            <a href="/blog" class="footer__nav-link">Blog</a>
+          </li>
+          <li class="footer__nav-item">
+            <a href="/careers" class="footer__nav-link">Careers</a>
+          </li>
+        </ul>
+      </nav>
+
+      <!-- Newsletter -->
+      <section class="footer__newsletter" aria-labelledby="newsletter-heading">
+        <h3 id="newsletter-heading" class="footer__subheading">Stay Updated</h3>
+        <form class="footer__form" aria-label="Email newsletter subscription">
+          <div class="footer__form-group">
+            <label for="footer-email" class="visually-hidden">Email </label>
+            <input 
+              type="email" 
+              id="footer-email" 
+              class="footer__input" 
+              placeholder="your@email.com"
+              required
+              aria-required="true"
+            >
+            <button type="submit" class="footer__submit" aria-label="Subscribe to newsletter">
+              Subscribe
+            </button>
+          </div>
+          <p class="footer__disclaimer">We respect your privacy. Unsubscribe at any time.</p>
+        </form>
+      </section>
+
+      <!-- Contact Information -->
+      <address class="footer__contact" aria-labelledby="contact-heading">
+        <h3 id="contact-heading" class="footer__subheading">Contact Us</h3>
+        <ul class="footer__contact-list">
+          <li class="footer__contact-item">
+            <a href="mailto:team@foodchaintech.com" class="footer__contact-link">
+              team@foodchaintech.com
+            </a>
+          </li>
+          <li class="footer__contact-item">
+            <a href="tel:+18005551234" class="footer__contact-link">
+              (800) 555-1234
+            </a>
+          </li>
+        </ul>
+      </address>
+    </div>
+
+    <!-- Social Navigation -->
+    <nav class="footer__social" aria-labelledby="social-heading">
+      <h2 id="social-heading" class="visually-hidden">Connect With Us</h2>
+      <ul class="footer__social-list">
+        <li class="footer__social-item">
+          <a href="https://linkedin.com/company/grainchain" 
+             class="footer__social-link" 
+             aria-label="LinkedIn (opens in new tab)" 
+             target="_blank" 
+             rel="noopener noreferrer">
+            <svg class="footer__social-icon" aria-hidden="true" width="24" height="24" viewBox="0 0 24 24">
+              <path fill="currentColor" d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+            </svg>
+          </a>
+        </li>
+        <li class="footer__social-item">
+          <a href="https://github.com/grainchain" 
+             class="footer__social-link" 
+             aria-label="GitHub (opens in new tab)" 
+             target="_blank" 
+             rel="noopener noreferrer">
+            <svg class="footer__social-icon" aria-hidden="true" width="24" height="24" viewBox="0 0 24 24">
+              <path fill="currentColor" d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+            </svg>
+          </a>
+        </li>
+        <li class="footer__social-item">
+          <a href="https://twitter.com/grainchain" 
+             class="footer__social-link" 
+             aria-label="Twitter (opens in new tab)" 
+             target="_blank" 
+             rel="noopener noreferrer">
+            <svg class="footer__social-icon" aria-hidden="true" width="24" height="24" viewBox="0 0 24 24">
+              <path fill="currentColor" d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
+            </svg>
+          </a>
+        </li>
+        <li class="footer__social-item">
+          <a href="https://reddit.com/r/grainchain" 
+             class="footer__social-link" 
+             aria-label="Reddit (opens in new tab)" 
+             target="_blank" 
+             rel="noopener noreferrer">
+            <svg class="footer__social-icon" aria-hidden="true" width="24" height="24" viewBox="0 0 24 24">
+              <path fill="currentColor" d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.5.002l-.002-.002a1.25 1.25 0 0 1 1.252-1.249zM12 3.49a8.51 8.51 0 0 1 8.51 8.51 8.51 8.51 0 0 1-8.51 8.51A8.51 8.51 0 0 1 3.49 12 8.51 8.51 0 0 1 12 3.49zm-.78 4.822a.374.374 0 0 0-.374.373v3.722a.375.375 0 1 0 .75 0V8.685a.374.374 0 0 0-.376-.373zm-4.615.184a.375.375 0 0 0-.374.374v2.793c0 .206.168.374.374.374h2.793a.375.375 0 0 0 0-.75H7.884V8.872a.375.375 0 0 0-.374-.374zm8.142 0a.375.375 0 0 0-.374.374v2.793h-1.44a.375.375 0 0 0 0 .75h2.793a.375.375 0 0 0 .374-.374V8.872a.374.374 0 0 0-.374-.374z"/>
+            </svg>
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+    <!-- Legal/Credits -->
+    <div class="footer__legal">
+      <div class="footer__legal-links">
+        <a href="/privacy" class="footer__legal-link">Privacy Policy</a>
+        <span aria-hidden="true"> | </span>
+        <a href="/terms" class="footer__legal-link">Terms of Service</a>
+        <span aria-hidden="true"> | </span>
+        <a href="/cookies" class="footer__legal-link">Cookie Policy</a>
+      </div>
+      <p class="footer__copyright">&copy; <time datetime="2025">2025</time> GrainChain. All rights reserved.</p>
+      <p class="footer__credits">Built with <span aria-label="love">❤️</span> + <span class="footer__tech">Tech</span></p>
+    </div>
+  </div>
+</footer>
+      <!-- GSAP Core -->
+       <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+      <!--  TextPlugin -->
+       <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/TextPlugin.min.js"></script>
+      <!-- ScrollTrigger -->
+       <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
+       <!-- SplitText for letter-by-letter animation  -->
+       <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js"></script>
+       <script type="module" src="/src/js/main.js"></script>
+</body>
+</html>

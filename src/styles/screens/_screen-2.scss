@@ -1,0 +1,254 @@
+@use "sass:map";
+@use "../abstracts/variables" as *;
+@use "../abstracts/mixins" as *;
+@use "../components/quiz" as quiz;
+@use "../components/supply-chain" as supply-chain;
+
+/* ===== SCREEN 2 STYLES ===== */
+.screen--hidden-cost {
+  position: relative;
+  min-height: 100dvh;
+  overflow: hidden;
+  isolation: isolate;
+  z-index: var(--z-base);
+  background: var(--background-color);
+
+  // Gradient overlay (background animation)
+  &__gradient-overlay {
+    @include overlay(0.8);
+    background: linear-gradient(
+      270deg, 
+      hsl(120, 100%, 25%),
+      map.get($colors, 'warning'),
+      map.get($colors, 'error'),
+      hsl(39, 100%, 50%),
+      hsl(300, 100%, 25%),
+      hsl(240, 100%, 50%)
+    );
+    background-size: 300% 100%;
+    animation: gradient-shift 20s linear infinite;
+    z-index: var(--z-behind);
+    will-change: background-position;
+
+    @media (prefers-reduced-motion: reduce) {
+      background: hsl(120, 100%, 25%);
+    }
+  }
+
+  // Floating icons 
+  &__floating-icons {
+    @include overlay(0);
+    z-index: var(--z-base);
+    pointer-events: none;
+  }
+
+  &__floating-icon {
+    position: absolute;
+    width: clamp(20px, 3vw, 40px);
+    height: auto;
+    aspect-ratio: 1/1;
+    opacity: 0.8;
+    filter: drop-shadow(var(--shadow-sm));
+    will-change: transform;
+
+    // Using your spacing scale for positioning
+      $icon-positions: (
+    1: (top: 8%, left: 15%),
+    2: (top: 22%, left: 75%),
+    3: (top: 38%, left: 35%),
+    4: (top: 12%, left: 55%),
+    5: (top: 58%, left: 20%),
+    6: (top: 68%, left: 65%),
+    7: (top: 82%, left: 40%),
+    8: (top: 48%, left: 85%)
+    );
+
+    @each $i, $pos in $icon-positions {
+      &:nth-child(#{$i}) {
+        top: map.get($pos, 'top');
+        left: map.get($pos, 'left');
+        animation-delay: #{$i * 0.5s};
+      }
+    }
+  }
+
+  // Content container
+  &__content {
+    position: relative;
+    z-index: var(--z-base);
+    padding: var(--space-xxl);
+    max-width: 1440px;
+    margin: 0 auto;
+
+    @include respond-to('lg') {
+      padding: var(--space-xl);
+    }
+  }
+
+  // Headline 
+  &__headline {
+    font-family: var(--font-header);
+    font-size: clamp(
+      var(--font-size-lg),
+      5vw,
+      var(--font-size-xxl)
+    );
+    color: var(--text-white);
+    text-align: center;
+    margin-bottom: var(--space-xl);
+    text-shadow: 0 0 15px rgba(map.get($colors, 'error'), 0.5);
+    line-height: 1.2;
+    opacity: 0;
+  }
+
+ // Stats
+.stats {
+  display: flex;
+  justify-content: space-between;
+  gap: map.get($spacing, 'md');
+  margin-top: map.get($spacing, 'lg');
+  flex-wrap: wrap;
+
+  &__item {
+    background: map.get($colors, 'light');
+    padding: map.get($spacing, 'md');
+    border-radius: map.get($radii, 'lg');
+    text-align: center;
+    width: min(150px, 100%);
+    box-shadow: var(--shadow-md);
+    transition: background 0.3s ease;
+    z-index: 3;
+    will-change: transform; // Performance optimization
+
+  }
+
+  &__value {
+    font-family: map.get($font-families, 'primary');
+    font-size: clamp(
+      map.get($font-sizes, 'lg'),
+      5vw,
+      map.get($font-sizes, 'xl')
+    );
+    font-weight: bold;
+    color: map.get($colors, 'success'); // Initial color
+    text-shadow: 1px 1px 6px rgba(map.get($colors, 'success'), 0.5);
+    transition: 
+      color 0.3s ease, 
+      text-shadow 0.3s ease,
+      opacity 0.5s ease; // Added opacity transition
+    display: inline-block;
+    opacity: 0; // Will be animated by GSAP
+    will-change: transform, opacity, color, text-shadow;
+    line-height: 1; // Ensures consistent height
+
+    // Dynamic colors for different value ranges
+    &--warning {
+      color: map.get($colors, 'warning');
+      text-shadow: 1px 1px 6px rgba(map.get($colors, 'warning'), 0.5);
+    }
+    
+    &--accent {
+      color: map.get($colors, 'accent');
+      text-shadow: 1px 1px 6px rgba(map.get($colors, 'accent'), 0.5);
+    }
+    
+    &--error {
+      color: map.get($colors, 'error');
+      text-shadow: 1px 1px 6px rgba(map.get($colors, 'error'), 0.5);
+    }
+  }
+
+  &__label {
+    font-family: map.get($font-families, 'primary');
+    font-size: map.get($font-sizes, 'sm');
+    font-weight: 700;
+    color: map.get($colors, 'accent-hover');
+    margin-top: map.get($spacing, 'sm');
+    text-shadow: 1px 1px 6px rgba(hsl(0, 0%, 70%), 0.7);
+    opacity: 0; // Will be animated by GSAP
+    transition: opacity 0.5s ease;
+    will-change: transform, opacity;
+    transform: translateY(10px); // For subtle fade-up effect
+  }
+}
+
+  // Import components
+  @include quiz.styles;
+  @include supply-chain.styles;
+
+  @keyframes gradient-shift {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 100% 50%; }
+  }
+
+  // Bounce keyframes as reusable mixin
+@mixin bounce($name, $distance: 8px) {
+  @keyframes #{$name} {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-#{$distance});
+    }
+  }
+}
+
+
+  .scroll-cue {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: map.get($spacing, 'xl');
+  gap: map.get($spacing, 'sm');
+  animation: bounce 2s cubic-bezier(0.68, -0.55, 0.27, 1.55) infinite;
+  text-align: center;
+  will-change: transform;
+
+  &__text {
+    font-family: $font-header;
+    font-size: clamp(
+      map.get($font-sizes, 'sm'),
+      2vw,
+      map.get($font-sizes, 'md')
+    );
+    font-weight: bold;
+    color: map.get($colors, 'accent-hover');
+    text-shadow: 4px 4px 16px rgba(0, 0, 0, 0.2);
+  }
+
+  &__button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: map.get($spacing, 'xs');
+    transform-origin: center;
+    transition: transform 0.4s ease, filter 0.4s ease;
+    
+    &:hover {
+     transform: translateY(-4px) scale(1.1) rotate(90deg);
+     filter: drop-shadow(0 0 10px var(--accent-color));
+    }
+  }
+
+  &__icon {
+    width: 32px;
+    height: 32px;
+    filter: drop-shadow(0 0 4px var(--accent-color));
+    transition: filter 0.4s ease;
+
+    .scroll-cue__button:hover & {
+      filter: drop-shadow(0 0 12px var(--accent-color));
+    }
+  }
+
+  @include bounce(bounce, 8px);
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+
+    &__button:hover {
+      transform: none;
+    }
+  }
+}
+}

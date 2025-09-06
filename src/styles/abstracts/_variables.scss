@@ -1,0 +1,184 @@
+@use "sass:map";
+@use "sass:color";
+// DESIGN TOKENS
+
+// Color Palette
+$colors: (
+  primary: hsl(202, 71%, 52%),
+  primary-hover: hsl(208, 79%, 51%),
+  secondary: hsl(45, 86%, 62%),
+  background: hsl(0, 0%, 96%),
+  text: hsl(0, 0%, 20%),
+  text-dark: hsl(0, 0%, 13%),
+  accent: hsl(0, 79%, 63%),
+  accent-hover: hsl(0, 79%, 53%),
+  accent-light: color.adjust(#ff6d00, $lightness: 15%),
+  success: hsl(145, 63%, 42%),
+  text-white: hsl(0, 0%, 100%),
+  text-secondary: hsl(0, 0%, 70%),
+  warning: hsl(45, 86%, 62%),
+  error: hsl(0, 79%, 63%),
+  light: hsl(0, 0%, 96%)
+);
+
+// Spacing Scale
+$spacing: (
+  xxs: 0.25rem,
+  xs: 0.5rem,
+  sm: 0.75rem,
+  md: 1rem,
+  lg: 1.5rem,
+  xl: 2rem,
+  xxl: 3rem,
+  xxxl: 4rem
+);
+
+// Font Families
+$font-families: (
+  'primary': "'Helvetica Neue', Arial, sans-serif", // Main body font
+  'header': "'Montserrat', sans-serif", // Headings
+  'btn': "'Inter', sans-serif" // Buttons and interactive elements
+);
+
+// Font Sizes
+$font-sizes: (
+  xs: 0.75rem,
+  sm: 0.875rem,
+  base: 1rem,
+  md: 1.125rem,
+  lg: 1.5rem,
+  xl: 2rem,
+  xxl: 3rem,
+  xxxl: 4rem
+);
+
+// Border Radii
+$radii: (
+  sm: 4px,
+  md: 8px,
+  lg: 16px,
+  xl: 24px,
+  pill: 999px
+);
+
+// Shadows
+$shadows: (
+  sm: 0 1px 3px rgba(0, 0, 0, 0.12),
+  md: 0 4px 6px rgba(0, 0, 0, 0.15),
+  lg: 0 10px 25px rgba(0, 0, 0, 0.2)
+);
+
+// Z-index
+$z-indexes: (
+  'sticky-cta': 9999,
+  'modal': 9998,
+  'overlay': 1000,
+  'nav': 100,
+  'base': 1,
+  'behind': -1
+) !default;
+
+// Additional Tokens
+$food-types: (
+  'broccoli': 'vegetable',
+  'bread': 'grain',
+  'milk': 'dairy',
+  'meat': 'meat'
+);
+
+$screen-eases: (
+  'intro': cubic-bezier(0.16, 1, 0.3, 1),
+  'stats': cubic-bezier(0.65, 0, 0.35, 1),
+  'vision': cubic-bezier(0.7, 0, 0.2, 1)
+);
+
+$transition-durations: (
+  fast: 0.2s,
+  normal: 0.3s,
+  slow: 0.5s
+);
+
+$animation-timings: (
+  'logo-in': 1.2s,
+  'subtitle-in': 1s,
+  'hint-in': 0.6s
+);
+// Mobile Header Specific Tokens
+$mobile-header: (
+  sidebar-width: 280px,
+  overlay-opacity: 0.85,
+  hamburger-size: 24px,
+  sidebar-bg: hsl(0, 0%, 13%),
+  sidebar-easing: map.get($screen-eases, 'intro')
+);
+// Breakpoints for Responsive Design
+$breakpoints: (
+  'sm': 576px,
+  'md': 768px,
+  'lg': 992px,
+  'xl': 1200px
+);
+$form-states: (
+  'focus-ring': 0 0 0 3px rgba(map.get($colors, 'primary'), 0.3),
+  'error-ring': 0 0 0 3px rgba(map.get($colors, 'error'), 0.3)
+);
+$animation-delays: (
+  'form-field': 0.05s,
+  'stagger-group': 0.1s  
+);
+// Export to CSS Variables
+:root {
+  // Colors
+  @each $name, $color in $colors {
+    --#{$name}-color: #{$color};
+  }
+
+  // Spacing
+  @each $size, $value in $spacing {
+    --space-#{$size}: #{$value};
+  }
+
+   // Font Families
+  @each $name, $font in $font-families {
+    --font-#{$name}: #{$font};
+  }
+  // Font Sizes
+  @each $size, $value in $font-sizes {
+    --font-size-#{$size}: #{$value};
+  }
+
+  // Radii
+  @each $size, $value in $radii {
+    --radius-#{$size}: #{$value};
+  }
+   // SCF Colors 
+  --warning-color: #{map.get($colors, 'warning')};
+  --error-color: #{map.get($colors, 'error')};
+  --light-color: #{map.get($colors, 'light')};
+
+  // Shadows
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.12);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.15);
+  --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.2);
+  --text-shadow-light: rgba(167, 165, 165, 0.514);
+
+  // Z-index
+  --z-behind: -1;
+  --z-base: 1;
+  --z-nav: 100;
+  --z-overlay: 1000;
+  --z-modal: 9999;
+
+  --mobile-sidebar-width: #{map.get($mobile-header, 'sidebar-width')};
+  --hamburger-color: var(--secondary-color);
+}
+
+// SASS Quick Access Variables
+$primary-color: map.get($colors, primary);
+$accent-color: map.get($colors, accent);
+$success-color: map.get($colors, success);
+$space-md: map.get($spacing, md);
+$font-size-base: map.get($font-sizes, base);
+$font-primary: map.get($font-families, 'primary');
+$font-header: map.get($font-families, 'header');
+$font-btn: map.get($font-families, 'btn');
